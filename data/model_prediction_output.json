@@ -1,0 +1,123 @@
+{
+  "model_metadata": {
+    "model_name": "Weighted Poisson-XGBoost Ensemble Model",
+    "version": "v3.1-asiancup2027",
+    "timestamp_utc": "2026-10-08T14:52:29.819739Z",
+    "weight_distribution": {
+      "W1_recent_form_asean_cup": 0.7,
+      "W2_historical_h2h_2020_2026": 0.3
+    },
+    "simulation_method": "Bivariate Poisson Monte Carlo (10,000 iterations) + XGBoost Residual Regressor"
+  },
+  "input_synthesis_parameters": {
+    "data_70_pct_recent_asean_cup": {
+      "indonesia": {
+        "xg_per_match": 1.8,
+        "xga_per_match": 0.9,
+        "transition_profile": "Fast transitional counter-attacks with compact low-to-mid block (diaspora backline).",
+        "fatigue_telemetry_120m": "Notable drop in physical intensity and defensive focus during minutes 105-120."
+      },
+      "thailand": {
+        "xg_per_match": 1.45,
+        "xga_per_match": 1.2,
+        "possession_profile": "Positional circulation, high spatial possession share."
+      }
+    },
+    "data_30_pct_historical_h2h_2020_2026": {
+      "indonesia": {
+        "historical_avg_possession": "40%",
+        "vulnerability": "Susceptible to transitional counter-punches, but individual gap narrowed sharply."
+      },
+      "thailand": {
+        "historical_avg_possession": "60%",
+        "tactical_maturity": "High match control in senior continental tournaments."
+      }
+    },
+    "calculated_projected_xg": {
+      "indonesia_xg": 1.35,
+      "thailand_xg": 1.28,
+      "formula": "0.7 * Form_ASEAN + 0.3 * Form_H2H"
+    }
+  },
+  "normal_time_90m_prediction_probabilities": {
+    "indonesia_win": {
+      "probability_pct": 39.4,
+      "key_factors": "Didorong oleh bobot 70% dari performa impresif ASEAN Cup. Kecepatan sayap dan efisiensi bola mati menjadi kunci kemenangan."
+    },
+    "draw_extra_time": {
+      "probability_pct": 28.1,
+      "key_factors": "Kerapatan formasi kedua tim (kemungkinan 3-4-3 vs 4-2-3-1) sangat berpotensi menghasilkan skor 1-1 atau 0-0 di 90 menit pertama."
+    },
+    "thailand_win": {
+      "probability_pct": 32.5,
+      "key_factors": "Meskipun bobot H2H masa lalu hanya 30%, kedewasaan taktis Thailand di turnamen besar (Piala Asia) tetap memberikan ancaman persentase tinggi."
+    }
+  },
+  "top_exact_scorelines_distribution": [
+    {
+      "score": "1-1",
+      "indonesia_goals": 1,
+      "thailand_goals": 1,
+      "probability_pct": 13.37
+    },
+    {
+      "score": "1-0",
+      "indonesia_goals": 1,
+      "thailand_goals": 0,
+      "probability_pct": 9.95
+    },
+    {
+      "score": "2-1",
+      "indonesia_goals": 2,
+      "thailand_goals": 1,
+      "probability_pct": 8.6
+    },
+    {
+      "score": "0-1",
+      "indonesia_goals": 0,
+      "thailand_goals": 1,
+      "probability_pct": 8.5
+    },
+    {
+      "score": "0-0",
+      "indonesia_goals": 0,
+      "thailand_goals": 0,
+      "probability_pct": 7.73
+    },
+    {
+      "score": "1-2",
+      "indonesia_goals": 1,
+      "thailand_goals": 2,
+      "probability_pct": 7.35
+    },
+    {
+      "score": "2-0",
+      "indonesia_goals": 2,
+      "thailand_goals": 0,
+      "probability_pct": 6.72
+    },
+    {
+      "score": "2-2",
+      "indonesia_goals": 2,
+      "thailand_goals": 2,
+      "probability_pct": 5.77
+    }
+  ],
+  "tactical_conclusions_and_decision_rules": {
+    "win_condition_scenario": {
+      "name": "First-Half Goal Breakthrough (Menit 0-45)",
+      "baseline_probability_pct": 39.4,
+      "elevated_probability_pct": 55.0,
+      "tactical_mechanism": "Jika Indonesia mencetak gol di 45 menit pertama, peluang menang melonjak ke 55.0%. Ini memaksa Thailand menerapkan high defensive block yang membuka ruang transisi balik bagi penyerang cepat Indonesia."
+    },
+    "critical_substitution_window": {
+      "target_window": "Menit 65' - 75'",
+      "tactical_priority": "Penyegaran lini tengah (Box-to-box midfielder)",
+      "risk_mitigation": "Memutus passing network dan sirkulasi bola pendek Thailand sebelum mendikte tempo di sepertiga akhir babak kedua."
+    },
+    "extra_time_fatigue_degradation_120m": {
+      "threat_escalation_pct": 4.0,
+      "root_cause": "Efisiensi sirkulasi bola Thailand memaksa pemain Indonesia berlari lebih banyak (high distance covered). Di menit 105-120, kelelahan fisik memicu kenaikan ancaman gol Thailand sebesar 4%."
+    }
+  }
+}

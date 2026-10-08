@@ -1,0 +1,96 @@
+# ==============================================================================
+# AFC Asian Cup 2027 Analytics & Simulation - Git Ignore Specification
+# Standardized for Python, Data Science, Streamlit, Jupyter, and Multi-OS Workflows
+# ==============================================================================
+
+# Virtual Environments
+asiancup_env/
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Bytecode & Python Caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Unit Test, Pytest & Coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook Checkpoints & Cache
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+*.ipynb_checkpoints
+
+# Streamlit Local Runtime & User Secrets
+.streamlit/secrets.toml
+
+# IDE & Editor Specific Configurations
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS-Specific Metadata Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# Environment Variables & API Credentials
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# Temporary Scratch Scripts & Task Artifacts
+scratch/
+*.tmp
+*.temp
+*.log

@@ -1545,8 +1545,13 @@ data = {
     }
 }
 
-# Save as JSON
-with open("d:\\PROJECT\\asian-cup-2027\\indonesia_vs_thailand_analytics.json", "w", encoding="utf-8") as f:
+# Resolve target output path dynamically to data/ directory
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+TARGET_PATH = os.path.join(BASE_DIR, "data", "indonesia_vs_thailand_analytics.json")
+os.makedirs(os.path.dirname(TARGET_PATH), exist_ok=True)
+
+with open(TARGET_PATH, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=2, ensure_ascii=False)
 
-print("JSON file successfully created and verified!")
+print(f"JSON file successfully created and verified at: {TARGET_PATH}")
