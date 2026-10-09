@@ -1,12 +1,12 @@
 """
 Halaman 1: Prediksi Lengkap Peluang 24 Tim Peserta AFC Asian Cup 2027
-Simulasi 100.000 Iterasi Monte Carlo Berdasarkan Data 4 Tahun Terakhir.
+Simulasi 100.000 Iterasi Monte Carlo Berdasarkan Rekor Pertandingan 4 Tahun Terakhir.
+Bahasa: Bahasa Indonesia Baku (PUEBI/KBBI).
 """
 
 import os
 import streamlit as st
 import pandas as pd
-import numpy as np
 
 from app.utils.styles import inject_custom_css
 from app.utils.charts import create_top_quarter_final_bar, create_stage_progression_funnel
@@ -19,30 +19,30 @@ st.set_page_config(
 
 inject_custom_css()
 
-# Path Data Lake
+# Direktori Data Lake
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_PATH = os.path.join(BASE_DIR, "data", "asian_cup_predictions.csv")
 
 @st.cache_data
 def load_predictions_data():
     if not os.path.exists(DATA_PATH):
-        st.error(f"File data prediksi tidak ditemukan: {DATA_PATH}")
+        st.error(f"Berkas data prediksi tidak ditemukan: {DATA_PATH}")
         return pd.DataFrame()
     return pd.read_csv(DATA_PATH)
 
 df = load_predictions_data()
 
-# Header Halaman
+# Tajuk Halaman
 st.markdown(
     """
     <div style="margin-bottom: 24px;">
         <span class="metric-badge badge-gold">100.000 ITERASI SIMULASI MONTE CARLO</span>
-        <span class="metric-badge badge-tha">DATA 4 TAHUN TERAKHIR (2023 - 2026)</span>
+        <span class="metric-badge badge-tha">DATA 4 TAHUN TERAKHIR (2023–2026)</span>
         <h1 style="color: #ffffff; margin-top: 6px; font-weight: 800;">
             🏆 Peta Peluang 24 Negara Peserta Piala Asia 2027
         </h1>
         <p style="color: #94a3b8; font-size: 1.05rem;">
-            Analisis bertahap probabilitas kelolosan: <b>Fase Grup ➔ 16 Besar ➔ 8 Besar (Quarter-Finals) ➔ Semifinal ➔ Final ➔ Juara</b>.
+            Analisis bertahap probabilitas kelolosan: <b>Fase Grup ➔ 16 Besar ➔ 8 Besar (Perempat Final) ➔ Semifinal ➔ Final ➔ Juara</b>.
         </p>
     </div>
     """,
@@ -61,56 +61,57 @@ kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 
 with kpi1:
     st.metric(
-        label="Favorit Juara Teratas",
-        value=top_team["Team"],
-        delta=f"{top_team['Win_Tournament_Prob(%)']:.2f}% Peluang Juara"
+        label="Unggulan Teratas Juara",
+        value=str(top_team["Team"]),
+        delta=f"{float(top_team['Win_Tournament_Prob(%)']):.2f}% Peluang Juara"
     )
 
 with kpi2:
+    qf_strong_count = len(df[df["Reach_Quarter_Final_Prob(%)"] >= 50.0])
     st.metric(
         label="Kandidat Kuat 8 Besar (>50%)",
-        value="8 Negara",
-        delta="JPN, KOR, IRN, KSA, AUS, QAT, IRQ, UAE"
+        value=f"{qf_strong_count} Negara",
+        delta="JPN, KSA, IRN, AUS, KOR, QAT, UZB"
     )
 
 with kpi3:
     if idn_row is not None:
         st.metric(
             label="Peluang IDN Lolos 16 Besar",
-            value=f"{idn_row['Reach_Round_16_Prob(%)']:.2f}%",
-            delta=f"Peringkat #{int(idn_row['Rank'])} di Asia"
+            value=f"{float(idn_row['Reach_Round_16_Prob(%)']):.2f}%",
+            delta=f"Grup F (Bersama JPN, QAT, THA)"
         )
 
 with kpi4:
     if idn_row is not None:
         st.metric(
             label="Peluang IDN Lolos 8 Besar",
-            value=f"{idn_row['Reach_Quarter_Final_Prob(%)']:.2f}%",
+            value=f"{float(idn_row['Reach_Quarter_Final_Prob(%)']):.2f}%",
             delta="Target Utama (Perempat Final)"
         )
 
 st.write("")
 
-# Edukasi Sederhana: Penjelasan Tahapan
-with st.expander("📚 Pelajari Cara Membaca Angka-Angka Probabilitas Ini (Panduan Orang Awam)", expanded=True):
+# Edukasi Sederhana: Panduan Membaca Probabilitas
+with st.expander("📚 Panduan Membaca Angka Probabilitas Turnamen bagi Orang Awam", expanded=True):
     st.markdown(
         """
-        - **Peluang Lolos 16 Besar (`Reach_Round_16_Prob`)**: Kemungkinan tim mengakhiri babak grup di peringkat 1, 2, atau termasuk dalam 4 tim peringkat ketiga terbaik. Indonesia memiliki peluang **67.74%**, artinya dalam 2 dari 3 simulasi, Indonesia berhasil melangkah keluar dari fase grup!
-        - **Peluang Lolos 8 Besar (`Reach_Quarter_Final_Prob`)**: Kemungkinan tim memenangkan laga babak gugur pertama (Babak 16 Besar). Indonesia memiliki peluang **16.18%** secara umum, dan bisa melonjak hingga **42.5%** jika mengamankan posisi Runner-up Grup A!
-        - **Peluang Semifinal & Final**: Persentase menembus 4 besar Asia yang biasanya didominasi oleh raksasa tradisional seperti Jepang, Korea Selatan, Iran, dan Arab Saudi.
+        - **Peluang Lolos 16 Besar (`Reach_Round_16_Prob`)**: Kemungkinan tim mengakhiri fase grup di posisi juara grup, runner-up grup, atau termasuk dalam 4 tim peringkat ketiga terbaik. Indonesia di Grup F memiliki peluang **41,00%**, di mana laga menghadapi Thailand menjadi kunci krusial pengumpulan poin.
+        - **Peluang Lolos 8 Besar (`Reach_Quarter_Final_Prob`)**: Kemungkinan tim memenangkan laga babak gugur pertama (Babak 16 Besar). Indonesia mencatatkan peluang **11,03%** secara agregat turnamen, dan dapat melonjak hingga **40,5%** apabila mengunci posisi Runner-up Grup F!
+        - **Peluang Semifinal dan Final**: Persentase menembus 4 besar Asia yang didominasi oleh kekuatan tradisional Asia seperti Jepang, Arab Saudi, Iran, Korea Selatan, dan Australia.
         """
     )
 
 st.write("")
 
 # Visualisasi Interaktif
-tab_chart1, tab_chart2 = st.tabs(["📊 Peringkat Peluang Lolos 8 Besar", "🪜 Piramida Kelolosan Tim Pilihan"])
+tab_chart1, tab_chart2 = st.tabs(["📊 Peringkat Peluang Lolos 8 Besar", "🪜 Piramida Kelolosan Negara Pilihan"])
 
 with tab_chart1:
-    st.markdown("#### Siapa Saja yang Berpeluang Lolos ke Babak 8 Besar (Quarter-Finals)?")
-    st.caption("Grafik membandingkan 14 negara dengan probabilitas perempat final tertinggi. Timnas Indonesia disorot dengan warna merah.")
+    st.markdown("#### Siapa Saja yang Berpeluang Lolos ke Babak 8 Besar (Perempat Final)?")
+    st.caption("Grafik membandingkan 14 negara dengan probabilitas perempat final tertinggi. Timnas Indonesia disorot dengan warna merah khusus.")
     fig_qf = create_top_quarter_final_bar(df)
-    st.plotly_chart(fig_qf, use_container_width=True)
+    st.plotly_chart(fig_qf, width="stretch")
 
 with tab_chart2:
     st.markdown("#### Piramida Ketahanan Turnamen per Negara")
@@ -120,7 +121,7 @@ with tab_chart2:
         index=df["Team"].tolist().index("Indonesia") if "Indonesia" in df["Team"].tolist() else 0
     )
     fig_funnel = create_stage_progression_funnel(df, team_name=selected_team)
-    st.plotly_chart(fig_funnel, use_container_width=True)
+    st.plotly_chart(fig_funnel, width="stretch")
 
 st.write("")
 
@@ -133,14 +134,14 @@ with f_col1:
     search_q = st.text_input("🔍 Cari Negara:", "")
 
 with f_col2:
-    group_filter = st.selectbox("Filter Grup:", ["Semua Grup"] + sorted(df["Group"].unique().tolist()))
+    group_filter = st.selectbox("Pilih Grup:", ["Semua Grup"] + sorted(df["Group"].unique().tolist()))
 
 with f_col3:
-    min_qf = st.slider("Min Peluang 8 Besar (%):", 0.0, 95.0, 0.0, step=5.0)
+    min_qf = st.slider("Batas Minimal Peluang 8 Besar (%):", 0.0, 90.0, 0.0, step=5.0)
 
 with f_col4:
     sort_by = st.selectbox(
-        "Urutkan Berdasarkan:",
+        "Urutkan Berdasarkan Kolom:",
         [
             "Reach_Quarter_Final_Prob(%)",
             "Reach_Round_16_Prob(%)",
@@ -163,18 +164,18 @@ if group_filter != "Semua Grup":
 filtered_df = filtered_df[filtered_df["Reach_Quarter_Final_Prob(%)"] >= min_qf]
 filtered_df = filtered_df.sort_values(by=sort_by, ascending=False)
 
-# Format kolom tabel untuk pembacaan nyaman
+# Format nama kolom tabel dalam bahasa baku
 col_renames = {
     "Rank": "Peringkat",
     "Team": "Negara",
     "Group": "Grup",
     "Base_TPI": "Nilai TPI",
-    "Group_Stage_Exit_Prob(%)": "Gugur Grup (%)",
+    "Group_Stage_Exit_Prob(%)": "Gugur Fase Grup (%)",
     "Reach_Round_16_Prob(%)": "Lolos 16 Besar (%)",
     "Reach_Quarter_Final_Prob(%)": "Lolos 8 Besar (%)",
     "Reach_Semi_Final_Prob(%)": "Lolos Semifinal (%)",
     "Reach_Final_Prob(%)": "Lolos Final (%)",
-    "Win_Tournament_Prob(%)": "Juara (%)"
+    "Win_Tournament_Prob(%)": "Juara Turnamen (%)"
 }
 
 styled_table = filtered_df.rename(columns=col_renames).copy()
@@ -182,24 +183,24 @@ styled_table = filtered_df.rename(columns=col_renames).copy()
 st.dataframe(
     styled_table.style.format({
         "Nilai TPI": "{:.2f}",
-        "Gugur Grup (%)": "{:.2f}%",
+        "Gugur Fase Grup (%)": "{:.2f}%",
         "Lolos 16 Besar (%)": "{:.2f}%",
         "Lolos 8 Besar (%)": "{:.2f}%",
         "Lolos Semifinal (%)": "{:.2f}%",
         "Lolos Final (%)": "{:.2f}%",
-        "Juara (%)": "{:.2f}%"
+        "Juara Turnamen (%)": "{:.2f}%"
     }).background_gradient(
-        subset=["Lolos 16 Besar (%)", "Lolos 8 Besar (%)", "Lolos Semifinal (%)", "Juara (%)"],
+        subset=["Lolos 16 Besar (%)", "Lolos 8 Besar (%)", "Lolos Semifinal (%)", "Juara Turnamen (%)"],
         cmap="YlGnBu"
     ),
-    use_container_width=True,
+    width="stretch",
     height=480
 )
 
-# Unduh Data CSV
+# Tombol Unduh Data CSV
 csv_dl = filtered_df.to_csv(index=False).encode('utf-8')
 st.download_button(
-    label="📥 Unduh Data Tabel Prediksi (CSV)",
+    label="📥 Unduh Data Tabel Prediksi Lengkap (CSV)",
     data=csv_dl,
     file_name="prediksi_piala_asia_2027_24_tim.csv",
     mime="text/csv"

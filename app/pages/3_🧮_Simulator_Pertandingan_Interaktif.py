@@ -1,15 +1,15 @@
 """
 Halaman 3: Simulator Pertandingan Interaktif AFC Asian Cup 2027
-Didukung oleh Model Bivariate Poisson + Koreksi Residual XGBoost.
+Didukung oleh Distribusi Bivariate Poisson dan Koreksi Residual XGBoost.
+Bahasa: Bahasa Indonesia Baku (PUEBI/KBBI).
 """
 
 import os
 import sys
 import streamlit as st
 import pandas as pd
-import numpy as np
 
-# Pastikan project root ada di sys.path
+# Menambahkan direktori utama repositori ke sys.path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
@@ -26,7 +26,7 @@ st.set_page_config(
 
 inject_custom_css()
 
-# Memuat data tim dan nilai TPI dari CSV
+# Memuat data tim dan nilai TPI dari CSV hasil simulasi
 CSV_PATH = os.path.join(BASE_DIR, "data", "asian_cup_predictions.csv")
 
 @st.cache_data
@@ -34,19 +34,20 @@ def load_teams():
     if os.path.exists(CSV_PATH):
         df = pd.read_csv(CSV_PATH)
         return dict(zip(df["Team"], df["Base_TPI"]))
+    # Peta cadangan terkalibrasi resmi 24 tim
     return {
-        "Japan": 9.00, "South Korea": 7.57, "Iran": 7.42, "Saudi Arabia": 7.20,
-        "Australia": 6.73, "Qatar": 6.43, "Iraq": 5.52, "United Arab Emirates": 5.46,
-        "Uzbekistan": 5.45, "Jordan": 4.93, "Bahrain": 4.41, "Oman": 4.36,
-        "Indonesia": 4.01, "Syria": 3.33, "Palestine": 3.23, "Thailand": 3.22,
-        "China PR": 2.98, "Vietnam": 2.79, "Kuwait": 2.65, "Tajikistan": 2.62,
-        "Lebanon": 2.56, "Malaysia": 3.05, "Kyrgyzstan": 2.20, "North Korea": 1.50
+        "Japan": 9.00, "South Korea": 7.56, "Iran": 7.48, "Saudi Arabia": 7.42,
+        "Australia": 6.80, "Qatar": 6.61, "Iraq": 5.71, "United Arab Emirates": 5.67,
+        "Uzbekistan": 5.56, "Jordan": 5.14, "Bahrain": 4.70, "Oman": 4.64,
+        "Indonesia": 4.26, "Syria": 3.62, "Palestine": 3.55, "Thailand": 3.52,
+        "China PR": 3.20, "Vietnam": 3.16, "Kuwait": 3.03, "Tajikistan": 2.90,
+        "Kyrgyzstan": 2.47, "Yemen": 1.96, "North Korea": 1.77, "Singapore": 1.50
     }
 
 team_tpi_map = load_teams()
 team_names = list(team_tpi_map.keys())
 
-# Header
+# Tajuk Halaman
 st.markdown(
     """
     <div style="margin-bottom: 24px;">
@@ -55,7 +56,7 @@ st.markdown(
             🧮 Simulator Laga Head-to-Head Interaktif
         </h1>
         <p style="color: #94a3b8; font-size: 1.05rem;">
-            Simulasikan duel antara dua tim mana pun dengan slider faktor keberuntungan/stokastik untuk melihat peluang hasil dan distribusi skor tepat.
+            Simulasikan duel antara dua tim mana pun dengan slider faktor keberuntungan/kejutan lapangan untuk melihat peluang hasil serta distribusi skor akhir.
         </p>
     </div>
     """,
@@ -69,32 +70,32 @@ c1, c2, c3 = st.columns([1.2, 1.2, 1.6])
 
 with c1:
     team_a = st.selectbox(
-        "Pilih Tim A (Tuan Rumah / Pot 1):",
+        "Pilih Tim A (Tuan Rumah / Tim Pertama):",
         team_names,
         index=team_names.index("Indonesia") if "Indonesia" in team_names else 0
     )
-    tpi_a = team_tpi_map.get(team_a, 4.01)
+    tpi_a = float(team_tpi_map.get(team_a, 4.26))
     st.caption(f"🛡️ **{team_a}** Base TPI: `{tpi_a:.2f}`")
 
 with c2:
     team_b_options = [t for t in team_names if t != team_a]
-    default_b = "Saudi Arabia" if "Saudi Arabia" in team_b_options else team_b_options[0]
+    default_b = "Thailand" if "Thailand" in team_b_options else team_b_options[0]
     team_b = st.selectbox(
-        "Pilih Tim B (Tamu / Pot 2):",
+        "Pilih Tim B (Tim Tamu / Tim Kedua):",
         team_b_options,
         index=team_b_options.index(default_b) if default_b in team_b_options else 0
     )
-    tpi_b = team_tpi_map.get(team_b, 7.20)
+    tpi_b = float(team_tpi_map.get(team_b, 3.52))
     st.caption(f"⚔️ **{team_b}** Base TPI: `{tpi_b:.2f}`")
 
 with c3:
     luck_factor = st.slider(
-        "Faktor Keberuntungan / Kejutan Stokastik:",
+        "Faktor Keberuntungan / Kejutan Lapangan:",
         min_value=-0.50,
         max_value=0.50,
         value=0.00,
         step=0.05,
-        help="Mensimulasikan insiden tidak terduga: kartu merah awal, blunder wasit, cuaca ekstrem, atau dorongan suporter. Nilai positif menguntungkan Tim A; nilai negatif menguntungkan Tim B."
+        help="Mensimulasikan insiden tak terduga: kartu merah di awal laga, penalti kontroversial, kesalahan individu, atau dukungan suporter. Nilai positif menguntungkan Tim A; nilai negatif menguntungkan Tim B."
     )
     if luck_factor > 0:
         st.caption(f"📈 Momentum kejutan: **+{luck_factor:.2f}** menguntungkan **{team_a}**")
@@ -108,7 +109,7 @@ sim_button = st.button("🚀 Simulasikan Pertandingan Sekarang", type="primary",
 
 # Eksekusi Simulasi
 if sim_button or "current_sim" not in st.session_state:
-    with st.spinner(f"Menghitung Matriks Poisson untuk {team_a} vs {team_b}..."):
+    with st.spinner(f"Menghitung Matriks Peluang Poisson untuk {team_a} vs {team_b}..."):
         sim_res = predict_match(
             team_a_name=team_a,
             team_b_name=team_b,
@@ -131,21 +132,21 @@ if sim_res:
         st.metric(
             label=f"Peluang {sim_res['team_a']} Menang",
             value=f"{sim_res['win_prob_a']}%",
-            delta=f"xG Dibuat: {sim_res['projected_xg_a']}"
+            delta=f"Proyeksi xG: {sim_res['projected_xg_a']}"
         )
 
     with r2:
         st.metric(
             label="Peluang Imbang (Seri)",
             value=f"{sim_res['draw_prob']}%",
-            delta="Deadlock Rate"
+            delta="Potensi Perpanjangan Waktu"
         )
 
     with r3:
         st.metric(
             label=f"Peluang {sim_res['team_b']} Menang",
             value=f"{sim_res['win_prob_b']}%",
-            delta=f"xG Dibuat: {sim_res['projected_xg_b']}"
+            delta=f"Proyeksi xG: {sim_res['projected_xg_b']}"
         )
 
     with r4:
@@ -158,7 +159,7 @@ if sim_res:
 
     st.write("")
 
-    # Visualisasi Donut & Bar Skor
+    # Visualisasi Donut dan Batang Skor
     v1, v2 = st.columns([1, 1.2])
 
     with v1:
@@ -169,7 +170,7 @@ if sim_res:
             team_a=sim_res["team_a"],
             team_b=sim_res["team_b"]
         )
-        st.plotly_chart(fig_donut, use_container_width=True)
+        st.plotly_chart(fig_donut, width="stretch")
 
     with v2:
         fig_bar = create_scoreline_bar_chart(
@@ -177,44 +178,44 @@ if sim_res:
             team_a=sim_res["team_a"],
             team_b=sim_res["team_b"]
         )
-        st.plotly_chart(fig_bar, use_container_width=True)
+        st.plotly_chart(fig_bar, width="stretch")
 
     # Analisis Taktis Otomatis
     st.write("")
-    st.markdown("### 📋 Narasi Taktis Berbasis Data untuk Suporter")
+    st.markdown("### 📋 Narasi Taktis Berbasis Data")
 
     delta_tpi = sim_res["tpi_a"] - sim_res["tpi_b"]
     luck = sim_res["luck_factor"]
 
     if abs(delta_tpi) < 0.5:
         narasi = (
-            f"**Pertarungan Sangat Berimbang:** Selisih TPI kedua tim sangat tipis ({abs(delta_tpi):.2f}). "
-            f"Pertandingan ini memiliki peluang seri cukup tinggi ({sim_res['draw_prob']}%), "
-            f"di mana laga berpotensi berlanjut ke babak perpanjangan waktu atau adu penalti jika terjadi di fase gugur."
+            f"**Pertandingan Sangat Berimbang:** Selisih TPI kedua tim sangat tipis ({abs(delta_tpi):.2f}). "
+            f"Laga ini memiliki peluang imbang cukup tinggi ({sim_res['draw_prob']}%), "
+            f"yang berpotensi berlanjut ke babak perpanjangan waktu atau adu penalti jika terjadi pada fase gugur."
         )
     elif delta_tpi > 0:
         narasi = (
             f"**{sim_res['team_a']} Lebih Diunggulkan:** Dengan TPI {sim_res['tpi_a']} berbanding {sim_res['tpi_b']}, "
-            f"{sim_res['team_a']} diproyeksikan menguasai tempo laga dan menghasilkan ancaman lebih tinggi "
-            f"({sim_res['projected_xg_a']} xG vs {sim_res['projected_xg_b']} xG). Peluang menang: {sim_res['win_prob_a']}%."
+            f"{sim_res['team_a']} diproyeksikan mendikte jalannya pertandingan dan menghasilkan ancaman ofensif lebih tinggi "
+            f"({sim_res['projected_xg_a']} xG vs {sim_res['projected_xg_b']} xG). Peluang kemenangan: {sim_res['win_prob_a']}%."
         )
     else:
         narasi = (
-            f"**{sim_res['team_a']} Menghadapi Lawan Berat:** {sim_res['team_b']} memiliki keunggulan kualitas dasar "
-            f"(TPI {sim_res['tpi_b']}). Kunci bagi {sim_res['team_a']} adalah menerapkan strategi bertahan rapat (*low-block*) "
-            f"dan memaksimalkan serangan balik cepat (*counter-attack*) seperti saat Indonesia menundukkan Arab Saudi 2-0."
+            f"**{sim_res['team_a']} Menghadapi Lawan Tangguh:** {sim_res['team_b']} memiliki keunggulan kualitas dasar "
+            f"(TPI {sim_res['tpi_b']}). Kunci taktis bagi {sim_res['team_a']} adalah menerapkan strategi pertahanan blok rendah (*low-block*) "
+            f"dan memaksimalkan serangan balik cepat (*counter-attack*) berpresisi tinggi."
         )
 
     if abs(luck) > 0.1:
         narasi += (
-            f"\n\n**Efek Faktor Keberuntungan ({luck:+.2f}):** Varians acak yang disuntikkan secara nyata menggeser kurva peluang, "
-            f"mensimulasikan laga turnamen dengan dinamika dramatis di lapangan."
+            f"\n\n**Pengaruh Faktor Keberuntungan ({luck:+.2f}):** Varians acak yang disuntikkan secara nyata menggeser kurva probabilitas, "
+            f"mensimulasikan dinamika tak terduga yang kerap mewarnai atmosfer turnamen sepak bola."
         )
 
     st.info(narasi)
 
     # Tabel Rincian Skor
-    with st.expander("🔍 Lihat Tabel Lengkap 6 Skor Paling Mungkin"):
+    with st.expander("🔍 Rincian Tabel 6 Skor Paling Mungkin"):
         df_scores = pd.DataFrame(sim_res["top_scorelines"])
         df_scores.rename(columns={
             "score": "Tebakan Skor",
@@ -222,4 +223,4 @@ if sim_res:
             "goals_b": f"Gol ({sim_res['team_b']})",
             "probability_pct": "Peluang Terjadi (%)"
         }, inplace=True)
-        st.dataframe(df_scores, use_container_width=True)
+        st.dataframe(df_scores, width="stretch")
