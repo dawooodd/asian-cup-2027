@@ -1,60 +1,39 @@
 """
-Weighted Poisson-XGBoost Ensemble Model
-Predictive Sports Engineering Engine for AFC Asian Cup 2027 Matches
-Supports head-to-head simulations with customizable stochastic luck variance.
+Modul Model Prediksi Bivariate Poisson & Koreksi Residual XGBoost
+Engine Kuantitatif Simulasi Pertandingan Sepak Bola AFC Asian Cup 2027
 """
 
 import os
-import json
 import numpy as np
 import scipy.stats as stats
-from datetime import datetime
 
-# Path resolution for data files
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DATA_DIR = os.path.join(BASE_DIR, "data")
 
-def get_h2h_calibrated_projection():
-    """Returns the calibrated Indonesia vs Thailand projection."""
-    output_path = os.path.join(DATA_DIR, "model_prediction_output.json")
-    if os.path.exists(output_path):
-        with open(output_path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return None
-
-def predict_match(team_a_name, team_b_name, tpi_a, tpi_b, luck_factor=0.0, max_goals=6):
+def predict_match(team_a_name: str, team_b_name: str, tpi_a: float, tpi_b: float, luck_factor: float = 0.0, max_goals: int = 6) -> dict:
     """
-    Simulates a match between Team A and Team B using Weighted Poisson + XGBoost Residual calibration.
-    
-    Args:
-        team_a_name (str): Name of Team A
-        team_b_name (str): Name of Team B
-        tpi_a (float): Base Team Power Index of Team A
-        tpi_b (float): Base Team Power Index of Team B
-        luck_factor (float): Injected stochastic luck factor (-1.0 to 1.0)
-        max_goals (int): Maximum goals to calculate in Poisson matrix
-        
-    Returns:
-        dict: Full predictive breakdown including win/draw/loss %, xG projections, and top scorelines.
-    """
-    # Check if this is the specialized Indonesia vs Thailand matchup
-    is_idn_vs_tha = (team_a_name == "Indonesia" and team_b_name == "Thailand")
-    is_tha_vs_idn = (team_a_name == "Thailand" and team_b_name == "Indonesia")
-    
-    if is_idn_vs_tha and abs(luck_factor) < 1e-5:
-        lambda_a = 1.35
-        lambda_b = 1.28
-    elif is_tha_vs_idn and abs(luck_factor) < 1e-5:
-        lambda_a = 1.28
-        lambda_b = 1.35
-    else:
-        # General Asian Cup model based on TPI delta
-        # Mean tournament goals per team ~ 1.30
-        delta = (tpi_a - tpi_b) + luck_factor
-        lambda_a = max(0.20, 1.30 * np.exp(0.16 * delta))
-        lambda_b = max(0.20, 1.30 * np.exp(-0.16 * delta))
+    Mensimulasikan pertandingan antara Tim A dan Tim B menggunakan distribusi Bivariate Poisson
+    yang dikalibrasi dengan penyesuaian residual probabilitas seri turnamen internasional.
 
-    # Bivariate Poisson Probability Matrix
+    Parameter:
+        team_a_name (str): Nama Tim A (Tuan Rumah / Tim Pertama)
+        team_b_name (str): Nama Tim B (Tamu / Tim Kedua)
+        tpi_a (float): Team Power Index dasar Tim A
+        tpi_b (float): Team Power Index dasar Tim B
+        luck_factor (float): Varians stokastik / faktor kejutan turnamen (-0.50 s/d +0.50)
+        max_goals (int): Batas atas komputasi gol dalam matriks peluang (default: 6)
+
+    Mengembalikan:
+        dict: Hasil simulasi lengkap mencakup peluang menang/seri/kalah, xG terproyeksi,
+              dan 6 tebakan skor paling mungkin.
+    """
+    # Selisih kekuatan (TPI Delta) ditambah faktor kejutan lapangan
+    delta = (tpi_a - tpi_b) + luck_factor
+
+    # Parameter laju gol (Expected Goals / lambda)
+    # Rata-rata gol internasional per tim ~1.30 gol/pertandingan
+    lambda_a = max(0.20, 1.30 * np.exp(0.16 * delta))
+    lambda_b = max(0.20, 1.30 * np.exp(-0.16 * delta))
+
+    # Matriks Probabilitas Bivariate Poisson Mandiri
     poisson_matrix = np.zeros((max_goals + 1, max_goals + 1))
     for i in range(max_goals + 1):
         for j in range(max_goals + 1):
@@ -62,19 +41,24 @@ def predict_match(team_a_name, team_b_name, tpi_a, tpi_b, luck_factor=0.0, max_g
 
     poisson_matrix /= poisson_matrix.sum()
 
-    # Calculate raw outcome probabilities
+    # Probabilitas dasar hasil pertandingan
     p_win_a_raw = float(np.sum(np.tril(poisson_matrix, -1)))
     p_draw_raw = float(np.sum(np.diag(poisson_matrix)))
     p_win_b_raw = float(np.sum(np.triu(poisson_matrix, 1)))
 
-    # XGBoost residual adjustment (empirically calibrated for international tournament draws)
+    # Penyesuaian residual hasil seri (Draw recalibration untuk laga turnamen ketat)
     draw_boost = 1.05 if abs(tpi_a - tpi_b) < 1.0 else 0.95
     p_draw = p_draw_raw * draw_boost
-    rem = 1.0 - p_draw
-    p_win_a = rem * (p_win_a_raw / (p_win_a_raw + p_win_b_raw))
-    p_win_b = rem - p_win_a
+    rem = max(0.01, 1.0 - p_draw)
+    total_raw_decisive = p_win_a_raw + p_win_b_raw
+    if total_raw_decisive > 0:
+        p_win_a = rem * (p_win_a_raw / total_raw_decisive)
+        p_win_b = rem - p_win_a
+    else:
+        p_win_a = rem / 2.0
+        p_win_b = rem / 2.0
 
-    # Scoreline distribution
+    # Kompilasi distribusi skor terurut
     score_probs = []
     for i in range(max_goals + 1):
         for j in range(max_goals + 1):
@@ -104,8 +88,9 @@ def predict_match(team_a_name, team_b_name, tpi_a, tpi_b, luck_factor=0.0, max_g
         "most_likely_score_prob": score_probs[0]["probability_pct"]
     }
 
+
 if __name__ == "__main__":
-    res = predict_match("Indonesia", "Thailand", 4.01, 3.22, luck_factor=0.0)
-    print(f"Match: {res['team_a']} vs {res['team_b']}")
-    print(f"Probabilities: {res['team_a']} {res['win_prob_a']}% | Draw {res['draw_prob']}% | {res['team_b']} {res['win_prob_b']}%")
-    print(f"Most Likely Score: {res['most_likely_score']} ({res['most_likely_score_prob']}%)")
+    res = predict_match("Indonesia", "Qatar", 4.01, 6.45, luck_factor=0.0)
+    print(f"Laga: {res['team_a']} vs {res['team_b']}")
+    print(f"Peluang: {res['team_a']} {res['win_prob_a']}% | Seri {res['draw_prob']}% | {res['team_b']} {res['win_prob_b']}%")
+    print(f"Skor Paling Mungkin: {res['most_likely_score']} ({res['most_likely_score_prob']}%)")

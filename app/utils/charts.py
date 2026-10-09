@@ -1,30 +1,31 @@
 """
-Plotly Chart Utility Module for AFC Asian Cup 2027 Dashboard.
-High-impact, educational, interactive visualizations tailored for sports analytics and general audiences.
+Modul Utilitas Visualisasi Plotly untuk Dashboard AFC Asian Cup 2027.
+Visualisasi interaktif bertema gelap (dark-mode), edukatif, dan mudah dipahami oleh publik umum.
+Menerapkan prinsip kode bersih dan tata bahasa Indonesia baku (PUEBI/KBBI).
 """
 
+from typing import List, Dict, Any
 import plotly.graph_objects as go
-import plotly.express as px
 import pandas as pd
 import numpy as np
 
-# Dark Theme Palette
+# Palet Warna Tema Gelap Modern
 DARK_BG = "#0d1117"
 CARD_BG = "#161b22"
 BORDER_COLOR = "#30363d"
 TEXT_COLOR = "#f0f6fc"
 TEXT_MUTED = "#8b949e"
 
-IDN_COLOR = "#e63946"      # Indonesian Crimson
-GOLD_COLOR = "#fbbf24"     # Champions Gold
-CYAN_COLOR = "#38bdf8"     # Electric Sky Blue
-GREEN_COLOR = "#10b981"    # Mint Green
-PURPLE_COLOR = "#a855f7"   # Royal Purple
-ORANGE_COLOR = "#f97316"   # Amber Orange
+IDN_COLOR = "#e63946"      # Merah Crimson Garuda
+GOLD_COLOR = "#fbbf24"     # Emas Juara
+CYAN_COLOR = "#38bdf8"     # Biru Langit Elektrik
+GREEN_COLOR = "#10b981"    # Hijau Daun
+PURPLE_COLOR = "#a855f7"   # Ungu Elegan
+ORANGE_COLOR = "#f97316"   # Oranye Cerah
 
 
-def apply_dark_layout(fig, title="", height=450):
-    """Applies standardized dark theme styling to Plotly figures."""
+def apply_dark_layout(fig: go.Figure, title: str = "", height: int = 450) -> go.Figure:
+    """Menerapkan konfigurasi tata letak standar bertema gelap pada objek grafik Plotly."""
     fig.update_layout(
         title=dict(
             text=f"<b>{title}</b>" if title else "",
@@ -55,40 +56,40 @@ def apply_dark_layout(fig, title="", height=450):
 
 def create_stage_progression_funnel(df: pd.DataFrame, team_name: str = "Indonesia") -> go.Figure:
     """
-    Funnel / Bar chart showing step-by-step tournament survival probability for a specific team.
-    Educational for general audience: clearly shows where the hurdle is highest.
+    Membuat diagram piramida kelolosan bertahap turnamen untuk negara pilihan.
+    Sangat mudah dipahami orang awam untuk melihat di babak mana rintangan terbesar berada.
     """
     row = df[df["Team"] == team_name]
     if row.empty:
-        row = df.iloc[0]
-        team_name = row["Team"]
+        row = df.iloc[0:1]
+        team_name = str(row["Team"].iloc[0])
     
     r = row.iloc[0]
     stages = [
-        "Fase Grup (Start)",
+        "Fase Grup (Awal)",
         "Lolos 16 Besar",
-        "Lolos 8 Besar (Quarter-Finals)",
+        "Lolos 8 Besar (Perempat Final)",
         "Lolos Semifinal (4 Besar)",
-        "Lolos Final",
+        "Lolos Final (2 Besar)",
         "Juara Turnamen"
     ]
     
     probs = [
         100.0,
-        float(r.get("Reach_Round_16_Prob(%)", 67.74)),
-        float(r.get("Reach_Quarter_Final_Prob(%)", 16.18)),
-        float(r.get("Reach_Semi_Final_Prob(%)", 4.11)),
-        float(r.get("Reach_Final_Prob(%)", 0.65)),
-        float(r.get("Win_Tournament_Prob(%)", 0.07))
+        float(r.get("Reach_Round_16_Prob(%)", 41.00)),
+        float(r.get("Reach_Quarter_Final_Prob(%)", 11.03)),
+        float(r.get("Reach_Semi_Final_Prob(%)", 2.54)),
+        float(r.get("Reach_Final_Prob(%)", 0.43)),
+        float(r.get("Win_Tournament_Prob(%)", 0.06))
     ]
 
     colors = [
-        "#94a3b8",      # 100% Start (Gray)
-        "#38bdf8",      # 16 Besar (Cyan)
-        IDN_COLOR if team_name == "Indonesia" else "#f59e0b", # 8 Besar (Crimson / Highlight)
-        "#10b981",      # Semifinal (Green)
-        "#a855f7",      # Final (Purple)
-        GOLD_COLOR      # Juara (Gold)
+        "#94a3b8",      # 100% Start (Abu-abu)
+        "#38bdf8",      # 16 Besar (Sian)
+        IDN_COLOR if team_name == "Indonesia" else "#f59e0b", # 8 Besar (Sorotan)
+        "#10b981",      # Semifinal (Hijau)
+        "#a855f7",      # Final (Ungu)
+        GOLD_COLOR      # Juara (Emas)
     ]
 
     fig = go.Figure()
@@ -111,8 +112,8 @@ def create_stage_progression_funnel(df: pd.DataFrame, team_name: str = "Indonesi
 
 def create_top_quarter_final_bar(df: pd.DataFrame) -> go.Figure:
     """
-    Horizontal bar chart comparing all top contenders' chances to reach the 8 Besar (Quarter-Finals).
-    Highlights Indonesia in vibrant crimson.
+    Membuat diagram batang horizontal komparatif peluang melaju ke Babak 8 Besar (Perempat Final).
+    Menyorot Timnas Indonesia dengan warna merah khas.
     """
     top_qf = df.sort_values(by="Reach_Quarter_Final_Prob(%)", ascending=False).head(14).copy()
     top_qf = top_qf.sort_values(by="Reach_Quarter_Final_Prob(%)", ascending=True)
@@ -121,9 +122,9 @@ def create_top_quarter_final_bar(df: pd.DataFrame) -> go.Figure:
     for team in top_qf["Team"]:
         if team == "Indonesia":
             colors.append(IDN_COLOR)
-        elif team in ["Japan", "South Korea", "Iran", "Saudi Arabia"]:
+        elif team in ["Japan", "Saudi Arabia", "Iran", "South Korea"]:
             colors.append(GOLD_COLOR)
-        elif team in ["Australia", "Qatar", "Iraq", "United Arab Emirates", "Uzbekistan"]:
+        elif team in ["Australia", "Qatar", "Iraq", "United Arab Emirates", "Uzbekistan", "Jordan"]:
             colors.append(CYAN_COLOR)
         else:
             colors.append("#818cf8")
@@ -146,32 +147,31 @@ def create_top_quarter_final_bar(df: pd.DataFrame) -> go.Figure:
         hovertemplate=(
             "<b>%{y}</b><br>"
             "Peluang Lolos 8 Besar: <b>%{x:.2f}%</b><br>"
-            "Base TPI: <b>%{customdata[0]:.2f}</b><br>"
+            "Indeks TPI: <b>%{customdata[0]:.2f}</b><br>"
             "Peluang 16 Besar: <b>%{customdata[1]:.2f}%</b><br>"
             "Peluang Semifinal: <b>%{customdata[2]:.2f}%</b><br>"
             "Peluang Juara: <b>%{customdata[3]:.2f}%</b><extra></extra>"
         )
     ))
 
-    apply_dark_layout(fig, title="Peringkat Peluang Lolos Babak 8 Besar (Quarter-Finals) Piala Asia 2027", height=500)
+    apply_dark_layout(fig, title="Peringkat Peluang Lolos Babak 8 Besar (Perempat Final) Piala Asia 2027", height=500)
     fig.update_xaxes(title="Peluang Menembus Babak 8 Besar (%)", gridcolor="#21262d", zerolinecolor="#30363d", color=TEXT_MUTED)
     fig.update_yaxes(color=TEXT_COLOR, tickfont=dict(size=11, weight="bold"))
     return fig
 
 
-def create_indonesia_squad_value_evolution_chart(yearly_data: list) -> go.Figure:
+def create_indonesia_squad_value_evolution_chart(yearly_data: List[Dict[str, Any]]) -> go.Figure:
     """
-    Shows exponential growth of Indonesia's Squad Market Value (2023 - 2026/2027).
-    Helps laypeople understand WHY Indonesia's winning probability has surged.
+    Menampilkan pertumbuhan eksponensial nilai pasar skuad Timnas Indonesia (2023 - 2026/2027).
+    Membantu orang awam memahami korelasi investasi talenta dengan peningkatan probabilitas kemenangan.
     """
     years = [d["year"] for d in yearly_data]
-    vals = [d["market_value_eur"] / 1_000_000 for d in yearly_data] # in Millions EUR
+    vals = [d["market_value_eur"] / 1_000_000 for d in yearly_data]
     ranks = [d["rank_in_asia"] for d in yearly_data]
     notes = [d["notes"] for d in yearly_data]
 
     fig = go.Figure()
 
-    # Area plot
     fig.add_trace(go.Scatter(
         x=years,
         y=vals,
@@ -181,7 +181,7 @@ def create_indonesia_squad_value_evolution_chart(yearly_data: list) -> go.Figure
         marker=dict(size=12, color=GOLD_COLOR, line=dict(color="white", width=2)),
         fill="tozeroy",
         fillcolor="rgba(230, 57, 70, 0.18)",
-        text=[f"<b>€{v:.1f}M</b><br>(Rank #{r} Asia)" for v, r in zip(vals, ranks)],
+        text=[f"<b>€{v:.1f}M</b><br>(Peringkat #{r} Asia)" for v, r in zip(vals, ranks)],
         textposition="top center",
         textfont=dict(color=TEXT_COLOR, size=11),
         customdata=notes,
@@ -190,14 +190,14 @@ def create_indonesia_squad_value_evolution_chart(yearly_data: list) -> go.Figure
 
     apply_dark_layout(fig, title="Evolusi Nilai Pasar Skuad Timnas Indonesia (2023 - 2026)", height=380)
     fig.update_xaxes(gridcolor="#21262d", zerolinecolor="#30363d", color=TEXT_MUTED)
-    fig.update_yaxes(title="Market Value (€ Juta)", range=[0, 45], gridcolor="#21262d", zerolinecolor="#30363d", color=TEXT_MUTED)
+    fig.update_yaxes(title="Nilai Pasar Skuad (€ Juta)", range=[0, 45], gridcolor="#21262d", zerolinecolor="#30363d", color=TEXT_MUTED)
     return fig
 
 
-def create_scenario_comparison_bar(scenarios: list) -> go.Figure:
+def create_scenario_comparison_bar(scenarios: List[Dict[str, Any]]) -> go.Figure:
     """
-    Visualizes the 3 tactical pathways for Indonesia to reach the Quarter-Finals (8 Besar).
-    Compares probability of occurring vs win chance in Round of 16.
+    Memvisualisasikan 3 jalur taktis Indonesia menuju Babak 8 Besar (Perempat Final).
+    Membandingkan probabilitas terjadinya skenario di fase grup vs peluang menang di Babak 16 Besar.
     """
     names = [s["scenario"] for s in scenarios]
     r16_win = [float(s["r16_win_probability"].replace("%", "")) for s in scenarios]
@@ -206,7 +206,7 @@ def create_scenario_comparison_bar(scenarios: list) -> go.Figure:
     fig = go.Figure()
 
     fig.add_trace(go.Bar(
-        name="Kemungkinan Skenario Terjadi di Fase Grup",
+        name="Kemungkinan Terjadi di Fase Grup",
         x=names,
         y=occur,
         marker=dict(color="#38bdf8", line=dict(color=BORDER_COLOR, width=1)),
@@ -225,20 +225,20 @@ def create_scenario_comparison_bar(scenarios: list) -> go.Figure:
         textfont=dict(color=TEXT_COLOR, size=11)
     ))
 
-    apply_dark_layout(fig, title="Bedah 3 Skenario Menuju Babak 8 Besar (Quarter-Finals)", height=420)
+    apply_dark_layout(fig, title="Bedah 3 Skenario Menuju Babak 8 Besar (Perempat Final)", height=420)
     fig.update_layout(
         barmode="group",
-        legend=dict(orientation="h", yanchor="bottom", y=-0.25, xanchor="center", x=0.5)
+        legend=dict(orientation="h", yanchor="bottom", y=-0.28, xanchor="center", x=0.5)
     )
     fig.update_xaxes(color=TEXT_COLOR, tickfont=dict(size=10, weight="bold"))
     fig.update_yaxes(title="Probabilitas (%)", range=[0, 78], gridcolor="#21262d", color=TEXT_MUTED)
     return fig
 
 
-def create_matches_xg_trajectory_chart(matches: list) -> go.Figure:
+def create_matches_xg_trajectory_chart(matches: List[Dict[str, Any]]) -> go.Figure:
     """
-    Plots the expected goals (xG For vs xG Against) of Indonesia's matches across 4 years.
-    Visualizes tactical maturity: rising xG for, declining xG against against higher-tier teams.
+    Memplot tren Expected Goals (xG Dibuat vs xG Lawan) Timnas Indonesia selama 4 tahun terakhir.
+    Memvisualisasikan kematangan taktik: pertahanan kian rapat dan ancaman konversi kian tajam.
     """
     df_m = pd.DataFrame(matches)
     df_m["match_idx"] = range(1, len(df_m) + 1)
@@ -246,7 +246,6 @@ def create_matches_xg_trajectory_chart(matches: list) -> go.Figure:
 
     fig = go.Figure()
 
-    # xG Indonesia
     fig.add_trace(go.Scatter(
         x=df_m["match_idx"],
         y=df_m["xg_for"],
@@ -258,7 +257,6 @@ def create_matches_xg_trajectory_chart(matches: list) -> go.Figure:
         text=df_m["label"]
     ))
 
-    # xG Lawan
     fig.add_trace(go.Scatter(
         x=df_m["match_idx"],
         y=df_m["xg_against"],
@@ -272,7 +270,7 @@ def create_matches_xg_trajectory_chart(matches: list) -> go.Figure:
 
     apply_dark_layout(fig, title="Tren Expected Goals (xG) Timnas Indonesia di 20 Laga Kunci (2023 - 2026)", height=420)
     fig.update_xaxes(
-        title="Urutan Pertandingan (Kronologis 2023 - 2026)",
+        title="Urutan Pertandingan (Kronologis 2023–2026)",
         gridcolor="#21262d",
         zerolinecolor="#30363d",
         color=TEXT_MUTED
@@ -288,8 +286,8 @@ def create_matches_xg_trajectory_chart(matches: list) -> go.Figure:
 
 
 def create_match_donut_chart(win_a: float, draw: float, win_b: float, team_a: str, team_b: str) -> go.Figure:
-    """Builds a modern 3D-styled Donut Chart representing match outcome probabilities."""
-    labels = [f"{team_a} Menang", "Seri (Draw)", f"{team_b} Menang"]
+    """Membangun diagram donat modern yang merepresentasikan probabilitas hasil pertandingan."""
+    labels = [f"{team_a} Menang", "Imbang (Seri)", f"{team_b} Menang"]
     values = [win_a, draw, win_b]
     color_a = IDN_COLOR if team_a == "Indonesia" else "#3b82f6"
     color_b = "#10b981" if team_b != "Indonesia" else IDN_COLOR
@@ -304,13 +302,13 @@ def create_match_donut_chart(win_a: float, draw: float, win_b: float, team_a: st
         text=f"<b>PROYEKSI</b><br><span style='font-size:11px;color:{TEXT_MUTED}'>90 Menit Penuh</span>",
         x=0.5, y=0.5, showarrow=False, font=dict(size=14, color=TEXT_COLOR)
     )
-    apply_dark_layout(fig, title=f"Matriks Peluang Hasil: {team_a} vs {team_b}", height=420)
+    apply_dark_layout(fig, title=f"Matriks Peluang Hasil Pertandingan: {team_a} vs {team_b}", height=420)
     fig.update_layout(showlegend=False, margin=dict(l=20, r=20, t=50, b=20))
     return fig
 
 
-def create_scoreline_bar_chart(scorelines: list, team_a: str, team_b: str) -> go.Figure:
-    """Builds a horizontal bar chart displaying top probable scorelines."""
+def create_scoreline_bar_chart(scorelines: List[Dict[str, Any]], team_a: str, team_b: str) -> go.Figure:
+    """Membangun diagram batang horizontal yang menampilkan tebakan skor akhir paling mungkin."""
     scores = [s["score"] for s in scorelines]
     probs = [s["probability_pct"] for s in scorelines]
 
@@ -322,6 +320,6 @@ def create_scoreline_bar_chart(scorelines: list, team_a: str, team_b: str) -> go
         hovertemplate=f"Skor: <b>%{{y}}</b> ({team_a} - {team_b})<br>Peluang: <b>%{{x:.2f}}%</b><extra></extra>"
     )])
     apply_dark_layout(fig, title="Distribusi Skor Akhir Paling Mungkin", height=380)
-    fig.update_xaxes(title="Peluang Muncul (%)", gridcolor="#21262d", zerolinecolor="#30363d", color=TEXT_MUTED)
+    fig.update_xaxes(title="Peluang Terjadi (%)", gridcolor="#21262d", zerolinecolor="#30363d", color=TEXT_MUTED)
     fig.update_yaxes(title="Skor", color=TEXT_COLOR, tickfont=dict(size=12, weight="bold"))
     return fig
