@@ -135,9 +135,9 @@ teams_data = [
         "is_host": False, "dist_km": 550, "home_jan_temp_c": 18.0
     },
     {
-        "team": "India", "code": "IND", "group": "E",
-        "elo": 1125, "squad_val_eur": 6_300_000, "top5_league_players": 0,
-        "is_host": False, "dist_km": 3000, "home_jan_temp_c": 21.0
+        "team": "Malaysia", "code": "MAS", "group": "E",
+        "elo": 1195, "squad_val_eur": 14_800_000, "top5_league_players": 0,
+        "is_host": False, "dist_km": 6800, "home_jan_temp_c": 28.0
     }
 ]
 
@@ -239,8 +239,10 @@ for g, g_teams in groups_dict.items():
 K_FACTOR = 0.65
 STOCHASTIC_SIGMA = 0.15 # Stochastic Gaussian Noise (Weight: 10% Luck)
 
-# Tracking counters
+# Tracking counters across all tournament stages
 exit_group_count = np.zeros(n_teams, dtype=np.int32)
+reach_r16_count = np.zeros(n_teams, dtype=np.int32)
+reach_qf_count = np.zeros(n_teams, dtype=np.int32)
 reach_semi_count = np.zeros(n_teams, dtype=np.int32)
 reach_final_count = np.zeros(n_teams, dtype=np.int32)
 win_tourn_count = np.zeros(n_teams, dtype=np.int32)
@@ -253,19 +255,12 @@ BATCH_SIZE = 10000
 n_batches = N_SIMULATIONS // BATCH_SIZE
 
 for b in range(n_batches):
-    # Dynamic stochastic luck factor for each team in each simulation
-    # Luck ~ N(0, 0.15 * Base_TPI)
-    # Shape: (BATCH_SIZE, n_teams)
-    
-    # Track points and goal difference approximation for all 24 teams in batch
-    # Shape: (BATCH_SIZE, n_teams)
     batch_points = np.zeros((BATCH_SIZE, n_teams), dtype=np.float32)
     batch_tpi_tiebreak = np.zeros((BATCH_SIZE, n_teams), dtype=np.float32)
 
     # 1. GROUP STAGE MATCHES
     for g_idx, g_m in enumerate(group_matches):
         for (t_a, t_b) in g_m:
-            # Dynamic stochastic noise per match
             noise_a = np.random.normal(0, STOCHASTIC_SIGMA * base_tpi_arr[t_a], BATCH_SIZE)
             noise_b = np.random.normal(0, STOCHASTIC_SIGMA * base_tpi_arr[t_b], BATCH_SIZE)
             
@@ -273,44 +268,32 @@ for b in range(n_batches):
             eff_tpi_b = base_tpi_arr[t_b] + noise_b
             delta = eff_tpi_a - eff_tpi_b
             
-            # Probability of Draw decays with higher delta
             p_draw = 0.25 * np.exp(-0.25 * (delta ** 2))
-            # Conditional Win A prob
             p_win_a_cond = 1.0 / (1.0 + np.exp(-K_FACTOR * delta))
             p_win_a = (1.0 - p_draw) * p_win_a_cond
             p_win_b = 1.0 - p_draw - p_win_a
             
-            # Random uniform draw
             u = np.random.rand(BATCH_SIZE)
-            
             win_a_mask = u < p_win_a
             draw_mask = (u >= p_win_a) & (u < (p_win_a + p_draw))
             win_b_mask = u >= (p_win_a + p_draw)
             
-            # Points update: Win=3, Draw=1, Loss=0
             batch_points[:, t_a] += win_a_mask * 3.0 + draw_mask * 1.0
             batch_points[:, t_b] += win_b_mask * 3.0 + draw_mask * 1.0
             
-            # Tiebreak score based on effective performance
             batch_tpi_tiebreak[:, t_a] += delta
             batch_tpi_tiebreak[:, t_b] -= delta
 
     # 2. ADVANCING TEAMS DETERMINATION
-    # For each group, rank teams by Points + 0.01 * Tiebreaker
-    # Qualified: top 2 from 6 groups (12 teams) + 4 best 3rd-placed teams (4 teams) = 16 teams
-    
     r16_qualifiers = np.zeros((BATCH_SIZE, 16), dtype=np.int32)
     group_3rds = np.zeros((BATCH_SIZE, 6), dtype=np.int32)
     group_3rd_scores = np.zeros((BATCH_SIZE, 6), dtype=np.float32)
 
     qual_idx = 0
     for g_idx, (g_name, g_teams) in enumerate(groups_dict.items()):
-        # Scores for the 4 teams in this group across all batch sims
         g_scores = batch_points[:, g_teams] + 0.001 * batch_tpi_tiebreak[:, g_teams]
-        # Sort descending
         order = np.argsort(-g_scores, axis=1) # (BATCH_SIZE, 4)
         
-        # 1st and 2nd place advance automatically
         first_place = np.array(g_teams)[order[:, 0]]
         second_place = np.array(g_teams)[order[:, 1]]
         third_place = np.array(g_teams)[order[:, 2]]
@@ -321,76 +304,93 @@ for b in range(n_batches):
         qual_idx += 2
         
         group_3rds[:, g_idx] = third_place
-        # 3rd place score
         group_3rd_scores[:, g_idx] = np.take_along_axis(g_scores, order[:, 2:3], axis=1).squeeze(1)
 
-    # Pick 4 best 3rd-placed teams
+    # 4 best 3rd-placed teams
     order_3rds = np.argsort(-group_3rd_scores, axis=1) # (BATCH_SIZE, 6)
     for i in range(4):
         best_3rd = np.take_along_axis(group_3rds, order_3rds[:, i:i+1], axis=1).squeeze(1)
         r16_qualifiers[:, 12 + i] = best_3rd
 
-    # Record group stage exits
-    # Any team NOT in r16_qualifiers exited in group stage
+    # Record Round of 16 participants & group exits
     for sim_i in range(BATCH_SIZE):
         qual_set = set(r16_qualifiers[sim_i])
+        for t in qual_set:
+            reach_r16_count[t] += 1
         for t_idx in range(n_teams):
             if t_idx not in qual_set:
                 exit_group_count[t_idx] += 1
 
     # 3. KNOCKOUT STAGE SIMULATION
-    # Standard AFC Knockout bracket pairings for 16 teams:
-    # 8 matches in Round of 16 -> 8 QF teams -> 4 SF teams -> 2 Finalists -> 1 Champion
-    
-    def simulate_knockout_round(contenders_matrix):
-        """Simulate single elimination round: contenders_matrix has shape (BATCH_SIZE, 2*K)"""
-        k = contenders_matrix.shape[1] // 2
-        winners = np.zeros((BATCH_SIZE, k), dtype=np.int32)
-        for m in range(k):
-            t_a = contenders_matrix[:, 2 * m]
-            t_b = contenders_matrix[:, 2 * m + 1]
-            
-            # Base TPIs
-            tpi_a = base_tpi_arr[t_a]
-            tpi_b = base_tpi_arr[t_b]
-            
-            noise_a = np.random.normal(0, STOCHASTIC_SIGMA * tpi_a, BATCH_SIZE)
-            noise_b = np.random.normal(0, STOCHASTIC_SIGMA * tpi_b, BATCH_SIZE)
-            
-            delta = (tpi_a + noise_a) - (tpi_b + noise_b)
-            p_win_a = 1.0 / (1.0 + np.exp(-K_FACTOR * delta))
-            
-            u = np.random.rand(BATCH_SIZE)
-            win_a = u < p_win_a
-            winners[:, m] = np.where(win_a, t_a, t_b)
-        return winners
+    def simulate_pairs(team_a_arr, team_b_arr):
+        """Simulates knockout match between two parallel arrays of teams."""
+        tpi_a = base_tpi_arr[team_a_arr]
+        tpi_b = base_tpi_arr[team_b_arr]
+        
+        noise_a = np.random.normal(0, STOCHASTIC_SIGMA * tpi_a, BATCH_SIZE)
+        noise_b = np.random.normal(0, STOCHASTIC_SIGMA * tpi_b, BATCH_SIZE)
+        
+        delta = (tpi_a + noise_a) - (tpi_b + noise_b)
+        p_win_a = 1.0 / (1.0 + np.exp(-K_FACTOR * delta))
+        
+        u = np.random.rand(BATCH_SIZE)
+        win_a = u < p_win_a
+        return np.where(win_a, team_a_arr, team_b_arr)
 
-    # Round of 16 (16 teams -> 8 teams)
-    # Seed bracket: A1 vs 3rd, B1 vs 3rd, C1 vs 3rd, D1 vs 3rd, etc.
-    qf_teams = simulate_knockout_round(r16_qualifiers)
+    # Round of 16 Pairings (Official AFC Asian Cup Bracket Schema):
+    # Match 1: 2A vs 2C
+    # Match 2: 1D vs 3rd_1
+    # Match 3: 1B vs 3rd_2
+    # Match 4: 1F vs 2E
+    # Match 5: 1C vs 3rd_3
+    # Match 6: 1E vs 2D
+    # Match 7: 1A vs 3rd_4
+    # Match 8: 2B vs 2F
+    m1_win = simulate_pairs(r16_qualifiers[:, 1], r16_qualifiers[:, 5])
+    m2_win = simulate_pairs(r16_qualifiers[:, 6], r16_qualifiers[:, 12])
+    m3_win = simulate_pairs(r16_qualifiers[:, 2], r16_qualifiers[:, 13])
+    m4_win = simulate_pairs(r16_qualifiers[:, 10], r16_qualifiers[:, 9])
+    m5_win = simulate_pairs(r16_qualifiers[:, 4], r16_qualifiers[:, 14])
+    m6_win = simulate_pairs(r16_qualifiers[:, 8], r16_qualifiers[:, 7])
+    m7_win = simulate_pairs(r16_qualifiers[:, 0], r16_qualifiers[:, 15])
+    m8_win = simulate_pairs(r16_qualifiers[:, 3], r16_qualifiers[:, 11])
 
-    # Quarter-Finals (8 teams -> 4 teams)
-    sf_teams = simulate_knockout_round(qf_teams)
-    
-    # Record Reached Semi-Finals
+    # Quarter-Finalists (Babak 8 Besar)
+    qf_winners = [m1_win, m2_win, m3_win, m4_win, m5_win, m6_win, m7_win, m8_win]
     for sim_i in range(BATCH_SIZE):
-        for t in sf_teams[sim_i]:
-            reach_semi_count[t] += 1
+        for q_team in qf_winners:
+            reach_qf_count[q_team[sim_i]] += 1
 
-    # Semi-Finals (4 teams -> 2 teams)
-    final_teams = simulate_knockout_round(sf_teams)
-    
-    # Record Reached Final
-    for sim_i in range(BATCH_SIZE):
-        for t in final_teams[sim_i]:
-            reach_final_count[t] += 1
+    # Quarter-Finals -> Semi-Finals (4 Besar)
+    # QF 1: M1 vs M2
+    # QF 2: M3 vs M4
+    # QF 3: M5 vs M6
+    # QF 4: M7 vs M8
+    qf1_win = simulate_pairs(m1_win, m2_win)
+    qf2_win = simulate_pairs(m3_win, m4_win)
+    qf3_win = simulate_pairs(m5_win, m6_win)
+    qf4_win = simulate_pairs(m7_win, m8_win)
 
-    # Final (2 teams -> 1 Champion)
-    champion_team = simulate_knockout_round(final_teams).squeeze(1)
-    
-    # Record Champion
+    sf_winners = [qf1_win, qf2_win, qf3_win, qf4_win]
     for sim_i in range(BATCH_SIZE):
-        win_tourn_count[champion_team[sim_i]] += 1
+        for s_team in sf_winners:
+            reach_semi_count[s_team[sim_i]] += 1
+
+    # Semi-Finals -> Final (2 Besar)
+    # SF 1: QF1 vs QF2
+    # SF 2: QF3 vs QF4
+    f1_win = simulate_pairs(qf1_win, qf2_win)
+    f2_win = simulate_pairs(qf3_win, qf4_win)
+
+    final_winners = [f1_win, f2_win]
+    for sim_i in range(BATCH_SIZE):
+        for f_team in final_winners:
+            reach_final_count[f_team[sim_i]] += 1
+
+    # Final -> Champion (Juara)
+    champ = simulate_pairs(f1_win, f2_win)
+    for sim_i in range(BATCH_SIZE):
+        win_tourn_count[champ[sim_i]] += 1
 
 sim_duration = time.time() - start_time
 print(f"[SUCCESS] 100,000 Tournament Simulations completed in {sim_duration:.2f} seconds!")
@@ -402,8 +402,11 @@ print("[STEP 4] Compiling Deliverable: asian_cup_predictions.csv...")
 
 results_df = pd.DataFrame({
     "Team": df['team'],
+    "Group": df['group'],
     "Base_TPI": df['Base_TPI'],
     "Group_Stage_Exit_Prob(%)": np.round((exit_group_count / N_SIMULATIONS) * 100, 2),
+    "Reach_Round_16_Prob(%)": np.round((reach_r16_count / N_SIMULATIONS) * 100, 2),
+    "Reach_Quarter_Final_Prob(%)": np.round((reach_qf_count / N_SIMULATIONS) * 100, 2),
     "Reach_Semi_Final_Prob(%)": np.round((reach_semi_count / N_SIMULATIONS) * 100, 2),
     "Reach_Final_Prob(%)": np.round((reach_final_count / N_SIMULATIONS) * 100, 2),
     "Win_Tournament_Prob(%)": np.round((win_tourn_count / N_SIMULATIONS) * 100, 2)

@@ -1,6 +1,7 @@
 """
 AFC Asian Cup 2027 Analytics & Match Simulation Hub
-Main Landing Page & Methodology Center
+Main Landing Page & Pusat Edukasi Prediksi Sains Data Sepak Bola
+Fokus Utama: Proyeksi Kelolosan Timnas Indonesia & 24 Negara Peserta
 """
 
 import os
@@ -8,9 +9,9 @@ import streamlit as st
 import pandas as pd
 from app.utils.styles import inject_custom_css
 
-# Page Configuration
+# Konfigurasi Halaman Utama
 st.set_page_config(
-    page_title="AFC Asian Cup 2027 | Predictive Analytics Hub",
+    page_title="AFC Asian Cup 2027 | Proyeksi Timnas Indonesia & 24 Tim",
     page_icon="⚽",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -18,101 +19,102 @@ st.set_page_config(
 
 inject_custom_css()
 
-# Paths
+# Path Data Lake
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 CSV_PATH = os.path.join(DATA_DIR, "asian_cup_predictions.csv")
+INDO_PATH = os.path.join(DATA_DIR, "indonesia_4yr_match_analytics.json")
 
-# Load high-level tournament dataset
 @st.cache_data
-def load_quick_stats():
-    if os.path.exists(CSV_PATH):
-        return pd.read_csv(CSV_PATH)
-    return pd.DataFrame()
+def load_overview_data():
+    df = pd.read_csv(CSV_PATH) if os.path.exists(CSV_PATH) else pd.DataFrame()
+    return df
 
-df_preds = load_quick_stats()
+df_preds = load_overview_data()
 
-# Hero Section
+# Hero Section Edukatif
 st.markdown(
     """
     <div class="hero-banner">
-        <div class="section-tag">AFC ASIAN CUP SAUDI ARABIA 2027 • OFFICIAL ANALYTICS PORTAL</div>
-        <h1 style="color: #ffffff; margin-top: 4px; font-weight: 800; font-size: 2.4rem;">
-            Predictive Quantitative Engine & Tournament Simulator
+        <div class="section-tag">AFC ASIAN CUP ARAB SAUDI 2027 • PUSAT ANALITIKA DATA RESMI</div>
+        <h1 style="color: #ffffff; margin-top: 4px; font-weight: 800; font-size: 2.3rem;">
+            Sejauh Mana Timnas Indonesia Melangkah di Piala Asia 2027?
         </h1>
-        <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.6; max-width: 950px; margin-top: 10px;">
-            A state-of-the-art sports data science platform combining 
-            <b>Weighted Poisson Distributions</b>, <b>XGBoost Residual Ensembles</b>, and 
-            <b>100,000 Monte Carlo Stochastic Tournaments</b> to forecast championship outcomes, 
-            analyze historical tactical telemetry, and simulate head-to-head fixtures in real-time.
+        <p style="color: #94a3b8; font-size: 1.08rem; line-height: 1.6; max-width: 980px; margin-top: 10px;">
+            Platform komputasi sains data sepak bola berbasis <b>100.000 Iterasi Simulasi Monte Carlo</b>, 
+            <b>Data Pertandingan 4 Tahun Terakhir (2023–2026)</b>, dan <b>Evolusi Nilai Skuad (€36.5 Juta)</b> 
+            untuk memproyeksikan peluang realistis <b>Timnas Indonesia menembus Babak 8 Besar (Quarter-Finals)</b> 
+            serta peta persaingan seluruh 24 negara peserta.
         </p>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-# High-Level Metrics Row
+# Metric KPI Cards
 col1, col2, col3, col4, col5 = st.columns(5)
+
+idn_row = df_preds[df_preds["Team"] == "Indonesia"].iloc[0] if not df_preds.empty and not df_preds[df_preds["Team"] == "Indonesia"].empty else None
 
 with col1:
     st.metric(
-        label="Participating Nations",
-        value="24 Teams",
-        delta="6 Groups of 4"
+        label="Total Peserta",
+        value="24 Negara",
+        delta="6 Grup (A s/d F)"
     )
 
 with col2:
     st.metric(
-        label="Monte Carlo Simulations",
-        value="100,000",
-        delta="Full Brackets"
+        label="Simulasi Dijalankan",
+        value="100.000x",
+        delta="Braket Turnamen Penuh"
     )
 
 with col3:
+    r16_prob = idn_row["Reach_Round_16_Prob(%)"] if idn_row is not None else 67.74
     st.metric(
-        label="Host Nation",
-        value="Saudi Arabia",
-        delta="10% Proximity Boost"
+        label="Peluang IDN Lolos Grup",
+        value=f"{r16_prob:.1f}%",
+        delta="Target Minimal Fase 1"
     )
 
 with col4:
-    top_favorite = df_preds.iloc[0]["Team"] if not df_preds.empty else "Japan"
-    top_prob = df_preds.iloc[0]["Win_Tournament_Prob(%)"] if not df_preds.empty else 39.17
+    qf_prob = idn_row["Reach_Quarter_Final_Prob(%)"] if idn_row is not None else 16.18
     st.metric(
-        label="Top Title Favorite",
-        value=top_favorite,
-        delta=f"{top_prob:.1f}% Win Prob",
+        label="Peluang IDN Lolos 8 Besar",
+        value=f"{qf_prob:.1f}%",
+        delta="Target Utama (s/d 42.5% Skenario R-up)",
         delta_color="normal"
     )
 
 with col5:
-    idn_row = df_preds[df_preds["Team"] == "Indonesia"] if not df_preds.empty else None
-    idn_semi = idn_row.iloc[0]["Reach_Semi_Final_Prob(%)"] if idn_row is not None and not idn_row.empty else 12.48
+    top_fav = df_preds.iloc[0]["Team"] if not df_preds.empty else "Japan"
+    top_val = df_preds.iloc[0]["Win_Tournament_Prob(%)"] if not df_preds.empty else 42.46
     st.metric(
-        label="Indonesia Semis Odds",
-        value=f"{idn_semi:.1f}%",
-        delta="TPI 4.01 (#12 Rank)",
+        label="Unggulan #1 Juara",
+        value=top_fav,
+        delta=f"{top_val:.1f}% Juara",
         delta_color="normal"
     )
 
 st.write("")
 
-# Navigation Feature Cards
-st.markdown("### 🧭 Explore Analytics Modules")
+# Modul Navigasi Utama
+st.markdown("### 🧭 Jelajahi Modul Analisis & Prediksi")
 mod_col1, mod_col2, mod_col3 = st.columns(3)
 
 with mod_col1:
     st.markdown(
         """
         <div class="analytics-card">
-            <span class="metric-badge badge-gold">Module 01</span>
-            <h3 style="color: #f0f6fc; margin-top: 10px;">🏆 Tournament Outright</h3>
+            <span class="metric-badge badge-gold">Modul 01</span>
+            <h3 style="color: #f0f6fc; margin-top: 10px;">🏆 Peluang 24 Tim Peserta</h3>
             <p style="color: #8b949e; font-size: 0.95rem; line-height: 1.5;">
-                Explore championship probabilities, knockout progression matrices, and anomalies 
-                across all 24 qualified nations. Filter by progression stage and discover underdogs.
+                Peta kekuatan lengkap 24 kontestan: dari peluang lolos fase grup, 16 besar, 
+                <b>8 besar (perempat final)</b>, semifinal hingga tangga juara berdasarkan data 4 tahun terakhir.
             </p>
             <p style="margin-top: 15px; color: #38bdf8; font-weight: 600;">
-                👉 Open via Sidebar: <i>1_🏆_Tournament_Outright</i>
+                👉 Buka di Sidebar: <i>1_🏆_Peluang_24_Tim_Peserta</i>
             </p>
         </div>
         """,
@@ -123,14 +125,14 @@ with mod_col2:
     st.markdown(
         """
         <div class="analytics-card">
-            <span class="metric-badge badge-idn">Module 02</span>
-            <h3 style="color: #f0f6fc; margin-top: 10px;">⚔️ H2H Deep Dive</h3>
+            <span class="metric-badge badge-idn">Modul 02 • FOKUS UTAMA</span>
+            <h3 style="color: #f0f6fc; margin-top: 10px;">🇮🇩 Bedah Peluang 8 Besar Indonesia</h3>
             <p style="color: #8b949e; font-size: 0.95rem; line-height: 1.5;">
-                Granular tactical autopsy of the epic 120-minute FIFA ASEAN Cup 2026 Final: 
-                Spider radar charts, tactical substitution impacts, and cumulative xG line trajectories.
+                Analisis mendalam mengapa Indonesia berpeluang menembus <b>Babak 8 Besar</b>: 
+                rekor match 4 tahun terakhir vs raksasa Asia, lonjakan nilai skuad diaspora €36.5M, dan bedah 3 skenario taktis.
             </p>
             <p style="margin-top: 15px; color: #38bdf8; font-weight: 600;">
-                👉 Open via Sidebar: <i>2_⚔️_H2H_Deep_Dive</i>
+                👉 Buka di Sidebar: <i>2_🇮🇩_Peluang_8_Besar_Timnas_Indonesia</i>
             </p>
         </div>
         """,
@@ -141,105 +143,82 @@ with mod_col3:
     st.markdown(
         """
         <div class="analytics-card">
-            <span class="metric-badge badge-tha">Module 03</span>
-            <h3 style="color: #f0f6fc; margin-top: 10px;">🧮 Match Simulator</h3>
+            <span class="metric-badge badge-tha">Modul 03</span>
+            <h3 style="color: #f0f6fc; margin-top: 10px;">🧮 Simulator Laga Interaktif</h3>
             <p style="color: #8b949e; font-size: 0.95rem; line-height: 1.5;">
-                Run head-to-head predictive simulations between any two teams. 
-                Dynamically adjust the stochastic luck variance factor and view exact scoreline distributions.
+                Simulasikan pertandingan head-to-head antara dua tim mana pun. Uji skenario 
+                kejutan dengan menyuntikkan <i>Faktor Keberuntungan / Shock Factor</i> dan lihat tebakan skor paling akurat.
             </p>
             <p style="margin-top: 15px; color: #38bdf8; font-weight: 600;">
-                👉 Open via Sidebar: <i>3_🧮_Match_Simulator</i>
+                👉 Buka di Sidebar: <i>3_🧮_Simulator_Pertandingan_Interaktif</i>
             </p>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-# Methodology & Architectural Deep Dive Tabs
 st.write("")
-st.markdown("### 🔬 Scientific Methodology & Mathematical Architecture")
 
-tab_math, tab_arch, tab_dataset = st.tabs([
-    "📐 Predictive Weighting Schema",
-    "🏗️ Modular Repository Architecture",
-    "📊 Dataset & Sources"
+# Edukasi Sains Data Sepak Bola bagi Orang Awam
+st.markdown("### 🎓 Edukasi & Wawasan Baru bagi Pecinta Sepak Bola: Cara Kerja Prediksi Ini")
+
+tab_awam, tab_rumus, tab_sumber = st.tabs([
+    "💡 Penjelasan Sederhana untuk Orang Awam",
+    "📐 Matematika di Balik Model (Monte Carlo & TPI)",
+    "📁 Integritas Data & Struktur Repositori"
 ])
 
-with tab_math:
+with tab_awam:
     st.markdown(
         """
-        #### 1. Five-Pillar Team Power Index (TPI)
-        Each nation's Base TPI is computed as a weighted harmonic composite score spanning five independent domains:
+        Bagi Anda yang baru mengenal analitika statistik olahraga, berikut adalah 3 konsep utama yang digunakan dalam platform ini:
+        
+        #### 1. Apa itu Simulasi Monte Carlo? (Analogi Lempar Dadu Jutaan Kali)
+        > **Analogi Sederhana:** Bayangkan Anda melempar sepasang dadu sekali, hasilnya bisa acak. Tetapi jika Anda melemparnya **100.000 kali**, Anda akan tahu persis berapa persen angka 7 atau 12 akan muncul.
+        
+        Dalam sepak bola, sebuah pertandingan tidak bisa dipastikan 100% hanya dari nama besar. Kartu merah di menit ke-5, tiang gawang, atau blunder kiper bisa terjadi (faktor keberuntungan). 
+        Oleh karena itu, komputer kami **memainkan turnamen Piala Asia 2027 sebanyak 100.000 kali** secara virtual dengan memasukkan probabilitas menang, seri, dan kalah. Persentase yang Anda lihat di aplikasi ini adalah rangkuman dari 100.000 kemungkinan masa depan tersebut!
+        
+        #### 2. Mengapa Nilai Pasar Pemain (Squad Value) Sangat Berpengaruh?
+        Data Transfermarkt membuktikan bahwa nilai pasar pemain berkorelasi **>75%** dengan keberhasilan timnas di kompetisi internasional jangka panjang. 
+        Pemain yang bermain di liga elite Eropa (seperti **Jay Idzes di Serie A Italia** atau **Mees Hilgers di Eredivisie Belanda**) terbiasa menghadapi intensitas taktik, duel fisik, dan tempo pertandingan tertinggi di dunia. Kenaikan nilai skuad Indonesia dari **€5.8 Juta menjadi €36.5 Juta** dalam 4 tahun terakhir secara matematis mengangkat level kompetitif Garuda ke jajaran 6 besar Asia!
+        
+        #### 3. Apa itu Expected Goals (xG)?
+        xG (*Expected Goals*) adalah metrik yang mengukur **kualitas peluang tembakan** (skala 0.0 s/d 1.0). Tembakan penalti bernilai ~0.79 xG, sedangkan tendangan spekulatif dari jarak 35 meter bernilai ~0.02 xG. 
+        Jika Indonesia mencatat 2.15 xG saat melawan Arab Saudi (menang 2-0), itu membuktikan kemenangan tersebut bukan kebetulan, melainkan hasil dari peluang emas berbahaya yang berulang kali diciptakan.
+        """
+    )
+
+with tab_rumus:
+    st.markdown(
+        """
+        #### Rumusan Team Power Index (TPI) 5-Pilar
+        Kekuatan 24 tim peserta diukur melalui indeks komposit berbobot:
         
         $$TPI_i = 0.40 \\cdot ELO_i + 0.30 \\cdot \\ln(SquadValue_i) + 0.10 \\cdot Host_i + 0.10 \\cdot Climate_i + 0.10 \\cdot Luck_i$$
         
-        - **Historical Match Performance ($W_1 = 40\%$)**: 4-year FIFA/AFC match history translated into Elo ratings adjusted for goal difference and opponent caliber.
-        - **Squad Value & European Pedigree ($W_2 = 30\%$)**: Log-transformed Transfermarkt market values combined with UEFA Top-5 League player counts.
-        - **Host & Geographic Advantage ($W_3 = 10\%$)**: Travel distance penalty plus host bonus for Saudi Arabia.
-        - **Weather & Climate Adaptability ($W_4 = 10\%$)**: Empirical adjustment for Gulf desert conditions (30°C+ heat and low humidity).
-        - **Stochastic Tournament Variance ($W_5 = 10\%$)**: Gaussian white noise $\\mathcal{N}(0, \\sigma^2)$ reflecting tournament luck, referee variance, and penalty shootouts.
-        
-        #### 2. Weighted Poisson + XGBoost Residual Model
-        Match scorelines are generated via a Bivariate Poisson distribution parameterized by attack and defense coefficients:
-        
-        $$P(X = x, Y = y) = \\frac{\\lambda_A^x e^{-\\lambda_A}}{x!} \\times \\frac{\\lambda_B^y e^{-\\lambda_B}}{y!}$$
-        
-        Residual probabilities are passed through an XGBoost model calibrated on tournament draws, fatigue regressions, and tactical substitutions.
+        - **40% Rating Elo (Rekor 4 Tahun Terakhir)**: Menghitung hasil tanding melawan tim kuat vs tim lemah. Menang atas Arab Saudi memberi poin Elo jauh lebih besar dibanding menang atas tim semenjana.
+        - **30% Kualitas Skuad (Log-Transformed)**: Nilai pasar skuad ditransformasikan dengan fungsi logaritma agar tim bernilai ratusan juta Euro (Jepang/Korea) tidak merusak skala linier.
+        - **10% Faktor Tuan Rumah & Jarak Geografis**: Bonus tuan rumah untuk Arab Saudi dan penalti jarak tempuh timur jauh.
+        - **10% Ketahanan Iklim Teluk**: Adaptasi cuaca panas gurun (>30°C) di Arab Saudi.
+        - **10% Distribusi Stokastik $\\mathcal{N}(0, \\sigma^2)$**: Merefleksikan faktor keberuntungan dan adu penalti.
         """
     )
 
-with tab_arch:
+with tab_sumber:
     st.markdown(
         """
-        #### Clean Modular Repository Architecture
-        The repository is organized according to production-grade software engineering standards:
-        ```text
-        asian-cup-2027/
-        │
-        ├── data/                  # Standardized data lake (CSV, JSON telemetry)
-        │   ├── asian_cup_predictions.csv
-        │   ├── indonesia_vs_thailand_analytics.json
-        │   └── model_prediction_output.json
-        │
-        ├── src/                   # Pure python logic, models & pipelines
-        │   ├── data_pipeline/     # Data ingestion & schema normalization
-        │   ├── models/            # Poisson-XGBoost ensemble & prediction APIs
-        │   ├── simulation/        # 100,000 Monte Carlo tournament runner
-        │   └── legacy_viz/        # Preserved static matplotlib/seaborn generators
-        │
-        ├── notebooks/             # Exploratory Jupyter Notebooks
-        │   └── match_analysis.ipynb
-        │
-        ├── viz_outputs/           # Static PNG visual assets
-        │
-        ├── app/                   # Multipage Streamlit Application
-        │   ├── main.py            # Application entry point
-        │   ├── pages/             # Dynamic dashboard views
-        │   │   ├── 1_🏆_Tournament_Outright.py
-        │   │   ├── 2_⚔️_H2H_Deep_Dive.py
-        │   │   └── 3_🧮_Match_Simulator.py
-        │   └── utils/             # Interactive Plotly charts & styling
-        │
-        └── requirements.txt       # Pinned production dependencies
-        ```
+        - **Dataset Prediksi Turnamen**: [`data/asian_cup_predictions.csv`](file:///d:/PROJECT/asian-cup-2027/data/asian_cup_predictions.csv) — 24 tim dengan probabilitas lengkap fase grup, 16 besar, 8 besar, semifinal, final, juara.
+        - **Dataset Telemetri Timnas Indonesia**: [`data/indonesia_4yr_match_analytics.json`](file:///d:/PROJECT/asian-cup-2027/data/indonesia_4yr_match_analytics.json) — Rekor pertandingan 2023–2026, metrik xG, penguasaan bola, duel tekel, dan evolusi nilai pasar.
+        - **Engine Prediksi**: [`src/models/weighted_poisson_xgboost_model.py`](file:///d:/PROJECT/asian-cup-2027/src/models/weighted_poisson_xgboost_model.py) — Bivariate Poisson distribution + XGBoost Residual calibrations.
         """
     )
 
-with tab_dataset:
-    st.markdown(
-        """
-        - **Tournament Outright Dataset**: `data/asian_cup_predictions.csv` — Contains 24 qualified nations with Base TPI and probability distributions for Group Exit, Semi-Finals, Finals, and Tournament Championship.
-        - **Match Telemetry Dataset**: `data/indonesia_vs_thailand_analytics.json` — 1,600+ lines of granular telemetry capturing Schema A (Team stats), Schema B (Individual player ratings), Schema C (Substitution event log), and H2H match history.
-        - **Predictive Model Output**: `data/model_prediction_output.json` — Pre-calibrated Poisson matrix for Indonesia vs Thailand final projection.
-        """
-    )
-
-# Footer
 st.markdown("---")
 st.markdown(
     """
     <div style="text-align: center; color: #8b949e; font-size: 0.85rem; padding-bottom: 20px;">
-        AFC Asian Cup 2027 Quantitative Intelligence Engine • Built with Streamlit & Plotly • © 2026 Sports Science Division
+        AFC Asian Cup 2027 Quantitative Intelligence Engine • Dikembangkan dengan Streamlit & Plotly • Divisi Analisis Data Olahraga
     </div>
     """,
     unsafe_allow_html=True
