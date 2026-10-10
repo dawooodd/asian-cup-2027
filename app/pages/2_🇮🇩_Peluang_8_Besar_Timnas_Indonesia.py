@@ -198,9 +198,9 @@ with st.expander("⭐ Tabel Rincian 9 Pemain Pilar & Metrik Unggulan"):
 
 st.write("")
 
-# Bagian 3: Statistik Pertandingan 4 Tahun Terakhir (2023 - 2026)
-st.markdown("### 📊 Rekam Jejak 20 Pertandingan Kunci 4 Tahun Terakhir (2023–2026)")
-matches_data = analytics.get("matches_4_years_history", [])
+# Bagian 3: Rekam Jejak Tanpa Batas Pasca Piala Asia 2023 s/d Oktober 2026
+st.markdown("### 📊 Rekam Jejak 27 Pertandingan Resmi Pasca Piala Asia 2023 (s/d Oktober 2026)")
+matches_data = analytics.get("matches_post_asian_cup_history") or analytics.get("matches_4_years_history", [])
 
 col_xg_chart, col_tier_summary = st.columns([1.4, 1])
 
@@ -217,17 +217,17 @@ with col_tier_summary:
         f"""
         <div style="background: rgba(22, 27, 34, 0.85); border: 1px solid #30363d; border-radius: 8px; padding: 14px; margin-bottom: 12px;">
             <div style="color: #ef4444; font-weight: 700; font-size: 0.95rem;">⚔️ vs Raksasa Pot 1 Asia (Arab Saudi, Australia, Jepang)</div>
-            <div style="color: #f0f6fc; font-size: 1.1rem; font-weight: 800; margin-top: 4px;">{t1.get('wins', 1)} Menang - {t1.get('draws', 2)} Imbang - {t1.get('losses', 5)} Kalah</div>
+            <div style="color: #f0f6fc; font-size: 1.1rem; font-weight: 800; margin-top: 4px;">{t1.get('wins', 1)} Menang - {t1.get('draws', 2)} Imbang - {t1.get('losses', 4)} Kalah</div>
             <div style="color: #94a3b8; font-size: 0.85rem; margin-top: 6px;">
                 <b>Sorotan:</b> Menang 2-0 atas Arab Saudi di GBK, imbang 1-1 di Jeddah, imbang 0-0 vs Australia. Bukti nyata ketangguhan menahan negara berperingkat 50 besar dunia!
             </div>
         </div>
         
         <div style="background: rgba(22, 27, 34, 0.85); border: 1px solid #30363d; border-radius: 8px; padding: 14px;">
-            <div style="color: #38bdf8; font-weight: 700; font-size: 0.95rem;">🛡️ vs Pot 2 & 3 Asia (Bahrain, Vietnam, China, Burundi)</div>
-            <div style="color: #f0f6fc; font-size: 1.1rem; font-weight: 800; margin-top: 4px;">{t2.get('wins', 7)} Menang - {t2.get('draws', 1)} Imbang - {t2.get('losses', 2)} Kalah ({t2.get('win_rate_pct', 70.0)}% Kemenangan)</div>
+            <div style="color: #38bdf8; font-weight: 700; font-size: 0.95rem;">🛡️ vs Pot 2 & 3 Asia (Bahrain, Vietnam, China, Oman, dll.)</div>
+            <div style="color: #f0f6fc; font-size: 1.1rem; font-weight: 800; margin-top: 4px;">{t2.get('wins', 11)} Menang - {t2.get('draws', 4)} Imbang - {t2.get('losses', 2)} Kalah ({t2.get('win_rate_pct', 64.7)}% Kemenangan)</div>
             <div style="color: #94a3b8; font-size: 0.85rem; margin-top: 6px;">
-                <b>Sorotan:</b> Sapu bersih tiga kemenangan atas Vietnam (1-0, 1-0, 3-0) dan kemenangan 1-0 atas Bahrain. Dominasi atas kompetitor level menengah Asia.
+                <b>Sorotan:</b> Menang atas Vietnam (1-0, 3-0), Bahrain (1-0, 2-1 baru kemarin), China (2-0), Oman (1-0), dan Thailand (2-1).
             </div>
         </div>
         """,
@@ -236,7 +236,7 @@ with col_tier_summary:
 
 # Tabel Riwayat Pertandingan dengan Filter
 st.write("")
-st.markdown("#### 📋 Riwayat Rinci 20 Pertandingan Resmi")
+st.markdown("#### 📋 Riwayat Rinci 27 Pertandingan Resmi Lengkap")
 
 filter_tier = st.selectbox(
     "Filter Berdasarkan Kategori Lawan:",

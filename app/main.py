@@ -102,21 +102,20 @@ with col5:
 st.write("")
 
 # Modul Navigasi Utama
-st.markdown("### 🧭 Jelajahi Modul Analisis & Prediksi")
-mod_col1, mod_col2, mod_col3 = st.columns(3)
+st.markdown("### 🧭 Jelajahi 4 Modul Analisis & Prediksi")
+mod_col1, mod_col2, mod_col3, mod_col4 = st.columns(4)
 
 with mod_col1:
     st.markdown(
         """
         <div class="analytics-card">
             <span class="metric-badge badge-gold">Modul 01</span>
-            <h3 style="color: #f0f6fc; margin-top: 10px;">🏆 Peluang 24 Tim Peserta</h3>
-            <p style="color: #8b949e; font-size: 0.95rem; line-height: 1.5;">
-                Peta kekuatan lengkap 24 kontestan: dari peluang lolos fase grup, 16 besar, 
-                <b>8 besar (perempat final)</b>, semifinal hingga tangga juara berdasarkan data 4 tahun terakhir.
+            <h3 style="color: #f0f6fc; margin-top: 10px; font-size: 1.1rem;">🏆 Peluang 24 Tim</h3>
+            <p style="color: #8b949e; font-size: 0.88rem; line-height: 1.5;">
+                Peta probabilitas 24 negara dari fase grup hingga juara berdasarkan simulasi Monte Carlo.
             </p>
-            <p style="margin-top: 15px; color: #38bdf8; font-weight: 600;">
-                👉 Buka di Bilah Samping: <i>1_🏆_Peluang_24_Tim_Peserta</i>
+            <p style="margin-top: 15px; color: #38bdf8; font-weight: 600; font-size: 0.85rem;">
+                👉 <i>1_🏆_Peluang_24_Tim_Peserta</i>
             </p>
         </div>
         """,
@@ -127,14 +126,13 @@ with mod_col2:
     st.markdown(
         """
         <div class="analytics-card">
-            <span class="metric-badge badge-idn">Modul 02 • FOKUS UTAMA</span>
-            <h3 style="color: #f0f6fc; margin-top: 10px;">🇮🇩 Bedah Peluang 8 Besar Indonesia</h3>
-            <p style="color: #8b949e; font-size: 0.95rem; line-height: 1.5;">
-                Analisis mendalam mengapa Indonesia berpeluang menembus <b>Babak 8 Besar</b> dari Grup F: 
-                rekor 20 laga vs raksasa Asia, lonjakan nilai skuad diaspora €36,5M, dan bedah 3 skenario taktis.
+            <span class="metric-badge badge-idn">Modul 02 • FOKUS</span>
+            <h3 style="color: #f0f6fc; margin-top: 10px; font-size: 1.1rem;">🇮🇩 Peluang 8 Besar IDN</h3>
+            <p style="color: #8b949e; font-size: 0.88rem; line-height: 1.5;">
+                Bedah 3 skenario taktis Timnas Indonesia menembus Babak 8 Besar dari Grup F.
             </p>
-            <p style="margin-top: 15px; color: #38bdf8; font-weight: 600;">
-                👉 Buka di Bilah Samping: <i>2_🇮🇩_Peluang_8_Besar_Timnas_Indonesia</i>
+            <p style="margin-top: 15px; color: #38bdf8; font-weight: 600; font-size: 0.85rem;">
+                👉 <i>2_🇮🇩_Peluang_8_Besar_Timnas_Indonesia</i>
             </p>
         </div>
         """,
@@ -146,13 +144,29 @@ with mod_col3:
         """
         <div class="analytics-card">
             <span class="metric-badge badge-tha">Modul 03</span>
-            <h3 style="color: #f0f6fc; margin-top: 10px;">🧮 Simulator Laga Interaktif</h3>
-            <p style="color: #8b949e; font-size: 0.95rem; line-height: 1.5;">
-                Simulasikan pertandingan langsung antara dua tim mana pun. Uji skenario 
-                kejutan dengan menyuntikkan <i>Faktor Keberuntungan / Kejutan Lapangan</i> dan periksa tebakan skor paling akurat.
+            <h3 style="color: #f0f6fc; margin-top: 10px; font-size: 1.1rem;">🧮 Simulator Laga</h3>
+            <p style="color: #8b949e; font-size: 0.88rem; line-height: 1.5;">
+                Simulasikan duel head-to-head dua tim dengan suntikan faktor kejutan lapangan & distribusi skor.
             </p>
-            <p style="margin-top: 15px; color: #38bdf8; font-weight: 600;">
-                👉 Buka di Bilah Samping: <i>3_🧮_Simulator_Pertandingan_Interaktif</i>
+            <p style="margin-top: 15px; color: #38bdf8; font-weight: 600; font-size: 0.85rem;">
+                👉 <i>3_🧮_Simulator_Pertandingan_Interaktif</i>
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+with mod_col4:
+    st.markdown(
+        """
+        <div class="analytics-card">
+            <span class="metric-badge badge-gold">Modul 04 • BARU</span>
+            <h3 style="color: #f0f6fc; margin-top: 10px; font-size: 1.1rem;">⭐ Analisis Mikro X-Factor</h3>
+            <p style="color: #8b949e; font-size: 0.88rem; line-height: 1.5;">
+                Profil 1-2 pemain penentu keberuntungan (Clutch Gene) 24 tim & laga pasca Piala Asia 2023.
+            </p>
+            <p style="margin-top: 15px; color: #38bdf8; font-weight: 600; font-size: 0.85rem;">
+                👉 <i>4_⭐_Analisis_Mikro_Pemain_Kunci_&_Keberuntungan</i>
             </p>
         </div>
         """,

@@ -89,13 +89,35 @@ with c2:
     st.caption(f"⚔️ **{team_b}** Base TPI: `{tpi_b:.2f}`")
 
 with c3:
+    luck_preset = st.selectbox(
+        "Pemicu Keberuntungan Mikro (X-Factor Pemain Kunci):",
+        [
+            "Kondisi Netral (0.00)",
+            f"🌟 Performa Puncak Pemain Kunci {team_a} (+0.20)",
+            f"🔥 Momentum Luar Biasa & Penyelamatan Gemilang {team_a} (+0.35)",
+            f"⚡ Performa Puncak Pemain Kunci {team_b} (-0.20)",
+            f"💥 Serangan Balik Kilat & Keberuntungan {team_b} (-0.35)",
+            "Kustomisasi Manual (Gunakan Slider)"
+        ]
+    )
+    
+    preset_val = 0.00
+    if "+0.20" in luck_preset:
+        preset_val = 0.20
+    elif "+0.35" in luck_preset:
+        preset_val = 0.35
+    elif "-0.20" in luck_preset:
+        preset_val = -0.20
+    elif "-0.35" in luck_preset:
+        preset_val = -0.35
+
     luck_factor = st.slider(
-        "Faktor Keberuntungan / Kejutan Lapangan:",
+        "Slider Nilai Keberuntungan / Kejutan Lapangan:",
         min_value=-0.50,
         max_value=0.50,
-        value=0.00,
+        value=preset_val if "Kustomisasi" not in luck_preset else 0.00,
         step=0.05,
-        help="Mensimulasikan insiden tak terduga: kartu merah di awal laga, penalti kontroversial, kesalahan individu, atau dukungan suporter. Nilai positif menguntungkan Tim A; nilai negatif menguntungkan Tim B."
+        help="Mensimulasikan insiden tak terduga: aksi clutch pemain bintang, penyelamatan penalti kiper, atau kartu merah awal. Nilai positif menguntungkan Tim A; nilai negatif menguntungkan Tim B."
     )
     if luck_factor > 0:
         st.caption(f"📈 Momentum kejutan: **+{luck_factor:.2f}** menguntungkan **{team_a}**")
@@ -105,7 +127,7 @@ with c3:
         st.caption("⚖️ Kondisi netral (Kekuatan murni berdasarkan statistik)")
 
 st.write("")
-sim_button = st.button("🚀 Simulasikan Pertandingan Sekarang", type="primary", use_container_width=True)
+sim_button = st.button("🚀 Simulasikan Pertandingan Sekarang", type="primary", width="stretch")
 
 # Eksekusi Simulasi
 if sim_button or "current_sim" not in st.session_state:

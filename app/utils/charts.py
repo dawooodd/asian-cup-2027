@@ -323,3 +323,109 @@ def create_scoreline_bar_chart(scorelines: List[Dict[str, Any]], team_a: str, te
     fig.update_xaxes(title="Peluang Terjadi (%)", gridcolor="#21262d", zerolinecolor="#30363d", color=TEXT_MUTED)
     fig.update_yaxes(title="Skor", color=TEXT_COLOR, tickfont=dict(size=12, weight="bold"))
     return fig
+
+
+def create_player_micro_radar_chart(attributes: Dict[str, int], player_name: str, team_name: str) -> go.Figure:
+    """
+    Membangun diagram radar spider plot untuk profil atribut mikro penentu keberuntungan pemain kunci.
+    Kategori: Ketenangan (Composure), Dampak Penalti, Ketajaman Bola Mati, Kepemimpinan, Penentu Menit 75+.
+    """
+    categories = [
+        "Ketenangan di Bawah Tekanan",
+        "Dampak Penalti (Tepis/Eksekusi)",
+        "Ketajaman Bola Mati",
+        "Karisma & Kepemimpinan",
+        "Penentu Laga Menit 75+"
+    ]
+    raw_keys = ["composure", "penalty_impact", "set_piece_lethality", "leadership", "late_game_decisiveness"]
+    values = [attributes.get(k, 80) for k in raw_keys]
+
+    # Tutup poligon radar
+    cat_closed = categories + [categories[0]]
+    val_closed = values + [values[0]]
+
+    color = IDN_COLOR if team_name == "Indonesia" else CYAN_COLOR
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatterpolar(
+        r=val_closed,
+        theta=cat_closed,
+        fill="toself",
+        name=player_name,
+        line=dict(color=color, width=2.5),
+        fillcolor=f"rgba(230, 57, 70, 0.25)" if team_name == "Indonesia" else "rgba(56, 189, 248, 0.25)",
+        marker=dict(size=7, color=color),
+        hovertemplate="Atribut: <b>%{theta}</b><br>Nilai: <b>%{r}/100</b><extra></extra>"
+    ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 100],
+                tickfont=dict(size=10, color=TEXT_MUTED),
+                gridcolor="#21262d",
+                linecolor="#30363d"
+            ),
+            angularaxis=dict(
+                tickfont=dict(size=11, color=TEXT_COLOR, family="Inter, Segoe UI, sans-serif"),
+                gridcolor="#21262d",
+                linecolor="#30363d"
+            ),
+            bgcolor=CARD_BG
+        ),
+        paper_bgcolor=CARD_BG,
+        plot_bgcolor=CARD_BG,
+        font=dict(color=TEXT_COLOR, family="Inter, Segoe UI, sans-serif"),
+        height=380,
+        margin=dict(l=40, r=40, t=40, b=40),
+        title=dict(
+            text=f"<b>Radar Atribut Mikro (X-Factor): {player_name} ({team_name})</b>",
+            font=dict(size=14, color=TEXT_COLOR),
+            x=0.02,
+            y=0.98
+        ),
+        showlegend=False
+    )
+    return fig
+
+
+def create_clutch_comparison_bar(teams_data: Dict[str, Any]) -> go.Figure:
+    """Membangun diagram perbandingan Clutch Score pemain paling berpengaruh dari 24 negara peserta."""
+    team_names = []
+    player_names = []
+    clutch_scores = []
+    colors = []
+
+    for t_name, t_info in teams_data.items():
+        players = t_info.get("key_micro_players", [])
+        if players:
+            p = players[0]
+            team_names.append(t_name)
+            player_names.append(f"{p['name']} ({t_name})")
+            clutch_scores.append(p["clutch_score"])
+            colors.append(IDN_COLOR if t_name == "Indonesia" else ("#fbbf24" if p["clutch_score"] >= 94 else CYAN_COLOR))
+
+    df_clutch = pd.DataFrame({
+        "label": player_names,
+        "score": clutch_scores,
+        "team": team_names,
+        "color": colors
+    }).sort_values(by="score", ascending=True)
+
+    fig = go.Figure(data=[go.Bar(
+        y=df_clutch["label"],
+        x=df_clutch["score"],
+        orientation="h",
+        marker=dict(color=df_clutch["color"], line=dict(color=BORDER_COLOR, width=1)),
+        text=[f"<b>{s}</b>" for s in df_clutch["score"]],
+        textposition="outside",
+        textfont=dict(color=TEXT_COLOR, size=10),
+        hovertemplate="Pilar Kunci: <b>%{y}</b><br>Skor Clutch: <b>%{x}/100</b><extra></extra>"
+    )])
+
+    apply_dark_layout(fig, title="Peringkat Clutch Score Pemain Kunci 24 Negara Peserta (Skala 1 - 100)", height=650)
+    fig.update_xaxes(title="Clutch Score (Tingkat Penentu Kemenangan / Keberuntungan)", range=[70, 105], gridcolor="#21262d", color=TEXT_MUTED)
+    fig.update_yaxes(color=TEXT_COLOR, tickfont=dict(size=10, weight="bold"))
+    return fig
+

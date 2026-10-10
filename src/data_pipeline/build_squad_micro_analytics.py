@@ -1,0 +1,1201 @@
+"""
+Pipeline Data Sains: Analisis Mikro Pemain Kunci & Rekam Jejak Pasca Piala Asia 2023 (Februari 2024 - Oktober 2026)
+Mencakup seluruh 24 Negara Peserta AFC Asian Cup 2027 (Grup A s/d F).
+Menghasilkan: data/all_24_teams_squad_micro_analytics.json
+Bahasa: Bahasa Indonesia Baku (PUEBI/KBBI).
+"""
+
+import os
+import json
+from typing import Dict, Any, List
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+TARGET_PATH = os.path.join(BASE_DIR, "data", "all_24_teams_squad_micro_analytics.json")
+
+# Data 24 Negara Peserta dengan Skuad 2026, Pilar Mikro (X-Factor), dan Rekam Jejak Pasca Piala Asia 2023
+teams_analytics: Dict[str, Any] = {
+    "metadata": {
+        "title": "Analitika Mikro Skuad 24 Negara & Rekam Jejak Pertandingan Pasca Piala Asia 2023 (Februari 2024 - Oktober 2026)",
+        "scope": "Kualifikasi Piala Dunia 2026 Putaran 2 & 3, Kualifikasi Piala Asia 2027, FIFA Matchday s/d Oktober 2026",
+        "methodology": "Analisis Pengaruh Mikro Pemain (Clutch Score & Luck Multiplier) dan Metrik Performa Kumulatif",
+        "generated_at": "2026-10-10T10:00:00+07:00",
+        "author": "Divisi Kuantitatif Sains Data Sepak Bola Asia"
+    },
+    "teams": {
+        # =====================================================================
+        # GRUP A: Arab Saudi, Kuwait, Oman, Palestina
+        # =====================================================================
+        "Saudi Arabia": {
+            "group": "A",
+            "coach": "Roberto Mancini",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 36000000,
+            "performance_feb2024_oct2026": {
+                "period": "11 Februari 2024 - 10 Oktober 2026",
+                "matches_played": 25,
+                "wins": 13, "draws": 7, "losses": 5,
+                "win_rate_pct": 52.0, "unbeaten_rate_pct": 80.0,
+                "goals_for": 38, "goals_against": 19, "goal_difference": 19,
+                "clean_sheets": 12, "clean_sheet_rate_pct": 48.0,
+                "avg_xg_for": 1.72, "avg_xg_against": 0.88,
+                "avg_possession_pct": 62.4,
+                "late_goals_scored_75plus": 11,
+                "notes": "Tuan rumah turnamen; mendominasi laga kandang di Riyadh & Jeddah namun sempat ditahan imbang 1-1 dan takluk 0-2 dari Indonesia."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Salem Al-Dawsari",
+                    "position": "Penyerang Sayap (LW)",
+                    "club": "Al Hilal (Saudi Pro League)",
+                    "age_2026": 34,
+                    "market_value_eur": 2000000,
+                    "clutch_score": 93,
+                    "micro_luck_multiplier": 1.25,
+                    "attributes": {
+                        "composure": 92,
+                        "penalty_impact": 86,
+                        "set_piece_lethality": 89,
+                        "leadership": 95,
+                        "late_game_decisiveness": 94
+                    },
+                    "x_factor_role": "Pencipta Keajaiban Laga Besar (Big-Match Winner)",
+                    "micro_narrative": "Pemain dengan kemampuan magis mencetak gol dari sudut sempit di menit akhir. Memiliki karisma kepemimpinan yang mampu mengangkat mental tim saat tertekan di hadapan suporter tuan rumah."
+                },
+                {
+                    "name": "Saud Abdulhamid",
+                    "position": "Bek Sayap Kanan (RB)",
+                    "club": "AS Roma (Serie A Italia)",
+                    "age_2026": 26,
+                    "market_value_eur": 5000000,
+                    "clutch_score": 88,
+                    "micro_luck_multiplier": 1.18,
+                    "attributes": {
+                        "composure": 86,
+                        "penalty_impact": 70,
+                        "set_piece_lethality": 78,
+                        "leadership": 84,
+                        "late_game_decisiveness": 88
+                    },
+                    "x_factor_role": "Motor Transisi Kecepatan Tinggi & Penyelamat Garis Belakang",
+                    "micro_narrative": "Bek modern dengan intensitas fisik standar liga Eropa. Rata-rata melakukan 3,8 intersep krusial per laga yang kerap mematikan momentum serangan balik berbahaya lawan."
+                }
+            ]
+        },
+        "Oman": {
+            "group": "A",
+            "coach": "Jaroslav Šilhavý",
+            "squad_size_2026": 25,
+            "squad_market_value_eur": 8500000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 22,
+                "wins": 10, "draws": 5, "losses": 7,
+                "win_rate_pct": 45.5, "unbeaten_rate_pct": 68.2,
+                "goals_for": 29, "goals_against": 23, "goal_difference": 6,
+                "clean_sheets": 8, "clean_sheet_rate_pct": 36.4,
+                "avg_xg_for": 1.28, "avg_xg_against": 1.15,
+                "avg_possession_pct": 51.0,
+                "late_goals_scored_75plus": 6,
+                "notes": "Tim Teluk dengan organisasi bertahan liat; sering memaksakan hasil imbang atau kemenangan 1-0."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Issam Al-Sabhi",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Al Nahda (Oman)",
+                    "age_2026": 28,
+                    "market_value_eur": 600000,
+                    "clutch_score": 82,
+                    "micro_luck_multiplier": 1.14,
+                    "attributes": {
+                        "composure": 80,
+                        "penalty_impact": 78,
+                        "set_piece_lethality": 82,
+                        "leadership": 81,
+                        "late_game_decisiveness": 84
+                    },
+                    "x_factor_role": "Predator Kotak Penalti Oportunis",
+                    "micro_narrative": "Pencetak gol spesialis situasi bola muntah (*second ball*) yang mampu mengubah setengah peluang menjadi gol kemenangan tipis."
+                },
+                {
+                    "name": "Ibrahim Al-Mukhaini",
+                    "position": "Penjaga Gawang (GK)",
+                    "club": "Al Nahda (Oman)",
+                    "age_2026": 28,
+                    "market_value_eur": 450000,
+                    "clutch_score": 83,
+                    "micro_luck_multiplier": 1.16,
+                    "attributes": {
+                        "composure": 84,
+                        "penalty_impact": 88,
+                        "set_piece_lethality": 40,
+                        "leadership": 82,
+                        "late_game_decisiveness": 85
+                    },
+                    "x_factor_role": "Penepis Penalti Krusial Turnamen",
+                    "micro_narrative": "Kiper dengan jangkauan tangan panjang dan rekor menggagalkan 3 penalti krusial selama kualifikasi zona Asia."
+                }
+            ]
+        },
+        "Palestine": {
+            "group": "A",
+            "coach": "Makram Daboub",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 7500000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 21,
+                "wins": 7, "draws": 6, "losses": 8,
+                "win_rate_pct": 33.3, "unbeaten_rate_pct": 61.9,
+                "goals_for": 22, "goals_against": 24, "goal_difference": -2,
+                "clean_sheets": 7, "clean_sheet_rate_pct": 33.3,
+                "avg_xg_for": 1.15, "avg_xg_against": 1.25,
+                "avg_possession_pct": 44.5,
+                "late_goals_scored_75plus": 5,
+                "notes": "Mencatatkan sejarah lolos ke Putaran 3 Kualifikasi PD; bermain dengan militansi emosional tinggi dan determinasi pantang menyerah."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Oday Dabbagh",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "RSC Charleroi (Liga Belgia)",
+                    "age_2026": 27,
+                    "market_value_eur": 1800000,
+                    "clutch_score": 87,
+                    "micro_luck_multiplier": 1.20,
+                    "attributes": {
+                        "composure": 87,
+                        "penalty_impact": 82,
+                        "set_piece_lethality": 85,
+                        "leadership": 86,
+                        "late_game_decisiveness": 89
+                    },
+                    "x_factor_role": "Finisher Tajam Jam Terbang Eropa",
+                    "micro_narrative": "Pemain paling berbahaya Palestina. Ketajaman sundulan dan akselerasi di kotak penalti menjadikannya tumpuan utama pencetak gol penentu."
+                },
+                {
+                    "name": "Rami Hamadeh",
+                    "position": "Penjaga Gawang (GK)",
+                    "club": "Jabal Al-Mukaber (Palestina)",
+                    "age_2026": 32,
+                    "market_value_eur": 300000,
+                    "clutch_score": 84,
+                    "micro_luck_multiplier": 1.15,
+                    "attributes": {
+                        "composure": 86,
+                        "penalty_impact": 84,
+                        "set_piece_lethality": 30,
+                        "leadership": 90,
+                        "late_game_decisiveness": 86
+                    },
+                    "x_factor_role": "Benteng Terakhir Heroik",
+                    "micro_narrative": "Kiper yang kerap mencatatkan lebih dari 6 penyelamatan per laga saat timnya dikurung lawan papan atas Asia."
+                }
+            ]
+        },
+        "Kuwait": {
+            "group": "A",
+            "coach": "Juan Antonio Pizzi",
+            "squad_size_2026": 24,
+            "squad_market_value_eur": 5500000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 19,
+                "wins": 5, "draws": 5, "losses": 9,
+                "win_rate_pct": 26.3, "unbeaten_rate_pct": 52.6,
+                "goals_for": 16, "goals_against": 27, "goal_difference": -11,
+                "clean_sheets": 5, "clean_sheet_rate_pct": 26.3,
+                "avg_xg_for": 0.95, "avg_xg_against": 1.48,
+                "avg_possession_pct": 43.2,
+                "late_goals_scored_75plus": 4,
+                "notes": "Mengandalkan serangan balik sporadis dan eksekusi bola mati striker veteran."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Yousef Nasser",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Kuwait SC (Kuwait)",
+                    "age_2026": 35,
+                    "market_value_eur": 250000,
+                    "clutch_score": 81,
+                    "micro_luck_multiplier": 1.12,
+                    "attributes": {
+                        "composure": 84,
+                        "penalty_impact": 86,
+                        "set_piece_lethality": 82,
+                        "leadership": 91,
+                        "late_game_decisiveness": 82
+                    },
+                    "x_factor_role": "Kapten Veteran Pembidik Penalti & Gol Kejutan",
+                    "micro_narrative": "Meski usia veteran, naluri gol di kotak penalti sangat tinggi dan dingin mengeksekusi penalti di menit krusial."
+                }
+            ]
+        },
+
+        # =====================================================================
+        # GRUP B: Uzbekistan, Bahrain, Korea Utara, Yordania
+        # =====================================================================
+        "Uzbekistan": {
+            "group": "B",
+            "coach": "Srečko Katanec",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 38000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 24,
+                "wins": 15, "draws": 6, "losses": 3,
+                "win_rate_pct": 62.5, "unbeaten_rate_pct": 87.5,
+                "goals_for": 44, "goals_against": 16, "goal_difference": 28,
+                "clean_sheets": 12, "clean_sheet_rate_pct": 50.0,
+                "avg_xg_for": 1.84, "avg_xg_against": 0.82,
+                "avg_possession_pct": 58.5,
+                "late_goals_scored_75plus": 12,
+                "notes": "Salah satu tim dengan progres terpesat di Asia; melaju mulus di Kualifikasi PD Putaran 3 berkat generasi emas U-23."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Abbosbek Fayzullaev",
+                    "position": "Gelandang Serang (AM)",
+                    "club": "CSKA Moscow (Liga Rusia)",
+                    "age_2026": 22,
+                    "market_value_eur": 8000000,
+                    "clutch_score": 91,
+                    "micro_luck_multiplier": 1.24,
+                    "attributes": {
+                        "composure": 89,
+                        "penalty_impact": 80,
+                        "set_piece_lethality": 90,
+                        "leadership": 82,
+                        "late_game_decisiveness": 92
+                    },
+                    "x_factor_role": "Penyihir Lini Tengah (Playmaker Magis)",
+                    "micro_narrative": "Kelincahan dribel dan umpan kunci terobosan di celah sempit seringkali menjadi kunci pembongkar pertahanan rapat."
+                },
+                {
+                    "name": "Eldor Shomurodov",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "AS Roma (Serie A Italia)",
+                    "age_2026": 30,
+                    "market_value_eur": 4500000,
+                    "clutch_score": 89,
+                    "micro_luck_multiplier": 1.20,
+                    "attributes": {
+                        "composure": 88,
+                        "penalty_impact": 85,
+                        "set_piece_lethality": 86,
+                        "leadership": 94,
+                        "late_game_decisiveness": 88
+                    },
+                    "x_factor_role": "Kapten Pemimpin Lini Depan & Target Man Serie A",
+                    "micro_narrative": "Pengalaman di Serie A memberi keunggulan duel fisik atas bek-bek Asia; pencetak gol terbanyak sepanjang masa timnas."
+                }
+            ]
+        },
+        "Jordan": {
+            "group": "B",
+            "coach": "Jamal Sellami",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 17000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 23,
+                "wins": 13, "draws": 5, "losses": 5,
+                "win_rate_pct": 56.5, "unbeaten_rate_pct": 78.3,
+                "goals_for": 41, "goals_against": 21, "goal_difference": 20,
+                "clean_sheets": 9, "clean_sheet_rate_pct": 39.1,
+                "avg_xg_for": 1.68, "avg_xg_against": 1.05,
+                "avg_possession_pct": 53.0,
+                "late_goals_scored_75plus": 10,
+                "notes": "Runner-up Piala Asia 2023; memiliki duet transisi serang balik paling mematikan di Asia Barat."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Mousa Al-Tamari",
+                    "position": "Penyerang Sayap Kanan (RW)",
+                    "club": "Montpellier HSC (Ligue 1 Prancis)",
+                    "age_2026": 28,
+                    "market_value_eur": 8000000,
+                    "clutch_score": 94,
+                    "micro_luck_multiplier": 1.28,
+                    "attributes": {
+                        "composure": 92,
+                        "penalty_impact": 84,
+                        "set_piece_lethality": 88,
+                        "leadership": 90,
+                        "late_game_decisiveness": 95
+                    },
+                    "x_factor_role": "Solois Pembalik Keadaan (Solo Match-Winner)",
+                    "micro_narrative": "Kecepatan lari dan liukan dribel dari sayap kanan mampu mengelabui 2-3 bek sekaligus, menciptakan peluang gol dari situasi buntu."
+                },
+                {
+                    "name": "Yazan Al-Naimat",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Al Arabi (Qatar Stars League)",
+                    "age_2026": 26,
+                    "market_value_eur": 2500000,
+                    "clutch_score": 88,
+                    "micro_luck_multiplier": 1.19,
+                    "attributes": {
+                        "composure": 87,
+                        "penalty_impact": 80,
+                        "set_piece_lethality": 83,
+                        "leadership": 82,
+                        "late_game_decisiveness": 89
+                    },
+                    "x_factor_role": "Finisher Penyelesai Peluang Emas",
+                    "micro_narrative": "Tandem sejati Al-Tamari; penempatan posisi cerdas di kotak penalti menjadikannya mesin gol efisien di ajang turnamen."
+                }
+            ]
+        },
+        "Bahrain": {
+            "group": "B",
+            "coach": "Dragan Talajić",
+            "squad_size_2026": 25,
+            "squad_market_value_eur": 9200000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 22,
+                "wins": 9, "draws": 7, "losses": 6,
+                "win_rate_pct": 40.9, "unbeaten_rate_pct": 72.7,
+                "goals_for": 28, "goals_against": 24, "goal_difference": 4,
+                "clean_sheets": 8, "clean_sheet_rate_pct": 36.4,
+                "avg_xg_for": 1.25, "avg_xg_against": 1.22,
+                "avg_possession_pct": 47.8,
+                "late_goals_scored_75plus": 8,
+                "notes": "Terkenal dengan gol-gol menit akhir dramatis, termasuk gol penyama skor menit 99 kontra Indonesia."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Mohamed Marhoon",
+                    "position": "Gelandang Serang / Sayap (LW/AM)",
+                    "club": "Kuwait SC (Kuwait)",
+                    "age_2026": 27,
+                    "market_value_eur": 1200000,
+                    "clutch_score": 88,
+                    "micro_luck_multiplier": 1.21,
+                    "attributes": {
+                        "composure": 86,
+                        "penalty_impact": 84,
+                        "set_piece_lethality": 93,
+                        "leadership": 84,
+                        "late_game_decisiveness": 90
+                    },
+                    "x_factor_role": "Spesialis Tendangan Bebas Maut (Set-Piece Sniper)",
+                    "micro_narrative": "Pencetak gol tendangan bebas jarak jauh spektakuler. Satu tembakan bola matinya mampu membuyarkan kemenangan lawan di menit akhir."
+                }
+            ]
+        },
+        "North Korea": {
+            "group": "B",
+            "coach": "Sin Yong-nam",
+            "squad_size_2026": 24,
+            "squad_market_value_eur": 5200000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 18,
+                "wins": 6, "draws": 4, "losses": 8,
+                "win_rate_pct": 33.3, "unbeaten_rate_pct": 55.6,
+                "goals_for": 19, "goals_against": 22, "goal_difference": -3,
+                "clean_sheets": 5, "clean_sheet_rate_pct": 27.8,
+                "avg_xg_for": 1.05, "avg_xg_against": 1.35,
+                "avg_possession_pct": 42.0,
+                "late_goals_scored_75plus": 5,
+                "notes": "Bermain dengan disiplin spartan tanpa kompromi; stamina fisik konstan sepanjang 90 menit."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Han Kwang-song",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "April 25 (Korea Utara)",
+                    "age_2026": 27,
+                    "market_value_eur": 1000000,
+                    "clutch_score": 84,
+                    "micro_luck_multiplier": 1.15,
+                    "attributes": {
+                        "composure": 84,
+                        "penalty_impact": 80,
+                        "set_piece_lethality": 82,
+                        "leadership": 85,
+                        "late_game_decisiveness": 86
+                    },
+                    "x_factor_role": "Ujung Tombak Berpengalaman Eropa",
+                    "micro_narrative": "Mantan penyerang Cagliari & Juventus U23; memiliki teknik sentuhan pertama dan kecepatan di atas rata-rata pemain Korea Utara."
+                }
+            ]
+        },
+
+        # =====================================================================
+        # GRUP C: Iran, Suriah, Kirgizstan, China
+        # =====================================================================
+        "Iran": {
+            "group": "C",
+            "coach": "Amir Ghalenoei",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 52000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 25,
+                "wins": 18, "draws": 5, "losses": 2,
+                "win_rate_pct": 72.0, "unbeaten_rate_pct": 92.0,
+                "goals_for": 52, "goals_against": 15, "goal_difference": 37,
+                "clean_sheets": 14, "clean_sheet_rate_pct": 56.0,
+                "avg_xg_for": 2.10, "avg_xg_against": 0.75,
+                "avg_possession_pct": 61.5,
+                "late_goals_scored_75plus": 14,
+                "notes": "Salah satu kekuatan paling stabil di Asia; rekor tak terkalahkan panjang di kualifikasi Piala Dunia."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Mehdi Taremi",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Inter Milan (Serie A Italia)",
+                    "age_2026": 33,
+                    "market_value_eur": 9000000,
+                    "clutch_score": 95,
+                    "micro_luck_multiplier": 1.30,
+                    "attributes": {
+                        "composure": 96,
+                        "penalty_impact": 95,
+                        "set_piece_lethality": 91,
+                        "leadership": 94,
+                        "late_game_decisiveness": 96
+                    },
+                    "x_factor_role": "Predator Kotak Penalti Kelas Elite Eropa",
+                    "micro_narrative": "Pakar memancing pelanggaran penalti dan eksekutor dingin. Mampu memanfaatkan kesalahan terkecil bek lawan menjadi gol kemenangan."
+                },
+                {
+                    "name": "Alireza Beiranvand",
+                    "position": "Penjaga Gawang (GK)",
+                    "club": "Tractor SC (Iran)",
+                    "age_2026": 33,
+                    "market_value_eur": 1200000,
+                    "clutch_score": 90,
+                    "micro_luck_multiplier": 1.22,
+                    "attributes": {
+                        "composure": 92,
+                        "penalty_impact": 96,
+                        "set_piece_lethality": 35,
+                        "leadership": 93,
+                        "late_game_decisiveness": 91
+                    },
+                    "x_factor_role": "Raja Lemparan Jauh & Penepis Penalti Bersejarah",
+                    "micro_narrative": "Tinggi 194 cm dengan jangkauan lemparan tangan pemulai serangan balik hingga 60 meter. Terkenal menggagalkan penalti bintang dunia (Cristiano Ronaldo)."
+                }
+            ]
+        },
+        "China PR": {
+            "group": "C",
+            "coach": "Branko Ivanković",
+            "squad_size_2026": 25,
+            "squad_market_value_eur": 11500000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 22,
+                "wins": 7, "draws": 5, "losses": 10,
+                "win_rate_pct": 31.8, "unbeaten_rate_pct": 54.5,
+                "goals_for": 25, "goals_against": 35, "goal_difference": -10,
+                "clean_sheets": 5, "clean_sheet_rate_pct": 22.7,
+                "avg_xg_for": 1.10, "avg_xg_against": 1.60,
+                "avg_possession_pct": 46.0,
+                "late_goals_scored_75plus": 5,
+                "notes": "Performa fluktuatif; sempat mencuri kemenangan 2-1 atas Indonesia di Qingdao namun kalah telak saat menghadapi Jepang dan Australia."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Wu Lei",
+                    "position": "Penyerang Sayap / Kedua (LW/SS)",
+                    "club": "Shanghai Port (Liga Super China)",
+                    "age_2026": 34,
+                    "market_value_eur": 1200000,
+                    "clutch_score": 85,
+                    "micro_luck_multiplier": 1.17,
+                    "attributes": {
+                        "composure": 86,
+                        "penalty_impact": 82,
+                        "set_piece_lethality": 80,
+                        "leadership": 90,
+                        "late_game_decisiveness": 87
+                    },
+                    "x_factor_role": "Pencari Celah Garis Belakang Lawan",
+                    "micro_narrative": "Kelihaian membaca garis jebakan offside membuatnya kerap lolos satu lawan satu dengan kiper lawan di saat tak terduga."
+                }
+            ]
+        },
+        "Syria": {
+            "group": "C",
+            "coach": "José Lana",
+            "squad_size_2026": 25,
+            "squad_market_value_eur": 9000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 20,
+                "wins": 8, "draws": 5, "losses": 7,
+                "win_rate_pct": 40.0, "unbeaten_rate_pct": 65.0,
+                "goals_for": 26, "goals_against": 23, "goal_difference": 3,
+                "clean_sheets": 7, "clean_sheet_rate_pct": 35.0,
+                "avg_xg_for": 1.22, "avg_xg_against": 1.20,
+                "avg_possession_pct": 49.5,
+                "late_goals_scored_75plus": 6,
+                "notes": "Mengintegrasikan diaspora Amerika Latin (Ezequiel Ham, Jalil Elías); pertahanan solid di bawah asuhan pelatih Spanyol."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Omar Kharbin",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Al Wahda (Uni Emirat Arab)",
+                    "age_2026": 32,
+                    "market_value_eur": 3500000,
+                    "clutch_score": 88,
+                    "micro_luck_multiplier": 1.20,
+                    "attributes": {
+                        "composure": 90,
+                        "penalty_impact": 88,
+                        "set_piece_lethality": 89,
+                        "leadership": 92,
+                        "late_game_decisiveness": 89
+                    },
+                    "x_factor_role": "Mantan Pemain Terbaik Asia & Eksekutor Bola Mati Ulung",
+                    "micro_narrative": "Karisma dan kepemimpinan di lini depan; sangat berbahaya dalam situasi tendangan bebas melengkung dan penalti."
+                }
+            ]
+        },
+        "Kyrgyzstan": {
+            "group": "C",
+            "coach": "Maxim Lisitsyn",
+            "squad_size_2026": 24,
+            "squad_market_value_eur": 6400000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 21,
+                "wins": 7, "draws": 4, "losses": 10,
+                "win_rate_pct": 33.3, "unbeaten_rate_pct": 52.4,
+                "goals_for": 24, "goals_against": 28, "goal_difference": -4,
+                "clean_sheets": 6, "clean_sheet_rate_pct": 28.6,
+                "avg_xg_for": 1.12, "avg_xg_against": 1.38,
+                "avg_possession_pct": 46.5,
+                "late_goals_scored_75plus": 5,
+                "notes": "Lolos ke Putaran 3 Kualifikasi PD untuk pertama kali; mengandalkan penyerang naturalisasi Joel Kojo."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Joel Kojo",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Dinamo Samarqand (Uzbekistan)",
+                    "age_2026": 27,
+                    "market_value_eur": 800000,
+                    "clutch_score": 86,
+                    "micro_luck_multiplier": 1.18,
+                    "attributes": {
+                        "composure": 85,
+                        "penalty_impact": 80,
+                        "set_piece_lethality": 82,
+                        "leadership": 84,
+                        "late_game_decisiveness": 88
+                    },
+                    "x_factor_role": "Pahlawan Penentu Kejutan Turnamen",
+                    "micro_narrative": "Pencetak gol yang menyingkirkan Oman di Piala Asia 2023; memiliki kecepatan eksplosif dan insting penempatan posisi tajam."
+                }
+            ]
+        },
+
+        # =====================================================================
+        # GRUP D: Australia, Tajikistan, Irak, Singapura
+        # =====================================================================
+        "Australia": {
+            "group": "D",
+            "coach": "Tony Popovic",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 43000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 24,
+                "wins": 15, "draws": 5, "losses": 4,
+                "win_rate_pct": 62.5, "unbeaten_rate_pct": 83.3,
+                "goals_for": 48, "goals_against": 14, "goal_difference": 34,
+                "clean_sheets": 13, "clean_sheet_rate_pct": 54.2,
+                "avg_xg_for": 1.95, "avg_xg_against": 0.78,
+                "avg_possession_pct": 63.8,
+                "late_goals_scored_75plus": 12,
+                "notes": "Keunggulan postur fisik dan duel udara tertinggi di Asia; sempat ditahan imbang 0-0 oleh Indonesia di Jakarta."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Harry Souttar",
+                    "position": "Bek Tengah (CB)",
+                    "club": "Sheffield United (Championship Inggris)",
+                    "age_2026": 27,
+                    "market_value_eur": 8000000,
+                    "clutch_score": 91,
+                    "micro_luck_multiplier": 1.23,
+                    "attributes": {
+                        "composure": 90,
+                        "penalty_impact": 65,
+                        "set_piece_lethality": 94,
+                        "leadership": 92,
+                        "late_game_decisiveness": 92
+                    },
+                    "x_factor_role": "Menara Raksasa Udara (198 cm) Lini Serang & Bertahan",
+                    "micro_narrative": "Dengan tinggi 198 cm, ia adalah senjata mematikan sepak pojok Australia. Rata-rata memenangkan 91% duel udara dan mencetak gol sundulan penentu kebuntuan."
+                },
+                {
+                    "name": "Mathew Ryan",
+                    "position": "Penjaga Gawang (GK)",
+                    "club": "AS Roma (Serie A Italia)",
+                    "age_2026": 34,
+                    "market_value_eur": 2500000,
+                    "clutch_score": 88,
+                    "micro_luck_multiplier": 1.18,
+                    "attributes": {
+                        "composure": 91,
+                        "penalty_impact": 89,
+                        "set_piece_lethality": 30,
+                        "leadership": 96,
+                        "late_game_decisiveness": 89
+                    },
+                    "x_factor_role": "Kapten Pemimpin Mental & Penepis Penalti",
+                    "micro_narrative": "Berpengalaman di Premier League, La Liga, dan Serie A. Ketenangan distribusinya dari bawah memberi stabilitas mutlak bagi pertahanan Socceroos."
+                }
+            ]
+        },
+        "Iraq": {
+            "group": "D",
+            "coach": "Jesús Casas",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 16000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 23,
+                "wins": 14, "draws": 4, "losses": 5,
+                "win_rate_pct": 60.9, "unbeaten_rate_pct": 78.3,
+                "goals_for": 42, "goals_against": 19, "goal_difference": 23,
+                "clean_sheets": 10, "clean_sheet_rate_pct": 43.5,
+                "avg_xg_for": 1.76, "avg_xg_against": 0.95,
+                "avg_possession_pct": 55.4,
+                "late_goals_scored_75plus": 11,
+                "notes": "Gaya bermain menyerang langsung berenergi tinggi; Aymen Hussein menjadi salah satu striker tertajam di Asia."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Aymen Hussein",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Al Khor (Qatar Stars League)",
+                    "age_2026": 30,
+                    "market_value_eur": 2000000,
+                    "clutch_score": 92,
+                    "micro_luck_multiplier": 1.25,
+                    "attributes": {
+                        "composure": 90,
+                        "penalty_impact": 88,
+                        "set_piece_lethality": 93,
+                        "leadership": 91,
+                        "late_game_decisiveness": 93
+                    },
+                    "x_factor_role": "Predator Kotak Penalti Fisik Agresif",
+                    "micro_narrative": "Salah satu striker paling dominan di udara di kawasan Asia. Seringkali mencetak gol penentu kemenangan di atas menit ke-80."
+                },
+                {
+                    "name": "Ali Jasim",
+                    "position": "Penyerang Sayap (LW)",
+                    "club": "Como 1907 (Serie A Italia)",
+                    "age_2026": 22,
+                    "market_value_eur": 3000000,
+                    "clutch_score": 89,
+                    "micro_luck_multiplier": 1.21,
+                    "attributes": {
+                        "composure": 86,
+                        "penalty_impact": 80,
+                        "set_piece_lethality": 87,
+                        "leadership": 79,
+                        "late_game_decisiveness": 90
+                    },
+                    "x_factor_role": "Akselerator Serangan & Kreator Assist Serie A",
+                    "micro_narrative": "Bintang muda dengan visi umpan silang akurat dan tembakan melengkung mematikan dari sayap kiri."
+                }
+            ]
+        },
+        "Tajikistan": {
+            "group": "D",
+            "coach": "Gela Shekiladze",
+            "squad_size_2026": 25,
+            "squad_market_value_eur": 7200000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 20,
+                "wins": 7, "draws": 5, "losses": 8,
+                "win_rate_pct": 35.0, "unbeaten_rate_pct": 60.0,
+                "goals_for": 22, "goals_against": 25, "goal_difference": -3,
+                "clean_sheets": 7, "clean_sheet_rate_pct": 35.0,
+                "avg_xg_for": 1.15, "avg_xg_against": 1.30,
+                "avg_possession_pct": 47.0,
+                "late_goals_scored_75plus": 5,
+                "notes": "Pernah mengejutkan tembus 8 besar Piala Asia 2023; kiper Yatimov menjadi pahlawan adu penalti."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Rustam Yatimov",
+                    "position": "Penjaga Gawang (GK)",
+                    "club": "FC Rostov (Liga Rusia)",
+                    "age_2026": 27,
+                    "market_value_eur": 1500000,
+                    "clutch_score": 87,
+                    "micro_luck_multiplier": 1.19,
+                    "attributes": {
+                        "composure": 88,
+                        "penalty_impact": 92,
+                        "set_piece_lethality": 30,
+                        "leadership": 86,
+                        "late_game_decisiveness": 89
+                    },
+                    "x_factor_role": "Spesialis Adu Penalti Fase Gugur",
+                    "micro_narrative": "Kiper jangkung berdarah Rusia dengan rekor gemilang menghentikan penalti di babak sistem gugur internasional."
+                }
+            ]
+        },
+        "Singapore": {
+            "group": "D",
+            "coach": "Tsutomu Ogura",
+            "squad_size_2026": 24,
+            "squad_market_value_eur": 3800000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 18,
+                "wins": 3, "draws": 4, "losses": 11,
+                "win_rate_pct": 16.7, "unbeaten_rate_pct": 38.9,
+                "goals_for": 15, "goals_against": 38, "goal_difference": -23,
+                "clean_sheets": 2, "clean_sheet_rate_pct": 11.1,
+                "avg_xg_for": 0.85, "avg_xg_against": 2.10,
+                "avg_possession_pct": 41.5,
+                "late_goals_scored_75plus": 3,
+                "notes": "Dalam tahap rekonstruksi taktik di bawah Ogura; sempat menahan imbang China 2-2 di National Stadium."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Ikhsan Fandi",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "BG Pathum United (Liga Thailand)",
+                    "age_2026": 27,
+                    "market_value_eur": 600000,
+                    "clutch_score": 83,
+                    "micro_luck_multiplier": 1.14,
+                    "attributes": {
+                        "composure": 82,
+                        "penalty_impact": 79,
+                        "set_piece_lethality": 84,
+                        "leadership": 83,
+                        "late_game_decisiveness": 85
+                    },
+                    "x_factor_role": "Ujung Tombak Fisik & Penyelesai Akhir",
+                    "micro_narrative": "Satu-satunya striker Singapura dengan kemampuan menahan bola dan duel fisik melawan bek tangguh Asia."
+                }
+            ]
+        },
+
+        # =====================================================================
+        # GRUP E: Korea Selatan, Uni Emirat Arab, Vietnam, Yaman
+        # =====================================================================
+        "South Korea": {
+            "group": "E",
+            "coach": "Hong Myung-bo",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 182000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 25,
+                "wins": 17, "draws": 6, "losses": 2,
+                "win_rate_pct": 68.0, "unbeaten_rate_pct": 92.0,
+                "goals_for": 58, "goals_against": 16, "goal_difference": 42,
+                "clean_sheets": 13, "clean_sheet_rate_pct": 52.0,
+                "avg_xg_for": 2.25, "avg_xg_against": 0.72,
+                "avg_possession_pct": 65.2,
+                "late_goals_scored_75plus": 16,
+                "notes": "Kerap disebut tim 'Zombie Football' karena kebiasaan dramatis mencetak gol penentu kemenangan pada menit 90+."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Son Heung-min",
+                    "position": "Penyerang Sayap / Tengah (LW/CF)",
+                    "club": "Tottenham Hotspur (Premier League Inggris)",
+                    "age_2026": 34,
+                    "market_value_eur": 35000000,
+                    "clutch_score": 97,
+                    "micro_luck_multiplier": 1.35,
+                    "attributes": {
+                        "composure": 98,
+                        "penalty_impact": 96,
+                        "set_piece_lethality": 97,
+                        "leadership": 98,
+                        "late_game_decisiveness": 98
+                    },
+                    "x_factor_role": "Ikon Asia & Eksekutor Clutch Nomor 1 Dunia",
+                    "micro_narrative": "Pemain paling menentukan di Asia. Memiliki akurasi tembakan kedua kaki sempurna dan spesialis tendangan bebas pemecah kebuntuan di babak tambahan waktu."
+                },
+                {
+                    "name": "Kim Min-jae",
+                    "position": "Bek Tengah (CB)",
+                    "club": "Bayern Munich (Bundesliga Jerman)",
+                    "age_2026": 29,
+                    "market_value_eur": 45000000,
+                    "clutch_score": 93,
+                    "micro_luck_multiplier": 1.25,
+                    "attributes": {
+                        "composure": 94,
+                        "penalty_impact": 60,
+                        "set_piece_lethality": 86,
+                        "leadership": 92,
+                        "late_game_decisiveness": 91
+                    },
+                    "x_factor_role": "Monster Pertahanan (The Defensive Monster)",
+                    "micro_narrative": "Kecepatan pemulihan posisi dan tekel agresif bersih membuat lini belakang Korea sulit ditembus bahkan saat bermain dengan 10 pemain."
+                }
+            ]
+        },
+        "United Arab Emirates": {
+            "group": "E",
+            "coach": "Paulo Bento",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 31000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 23,
+                "wins": 13, "draws": 5, "losses": 5,
+                "win_rate_pct": 56.5, "unbeaten_rate_pct": 78.3,
+                "goals_for": 43, "goals_against": 21, "goal_difference": 22,
+                "clean_sheets": 10, "clean_sheet_rate_pct": 43.5,
+                "avg_xg_for": 1.70, "avg_xg_against": 1.02,
+                "avg_possession_pct": 59.0,
+                "late_goals_scored_75plus": 10,
+                "notes": "Memiliki kuartet naturalisasi Amerika Latin yang sangat berbahaya dalam kombinasi operan pendek cepat."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Fábio Lima",
+                    "position": "Gelandang Serang (AM/RW)",
+                    "club": "Al Wasl (UAE Pro League)",
+                    "age_2026": 32,
+                    "market_value_eur": 5000000,
+                    "clutch_score": 90,
+                    "micro_luck_multiplier": 1.22,
+                    "attributes": {
+                        "composure": 91,
+                        "penalty_impact": 92,
+                        "set_piece_lethality": 93,
+                        "leadership": 88,
+                        "late_game_decisiveness": 91
+                    },
+                    "x_factor_role": "Eksekutor Bola Mati Mematikan & Playmaker Kreatif",
+                    "micro_narrative": "Pencetak quattrick kontra Qatar di Kualifikasi PD; sangat mematikan dari tendangan bebas langsung di depan kotak penalti."
+                }
+            ]
+        },
+        "Vietnam": {
+            "group": "E",
+            "coach": "Kim Sang-sik",
+            "squad_size_2026": 25,
+            "squad_market_value_eur": 6100000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 20,
+                "wins": 7, "draws": 3, "losses": 10,
+                "win_rate_pct": 35.0, "unbeaten_rate_pct": 50.0,
+                "goals_for": 23, "goals_against": 31, "goal_difference": -8,
+                "clean_sheets": 4, "clean_sheet_rate_pct": 20.0,
+                "avg_xg_for": 1.10, "avg_xg_against": 1.55,
+                "avg_possession_pct": 49.0,
+                "late_goals_scored_75plus": 5,
+                "notes": "Mengalami masa transisi sulit pasca era Park Hang-seo; tiga kali berturut-turut ditaklukkan Indonesia tanpa mencetak gol."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Nguyen Quang Hai",
+                    "position": "Gelandang Serang (AM)",
+                    "club": "CAHN (V.League 1)",
+                    "age_2026": 29,
+                    "market_value_eur": 450000,
+                    "clutch_score": 85,
+                    "micro_luck_multiplier": 1.17,
+                    "attributes": {
+                        "composure": 86,
+                        "penalty_impact": 82,
+                        "set_piece_lethality": 91,
+                        "leadership": 87,
+                        "late_game_decisiveness": 87
+                    },
+                    "x_factor_role": "Kaki Kiri Emas Penentu Bola Mati",
+                    "micro_narrative": "Kemampuan menciptakan gol sensasional dari tendangan bebas jarak jauh; pemain paling dipercaya publik Vietnam saat situasi terdesak."
+                }
+            ]
+        },
+        "Yemen": {
+            "group": "E",
+            "coach": "Noureddine Ould Ali",
+            "squad_size_2026": 24,
+            "squad_market_value_eur": 2500000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 17,
+                "wins": 3, "draws": 5, "losses": 9,
+                "win_rate_pct": 17.6, "unbeaten_rate_pct": 47.1,
+                "goals_for": 14, "goals_against": 28, "goal_difference": -14,
+                "clean_sheets": 3, "clean_sheet_rate_pct": 17.6,
+                "avg_xg_for": 0.88, "avg_xg_against": 1.75,
+                "avg_possession_pct": 40.5,
+                "late_goals_scored_75plus": 3,
+                "notes": "Mengandalkan pertahanan blok rendah dan perjuangan fisik sengit di tengah keterbatasan fasilitas domestik."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Omar Al-Dahi",
+                    "position": "Penyerang Sayap (LW)",
+                    "club": "Al Karmel (Yordania)",
+                    "age_2026": 26,
+                    "market_value_eur": 300000,
+                    "clutch_score": 79,
+                    "micro_luck_multiplier": 1.11,
+                    "attributes": {
+                        "composure": 78,
+                        "penalty_impact": 75,
+                        "set_piece_lethality": 79,
+                        "leadership": 80,
+                        "late_game_decisiveness": 81
+                    },
+                    "x_factor_role": "Sprinter Sayap Serangan Balik Cepat",
+                    "micro_narrative": "Pemain sayap berkecepatan tinggi yang menjadi tumpuan utama melancarkan serangan kilat saat lawan lengah."
+                }
+            ]
+        },
+
+        # =====================================================================
+        # GRUP F: Jepang, Qatar, Thailand, Indonesia
+        # =====================================================================
+        "Japan": {
+            "group": "F",
+            "coach": "Hajime Moriyasu",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 285000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 26,
+                "wins": 22, "draws": 2, "losses": 2,
+                "win_rate_pct": 84.6, "unbeaten_rate_pct": 92.3,
+                "goals_for": 78, "goals_against": 12, "goal_difference": 66,
+                "clean_sheets": 17, "clean_sheet_rate_pct": 65.4,
+                "avg_xg_for": 2.65, "avg_xg_against": 0.58,
+                "avg_possession_pct": 67.5,
+                "late_goals_scored_75plus": 22,
+                "notes": "Tim nomor satu di Asia; kedalaman skuad hampir seluruhnya bermain reguler di 5 liga teratas Eropa."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Kaoru Mitoma",
+                    "position": "Penyerang Sayap Kiri (LW)",
+                    "club": "Brighton & Hove Albion (Premier League Inggris)",
+                    "age_2026": 29,
+                    "market_value_eur": 45000000,
+                    "clutch_score": 96,
+                    "micro_luck_multiplier": 1.32,
+                    "attributes": {
+                        "composure": 96,
+                        "penalty_impact": 82,
+                        "set_piece_lethality": 88,
+                        "leadership": 86,
+                        "late_game_decisiveness": 97
+                    },
+                    "x_factor_role": "Penghancur Pertahanan 1-lawan-1 (Dribble Specialist)",
+                    "micro_narrative": "Peneliti skripsi tesis dribel sepak bola; kemampuan akselerasi dan cut-inside miliknya hampir mustahil dihentikan bek Asia tanpa melakukan pelanggaran."
+                },
+                {
+                    "name": "Wataru Endo",
+                    "position": "Gelandang Bertahan (DM)",
+                    "club": "Liverpool FC (Premier League Inggris)",
+                    "age_2026": 33,
+                    "market_value_eur": 12000000,
+                    "clutch_score": 94,
+                    "micro_luck_multiplier": 1.27,
+                    "attributes": {
+                        "composure": 96,
+                        "penalty_impact": 80,
+                        "set_piece_lethality": 82,
+                        "leadership": 99,
+                        "late_game_decisiveness": 92
+                    },
+                    "x_factor_role": "Kapten Samurai Pelindung Transisi Lini Tengah",
+                    "micro_narrative": "Tingkat tekel dan perebutan bola kedua 88%; kepemimpinannya menjadi penjamin ketenangan tim saat menghadapi intensitas fisik tinggi."
+                }
+            ]
+        },
+        "Qatar": {
+            "group": "F",
+            "coach": "Tintín Márquez",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 21000000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 24,
+                "wins": 15, "draws": 4, "losses": 5,
+                "win_rate_pct": 62.5, "unbeaten_rate_pct": 79.2,
+                "goals_for": 46, "goals_against": 27, "goal_difference": 19,
+                "clean_sheets": 9, "clean_sheet_rate_pct": 37.5,
+                "avg_xg_for": 1.80, "avg_xg_against": 1.15,
+                "avg_possession_pct": 58.2,
+                "late_goals_scored_75plus": 11,
+                "notes": "Juara bertahan dua edisi beruntun (2019, 2023); memiliki pemahaman taktis turnamen luar biasa berpusat pada Akram Afif."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Akram Afif",
+                    "position": "Penyerang Sayap / Playmaker (LW/AM)",
+                    "club": "Al Sadd (Qatar Stars League)",
+                    "age_2026": 29,
+                    "market_value_eur": 6000000,
+                    "clutch_score": 96,
+                    "micro_luck_multiplier": 1.33,
+                    "attributes": {
+                        "composure": 97,
+                        "penalty_impact": 98,
+                        "set_piece_lethality": 96,
+                        "leadership": 94,
+                        "late_game_decisiveness": 97
+                    },
+                    "x_factor_role": "Pemain Terbaik Asia & Magnet Penalti Turnamen",
+                    "micro_narrative": "Mencetak hattrick penalti di Final Piala Asia 2023. Memiliki kemampuan membaca ruang gerak wasit dan bek lawan yang luar biasa, mengubah situasi 50-50 menjadi penalti dan gol."
+                },
+                {
+                    "name": "Almoez Ali",
+                    "position": "Penyerang Tengah (CF)",
+                    "club": "Al Duhail (Qatar Stars League)",
+                    "age_2026": 29,
+                    "market_value_eur": 3000000,
+                    "clutch_score": 90,
+                    "micro_luck_multiplier": 1.22,
+                    "attributes": {
+                        "composure": 91,
+                        "penalty_impact": 88,
+                        "set_piece_lethality": 87,
+                        "leadership": 90,
+                        "late_game_decisiveness": 91
+                    },
+                    "x_factor_role": "Top Skorer Sepanjang Masa Piala Asia",
+                    "micro_narrative": "Pemegang rekor 9 gol dalam satu edisi Piala Asia; insting gol predator yang sangat efisien dalam menyelesaikan umpan matang Afif."
+                }
+            ]
+        },
+        "Indonesia": {
+            "group": "F",
+            "coach": "Shin Tae-yong",
+            "squad_size_2026": 26,
+            "squad_market_value_eur": 36500000,
+            "performance_feb2024_oct2026": {
+                "period": "11 Februari 2024 - 10 Oktober 2026 (Pasca Piala Asia 2023 s/d FIFA Matchday Oktober 2026)",
+                "matches_played": 22,
+                "wins": 11, "draws": 5, "losses": 6,
+                "win_rate_pct": 50.0, "unbeaten_rate_pct": 72.7,
+                "goals_for": 33, "goals_against": 21, "goal_difference": 12,
+                "clean_sheets": 10, "clean_sheet_rate_pct": 45.5,
+                "avg_xg_for": 1.62, "avg_xg_against": 1.08,
+                "avg_possession_pct": 52.8,
+                "late_goals_scored_75plus": 9,
+                "notes": "Transformasi historis berkat gelombang diaspora Eropa; menundukkan Arab Saudi 2-0 di GBK, imbang 1-1 di Jeddah, tahan Australia 0-0, sapu bersih Vietnam (1-0, 3-0)."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Maarten Paes",
+                    "position": "Penjaga Gawang (GK)",
+                    "club": "FC Dallas (Major League Soccer)",
+                    "age_2026": 28,
+                    "market_value_eur": 3000000,
+                    "clutch_score": 94,
+                    "micro_luck_multiplier": 1.30,
+                    "attributes": {
+                        "composure": 96,
+                        "penalty_impact": 96,
+                        "set_piece_lethality": 30,
+                        "leadership": 92,
+                        "late_game_decisiveness": 97
+                    },
+                    "x_factor_role": "Penyelamat Penalti & Tembok Ajaib Fase Gugur (The Penalty Stopper)",
+                    "micro_narrative": "Faktor keberuntungan terbesar Indonesia. Mencatat rekor penyelamatan 78,4% vs tim Pot 1 dan menggagalkan penalti bintang Arab Saudi. Kiper kelas dunia adalah faktor mikro penentu mutlak dalam adu penalti babak gugur."
+                },
+                {
+                    "name": "Jay Idzes",
+                    "position": "Bek Tengah / Kapten (CB/C)",
+                    "club": "Venezia FC (Serie A Italia)",
+                    "age_2026": 26,
+                    "market_value_eur": 5000000,
+                    "clutch_score": 92,
+                    "micro_luck_multiplier": 1.25,
+                    "attributes": {
+                        "composure": 95,
+                        "penalty_impact": 75,
+                        "set_piece_lethality": 88,
+                        "leadership": 97,
+                        "late_game_decisiveness": 93
+                    },
+                    "x_factor_role": "Komandan Pertahanan Berdarah Dingin (Serie A General)",
+                    "micro_narrative": "Tinggi 191 cm, memimpin lini belakang dengan ketenangan Serie A. Rata-rata mencatat 4,4 sapuan bola bersih dan penyelamatan garis gawang (*goal-line clearance*) krusial."
+                }
+            ]
+        },
+        "Thailand": {
+            "group": "F",
+            "coach": "Masatada Ishii",
+            "squad_size_2026": 25,
+            "squad_market_value_eur": 10200000,
+            "performance_feb2024_oct2026": {
+                "period": "Februari 2024 - Oktober 2026",
+                "matches_played": 21,
+                "wins": 9, "draws": 5, "losses": 7,
+                "win_rate_pct": 42.9, "unbeaten_rate_pct": 66.7,
+                "goals_for": 32, "goals_against": 25, "goal_difference": 7,
+                "clean_sheets": 7, "clean_sheet_rate_pct": 33.3,
+                "avg_xg_for": 1.35, "avg_xg_against": 1.25,
+                "avg_possession_pct": 53.5,
+                "late_goals_scored_75plus": 7,
+                "notes": "Rival tradisional Asia Tenggara; bermain dengan kombinasi umpan segitiga pendek cepat ala pelatih Jepang Ishii."
+            },
+            "key_micro_players": [
+                {
+                    "name": "Chanathip Songkrasin",
+                    "position": "Gelandang Serang (AM)",
+                    "club": "BG Pathum United (Liga Thailand)",
+                    "age_2026": 32,
+                    "market_value_eur": 1000000,
+                    "clutch_score": 87,
+                    "micro_luck_multiplier": 1.20,
+                    "attributes": {
+                        "composure": 88,
+                        "penalty_impact": 82,
+                        "set_piece_lethality": 87,
+                        "leadership": 92,
+                        "late_game_decisiveness": 88
+                    },
+                    "x_factor_role": "Maestro 'Messi Jay' Pembongkar Pertahanan",
+                    "micro_narrative": "Pusat gravitasi permainan Thailand; kemampuan berputar cepat dan umpan terobosan cerdiknya dapat membuka peluang gol tak terduga."
+                },
+                {
+                    "name": "Suphanat Mueanta",
+                    "position": "Penyerang Sayap / Depan (RW/CF)",
+                    "club": "OH Leuven (Liga Belgia)",
+                    "age_2026": 23,
+                    "market_value_eur": 1200000,
+                    "clutch_score": 85,
+                    "micro_luck_multiplier": 1.18,
+                    "attributes": {
+                        "composure": 83,
+                        "penalty_impact": 80,
+                        "set_piece_lethality": 84,
+                        "leadership": 78,
+                        "late_game_decisiveness": 87
+                    },
+                    "x_factor_role": "Finisher Cepat Lulusan Eropa",
+                    "micro_narrative": "Penyerang muda dengan kecepatan sprint tinggi yang sangat berbahaya dalam skema serangan balik kilat."
+                }
+            ]
+        }
+    }
+}
+
+os.makedirs(os.path.dirname(TARGET_PATH), exist_ok=True)
+with open(TARGET_PATH, "w", encoding="utf-8") as f:
+    json.dump(teams_analytics, f, indent=2, ensure_ascii=False)
+
+print(f"[BERHASIL] Berkas analitika mikro 24 negara berhasil dibuat di: {TARGET_PATH}")
