@@ -355,7 +355,7 @@ Di fase grup Piala Asia, dua tim teratas setiap grup otomatis lolos ke Babak 16 
 
 ---
 
-## 📈 6. Rekam Jejak Tanpa Batas: 27 Pertandingan Timnas Indonesia (Maret 2024 – Oktober 2026)
+## 📈 6. Rekam Jejak: 27 Pertandingan Timnas Indonesia (Maret 2024 – Oktober 2026)
 
 Analisis pertandingan diperluas tanpa batasan buatan, mencakup **seluruh 27 pertandingan resmi FIFA dan Kualifikasi Piala Dunia** sejak pasca Piala Asia 2023 di Qatar hingga **FIFA Matchday Oktober 2026 yang baru saja usai kemarin**:
 
