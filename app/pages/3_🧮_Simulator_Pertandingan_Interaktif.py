@@ -246,3 +246,31 @@ if sim_res:
             "probability_pct": "Peluang Terjadi (%)"
         }, inplace=True)
         st.dataframe(df_scores, width="stretch")
+
+    # Diagnostik Machine Learning XGBoost
+    with st.expander("🤖 Diagnostik Machine Learning XGBoost & Penjelasan bagi Orang Awam", expanded=False):
+        st.markdown(
+            f"""
+            #### 🧠 Bagaimana Pohon Keputusan XGBoost Menghitung Laga Ini?
+            Model **XGBoost (Extreme Gradient Boosting)** tidak sekadar melihat nama besar atau peringkat dunia, melainkan 
+            mengevaluasi **pola interaksi non-linear** antara kekuatan tim (*TPI*), kedalaman materi liga top Eropa, 
+            ketahanan iklim, hingga **faktor mentalitas (*Clutch Score*)** dan **pengali keberuntungan (*Luck Multiplier*)**.
+
+            - **Prediksi Probabilitas Murni XGBoost**: 
+              - Menang {sim_res['team_a']}: **{sim_res.get('xgboost_pure_win_a', sim_res['win_prob_a'])}%**
+              - Hasil Imbang: **{sim_res.get('xgboost_pure_draw', sim_res['draw_prob'])}%**
+              - Menang {sim_res['team_b']}: **{sim_res.get('xgboost_pure_win_b', sim_res['win_prob_b'])}%**
+            - **Proyeksi Selisih Gol XGBoost**: **{sim_res.get('xgboost_predicted_goal_diff', 0.0):+.2f} Gol**
+            - **Model Ensemble**: {sim_res.get('model_architecture', 'Bivariate Poisson + XGBoost')}
+            """
+        )
+
+        feat_imp = sim_res.get("feature_importances", {})
+        if feat_imp:
+            st.markdown("##### 📊 Kontribusi Pembobotan Fitur (*Feature Importance*):")
+            feat_df = pd.DataFrame([
+                {"Fitur Analisis": k, "Tingkat Pengaruh (%)": v}
+                for k, v in feat_imp.items()
+            ]).sort_values(by="Tingkat Pengaruh (%)", ascending=False)
+            st.dataframe(feat_df, hide_index=True, width="stretch")
+            st.caption("💡 *Tingkat Pengaruh (%) menunjukkan seberapa dominan faktor tersebut dalam menentukan arah prediksi model XGBoost.*")
