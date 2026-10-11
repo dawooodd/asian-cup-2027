@@ -12,8 +12,8 @@ from app.utils.styles import inject_custom_css
 
 # Konfigurasi Halaman Utama
 st.set_page_config(
-    page_title="AFC Asian Cup 2027 | Proyeksi Timnas Indonesia & 24 Negara Peserta",
-    page_icon="⚽",
+    page_title="Garuda Intelligence | AFC Asian Cup 2027 Predictive Analytics",
+    page_icon="🦅",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -38,15 +38,16 @@ df_preds = load_overview_data()
 st.markdown(
     """
     <div class="hero-banner">
-        <div class="section-tag">AFC ASIAN CUP ARAB SAUDI 2027 • PUSAT ANALITIKA SAINS DATA RESMI</div>
+        <div class="section-tag">🦅 GARUDA INTELLIGENCE • PUSAT ANALITIKA SAINS DATA RESMI AFC ASIAN CUP 2027</div>
         <h1 style="color: #ffffff; margin-top: 4px; font-weight: 800; font-size: 2.3rem;">
-            Sejauh Mana Timnas Indonesia Melangkah di Piala Asia 2027?
+            Sistem Prediksi Kuantitatif & 100.000 Simulasi Monte Carlo Berbasis XGBoost
         </h1>
         <p style="color: #94a3b8; font-size: 1.08rem; line-height: 1.6; max-width: 980px; margin-top: 10px;">
-            Platform komputasi sains data sepak bola berbasis <b>100.000 Iterasi Simulasi Monte Carlo</b>, 
-            <b>Data Pertandingan 4 Tahun Terakhir (2023–2026)</b>, dan <b>Evolusi Nilai Skuad (€36,5 Juta)</b> 
-            untuk memproyeksikan peluang realistis <b>Timnas Indonesia menembus Babak 8 Besar (Perempat Final)</b> 
-            dari persaingan sengit <b>Grup F (bersama Jepang, Qatar, dan Thailand)</b> serta peta persaingan seluruh 24 negara peserta.
+            Platform komputasi sains data olahraga profesional memadukan <b>Machine Learning XGBoost</b>, 
+            <b>100.000 Iterasi Simulasi Turnamen Monte Carlo</b>, <b>Telemetri 27 Laga Resmi FIFA (2024–2026)</b>, 
+            serta <b>Determinan Mikro (Faktor Clutch & Pengali Keberuntungan)</b> untuk memproyeksikan peluang realistis 
+            <b>Timnas Indonesia menembus Babak 8 Besar (Perempat Final)</b> dari persaingan sengit 
+            <b>Grup F (bersama Jepang, Qatar, dan Thailand)</b> serta peta kekuatan seluruh 24 negara peserta.
         </p>
     </div>
     """,

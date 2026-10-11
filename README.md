@@ -1,103 +1,144 @@
-# ⚽ AFC Asian Cup 2027: Platform Prediksi Sains Data & Simulasi Turnamen
+# 🦅 Garuda Intelligence: Sistem Prediksi Kuantitatif & 100.000 Simulasi Monte Carlo AFC Asian Cup 2027 Berbasis Machine Learning XGBoost
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![XGBoost](https://img.shields.io/badge/XGBoost-2.0%2B-EB5424.svg)](https://xgboost.readthedocs.io/)
+> **Predictive Sports Analytics, XGBoost Machine Learning Ensemble, Stochastic Tournament Simulation, Micro X-Factor Determinants & Road to Quarter-Finals for Indonesia National Team**
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-2.0%2B-EB5424.svg?logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
 [![Monte Carlo](https://img.shields.io/badge/Simulation-100k%20Monte%20Carlo-8A2BE2.svg)](#)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B.svg?logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![Plotly](https://img.shields.io/badge/Plotly-5.20%2B-3F4F75.svg?logo=plotly&logoColor=white)](https://plotly.com/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.3%2B-F7931E.svg?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)](#)
 
-Repositori analitika sains data olahraga profesional dan sistem pemodelan prediktif kuantitatif untuk memproyeksikan seluruh peta persaingan **Piala Asia (AFC Asian Cup) Arab Saudi 2027**.
+---
 
-Platform ini memadukan **Model Machine Learning XGBoost (Extreme Gradient Boosting)** dengan **100.000 Iterasi Simulasi Turnamen Monte Carlo**, **Distribusi Probabilitas Bivariate Poisson**, **Rekam Jejak Tanpa Batas Pasca Piala Asia 2023 hingga FIFA Matchday Oktober 2026 (27 Laga Resmi)**, serta **Analisis Determinan Mikro (*X-Factor*, Skor *Clutch*, dan Pengali Keberuntungan)** untuk **seluruh 24 negara peserta (Grup A s/d F)**. Fokus komparasi utama diarahkan pada **Peluang Tim Nasional Indonesia Menembus Babak 8 Besar (Perempat Final)** dari persaingan sengit **Grup F (bersama Jepang, Qatar, dan Thailand)**.
+### 💼 Ringkasan Portofolio LinkedIn (*Executive Pitch*)
+> *"Bagaimana sains data kuantitatif membedah peluang sepak bola melampaui ranking FIFA konvensional? Proyek ini membangun sistem analitika prediktif end-to-end yang memadukan **Machine Learning XGBoost**, **Distribusi Bivariate Poisson**, serta **100.000 Iterasi Simulasi Turnamen Monte Carlo** untuk memproyeksikan seluruh peta persaingan **AFC Asian Cup Arab Saudi 2027**. Dengan meneliti telemetri 27 laga resmi pasca 2023, lonjakan nilai pasar skuad diaspora (€36,5M), serta **determinan mikro (faktor clutch dan pengali keberuntungan)** seluruh 24 negara peserta, platform ini menjawab pertanyaan paling krusial bagi publik: **Sejauh mana Timnas Indonesia melangkah di Piala Asia 2027 dan bagaimana skenario taktis terbaik menuju Babak 8 Besar (Perempat Final)?**"*
 
 ---
 
 ## 📑 Daftar Isi
-1. [Edukasi Sains Data bagi Orang Awam: Bagaimana XGBoost Dipadukan dengan Monte Carlo?](#-1-edukasi-sains-data-bagi-orang-awam-bagaimana-xgboost-dipadukan-dengan-monte-carlo)
-2. [Ringkasan Eksekutif: Sejauh Mana Timnas Indonesia Melangkah?](#-2-ringkasan-eksekutif-sejauh-mana-timnas-indonesia-melangkah)
-3. [Tabel Lengkap Hasil Simulasi 100.000 Putaran (24 Negara Peserta)](#-3-tabel-lengkap-hasil-simulasi-100000-putaran-24-negara-peserta)
-4. [Kamus Lengkap Insight Makro & Mikro Seluruh 24 Tim Peserta (Grup A s/d F)](#-4-kamus-lengkap-insight-makro--mikro-seluruh-24-tim-peserta-grup-a-sd-f)
-5. [Bedah Taktis & 3 Skenario Timnas Indonesia Menuju Babak 8 Besar](#-5-bedah-taktis--3-skenario-timnas-indonesia-menuju-babak-8-besar)
-6. [Rekam Jejak Tanpa Batas: 27 Pertandingan Timnas Indonesia (Maret 2024 – Oktober 2026)](#-6-rekam-jejak-tanpa-batas-27-pertandingan-timnas-indonesia-maret-2024--oktober-2026)
-7. [Arsitektur Direktori Repositori](#-7-arsitektur-direktori-repositori)
-8. [Panduan Instalasi & Menjalankan Dashboard Streamlit](#-8-panduan-instalasi--menjalankan-dashboard-streamlit)
-9. [Uji Kualitas & Verifikasi Otomatis (0 Exceptions)](#-9-uji-kualitas--verifikasi-otomatis-0-exceptions)
+1. [Latar Belakang & Domain Knowledge Sepak Bola Internasional](#-1-latar-belakang--domain-knowledge-sepak-bola-internasional)
+2. [Pernyataan Masalah & Tujuan Proyek](#-2-pernyataan-masalah--tujuan-proyek)
+3. [Sumber Data & Rekayasa Fitur (Makro & Mikro)](#-3-sumber-data--rekayasa-fitur-makro--mikro)
+4. [Metodologi & Arsitektur Pemodelan](#-4-metodologi--arsitektur-pemodelan)
+5. [Hasil Analisis & Galeri Visualisasi](#-5-hasil-analisis--galeri-visualisasi)
+6. [Kamus Lengkap Insight Makro & Mikro 24 Negara Peserta (Grup A s/d F)](#-6-kamus-lengkap-insight-makro--mikro-24-negara-peserta-grup-a-sd-f)
+7. [Bedah Taktis & 3 Skenario Timnas Indonesia Menuju Babak 8 Besar](#-7-bedah-taktis--3-skenario-timnas-indonesia-menuju-babak-8-besar)
+8. [Rekam Jejak Tanpa Batas: 27 Laga Resmi Timnas Indonesia (Maret 2024 – Oktober 2026)](#-8-rekam-jejak-tanpa-batas-27-laga-resmi-timnas-indonesia-maret-2024--oktober-2026)
+9. [Saran & Rekomendasi Menjalankan Proyek](#-9-saran--rekomendasi-menjalankan-proyek)
+10. [Panduan Eksekusi Teknis & Pengujian Sistem](#-10-panduan-eksekusi-teknis--pengujian-sistem)
+11. [Template Postingan LinkedIn Siap Pakai](#-11-template-postingan-linkedin-siap-pakai)
 
 ---
 
-## 🧠 1. Edukasi Sains Data bagi Orang Awam: Bagaimana XGBoost Dipadukan dengan Monte Carlo?
+## ⚽ 1. Latar Belakang & Domain Knowledge Sepak Bola Internasional
 
-Bagi masyarakat umum dan penggemar sepak bola yang awam terhadap istilah matematika dan pemrograman, berikut adalah penjelasan sederhana mengenai cara kerja sistem prediksi ini:
+### A. Konteks Kebangkitan Sepak Bola Indonesia & Transformasi Asia
+Sepak bola modern di Asia mengalami revolusi kompetitif yang belum pernah terjadi sebelumnya. Tim Nasional Indonesia bertransformasi dari tim regional Asia Tenggara menjadi kekuatan baru di tingkat benua:
+- **Integrasi Talenta Diaspora Liga Elite Eropa**: Kehadiran pemain diaspora yang merumput di kompetisi kasta tertinggi dunia seperti **Jay Idzes (Venezia - Serie A Italia)**, **Maarten Paes (FC Dallas - MLS)**, **Calvin Verdonk (NEC Nijmegen - Eredivisie)**, dan **Mees Hilgers (FC Twente)** mendongkrak nilai pasar skuad Indonesia dari €5,85 Juta (2023) menjadi **€36,50 Juta (2026)** — menembus **Peringkat 6 Tertinggi di Seluruh Asia**.
+- **Kualifikasi Menuju Piala Asia 2027 di Arab Saudi**: Turnamen edisi ke-19 ini diselenggarakan di Arab Saudi pada bulan Januari 2027 dengan format 24 negara kontestan yang terbagi dalam 6 grup (A sampai F). Indonesia tergabung di **Grup F bersama Jepang, Qatar, dan Thailand**.
+
+### B. Domain Knowledge Sepak Bola Kuantitatif
+Dalam pemodelan analitika sepak bola profesional, seorang analis data harus memahami domain spesifik:
+1. **Dinamika Turnamen Singkat (*Short Tournament Dynamics*)**: Berbeda dengan kompetisi liga domestik 38 pekan yang mencerminkan konsistensi jangka panjang, turnamen sistem gugur seperti Piala Asia sangat dipengaruhi oleh **varians jangka pendek (*high variance*)**, kelelahan fisik akumulatif, dan dinamika kartu penalti.
+2. **Format Regulasi 24 Tim**: Kelolosan ke babak 16 besar diberikan kepada Juara Grup, Runner-up Grup, serta **4 Tim Peringkat Ketiga Terbaik**. Artinya, sebuah tim tidak wajib memuncaki grup untuk melangkah jauh; meraih 3–4 poin dengan selisih gol terjaga sudah membuka pintu fase gugur.
+3. **Expected Goals (xG) vs Skor Riil**: xG mengukur probabilitas tembakan menjadi gol berdasarkan jarak tembakan, sudut, jenis umpan, dan tekanan pemain bertahan (skala 0,00 hingga 1,00). Dalam turnamen ketat, xG mencerminkan kualitas skema serangan riil ketimbang sekadar jumlah tembakan spekulatif.
+4. **Faktor Lingkungan & Geografis Riyadh Januari**: Riyadh di musim dingin memiliki suhu rata-rata 21,5°C dengan kelembapan rendah. Tim yang terbiasa dengan iklim panas ekstrem atau sebaliknya iklim dingin subtropis harus melakukan adaptasi fisiologis.
+5. **Momen Mikro & Keberuntungan Ilmiah (*Micro Luck & Clutch Moments*)**: Di babak gugur, adu penalti (*penalty shootout*), ketenangan kiper membaca arah bola, atau bola mati menit ke-90 sering kali menganulir keunggulan penguasaan bola 70%.
+
+---
+
+## 🎯 2. Pernyataan Masalah & Tujuan Proyek
+
+### A. Pernyataan Masalah (*Problem Statement*)
+1. **Keterbatasan Ranking FIFA Konvensional**: Peringkat resmi FIFA dihitung berdasarkan akumulasi poin historis bertahun-tahun yang lambat merespons perombakan radikal kualitas tim. Peringkat FIFA Indonesia sering kali tidak merefleksikan daya saing riil skuad diaspora modern saat berhadapan dengan tim Pot 1 dan Pot 2 Asia.
+2. **Dilema Persaingan "Grup Neraka" Grup F**: Indonesia berada satu grup dengan **Jepang** (Unggulan #1 Asia, skuad €285M) dan **Qatar** (Juara bertahan 2 edisi beruntun), serta rival bebuyutan **Thailand**. Diperlukan pemodelan probabilistik matematis untuk mengukur peluang realistis lolos fase grup dan menembus Babak 8 Besar.
+3. **Ketiadaan Pemodelan Faktor Mikro dan Keberuntungan**: Sebagian besar model analitika hanya berhenti pada statistik makro (seperti penguasaan bola atau ranking Elo) tanpa mampu menguantifikasi peran aksi satu detik (*clutch gene*), kepiawaian kiper menepis penalti, serta keberuntungan lapangan.
+
+### B. Tujuan Proyek (*Project Objectives*)
+1. **Membangun Pipeline Data End-to-End**: Melakukan pengumpulan, pembersihan, dan penataan data telemetri **27 pertandingan resmi FIFA pasca Piala Asia 2023 s.d. Oktober 2026** serta basis data 24 negara peserta secara etis sesuai panduan robots.txt.
+2. **Mengembangkan Model Machine Learning XGBoost Terkalibrasi**: Melatih model *Extreme Gradient Boosting* untuk menangkap interaksi non-linear multi-faktor makro dan mikro, dipadukan dengan distribusi probabilitas Bivariate Poisson.
+3. **Menjalankan 100.000 Iterasi Simulasi Turnamen Monte Carlo**: Mensimulasikan seluruh bagan turnamen resmi dari fase grup hingga partai final untuk memetakan distribusi frekuensi empiris kelolosan 24 negara kontestan.
+4. **Menjawab Hipotesis 3 Skenario Timnas Indonesia Menuju 8 Besar**: Memberikan justifikasi taktis kuantitatif bagi staf kepelatihan dan publik mengenai jalur kelolosan paling optimal.
+5. **Membangun Dashboard Web Multipage Streamlit**: Menyajikan antarmuka interaktif bertema modern gelap (*modern dark glassmorphism*) yang mendidik, transparan, dan dapat dipahami oleh orang awam.
+
+---
+
+## 🗄️ 3. Sumber Data & Rekayasa Fitur (Makro & Mikro)
+
+### A. Sumber Data Terverifikasi (Patuh Etika Web & robots.txt)
+- **Data Telemetri Pertandingan Timnas Indonesia**: 27 laga resmi FIFA dan Kualifikasi Piala Dunia (Maret 2024 – Oktober 2026), memuat skor akhir, xG serang, xG kebobolan, penguasaan bola, tekel sukses, dan status nirbobol (*clean sheet*).
+- **Data Profil & Nilai Pasar Skuad**: Transfermarkt dan federasi sepak bola resmi (nilai pasar skuad, klub asal, usia, dan jumlah pemain di 5 liga elite Eropa: Premier League, La Liga, Serie A, Bundesliga, Ligue 1).
+- **Data Geografis & Cuaca**: Titik koordinat bandara internasional, jarak tempuh ke Riyadh, dan deviasi suhu rata-rata bulan Januari.
+
+### B. Tabel Rekayasa Fitur Kuantitatif (*Feature Engineering*)
+
+| Nama Fitur | Kategori | Tipe Data | Skala / Rentang | Formula & Logika Komputasi | Kontribusi Bobot |
+| :--- | :---: | :---: | :---: | :--- | :---: |
+| **`TPI` (Team Power Index)** | Makro | Float | 1.50 s/d 9.00 | Agregat berbobot dari Elo, Kualitas Skuad, Geografis, dan Iklim | **38,73%** |
+| **`LogSquadVal`** | Makro | Float | Rasio Logaritma | $\ln(\text{SquadVal}_{\text{EUR}})$ untuk meredam skewness ekstrem Jepang (€285M) | **14,27%** |
+| **`Top5League`** | Makro | Integer | 0 s/d 17 Pemain | Normalisasi jumlah pemain yang aktif di 5 liga top Eropa | **12,27%** |
+| **`EloRating`** | Makro | Float | 1040 s/d 1655 | Rating performa pertandingan resmi 4 tahun terakhir disesuaikan kekuatan lawan | **10,07%** |
+| **`ClutchScore`** | Mikro | Float | 0 s/d 100 | Agregat 5 atribut mikro pemain kunci penentu menit akhir | **7,74%** |
+| **`MicroLuckMult`** | Mikro | Float | 1.00× s/d 1.35× | $1.0 + (\text{ClutchScore} - 50) / 150$, pengali momen kritis & adu penalti | **6,97%** |
+| **`HostAdvantage`** | Makro | Float | 0.0 s/d 1.0 | Nilai 1.0 untuk Arab Saudi, tim lain berbanding terbalik dengan jarak (km) | **5,21%** |
+| **`ClimateAdapt`** | Makro | Float | 0.0 s/d 1.0 | $1.0 - (|\text{Suhu Tim} - 21.5^{\circ}\text{C}| / \text{Deviasi Maksimal})$ | **4,74%** |
+
+### C. Formulasi 5 Atribut Mikro Penentu (*Clutch Gene & Luck Multiplier*)
+Setiap pemain kunci dianalisis menggunakan 5 parameter mikro berbobot:
+1. **$C$ (*Composure Under Pressure*)**: Ketenangan keputusan saat ditekan *high-press* (Bobot: 25%).
+2. **$P$ (*Penalty Clutch Impact*)**: Rasio konversi penalti atau penyelamatan kiper (Bobot: 25%).
+3. **$S$ (*Set-Piece Lethality*)**: Efektivitas tendangan bebas dan sepak pojok (Bobot: 15%).
+4. **$L$ (*Leadership & Resilience*)**: Kepemimpinan mengangkat moral tim saat tertinggal (Bobot: 15%).
+5. **$D$ (*Late-Game Decisiveness*)**: Produktivitas gol/tekel krusial pada menit ke-75+ (Bobot: 20%).
+
+$$\text{Clutch Score} = 0.25 C + 0.25 P + 0.15 S + 0.15 L + 0.20 D$$
+
+$$\text{Micro Luck Multiplier} = 1.0 + \left(\frac{\text{Clutch Score} - 50}{150}\right)$$
+
+---
+
+## 🔬 4. Metodologi & Arsitektur Pemodelan
+
+Platform analitika ini dibangun dengan arsitektur ensemble berlapis yang memadukan keunggulan kecerdasan buatan dan teori peluang stokastik:
 
 ```text
-  [DATA HISTORIS & PROFIL 24 TIM]
-  (Nilai Skuad, Elo Rating, Pemain Liga Eropa, Tuan Rumah, Iklim, Skor Clutch, Pengali Keberuntungan)
-                               │
-                               ▼
-            [MACHINE LEARNING XGBOOST CLASSIFIER & REGRESSOR]
-     Mempelajari ratusan pola interaksi non-linear sepak bola:
-     • Menghitung peluang Menang / Seri / Kalah untuk setiap duel (24 x 24 negara)
-     • Menghitung proyeksi selisih gol & kalibrasi Poisson
-                               │
-                               ▼
-         [MATRIKS PROBABILITAS LAGA TERTARIK & TERKALIBRASI]
-                               │
-                               ▼
-        [MESIN SIMULASI MONTE CARLO (100.000 TURNAMEN PENUH)]
-     Memutar turnamen digital sebanyak 100.000 kali dari laga pertama hingga final:
-     • Menyuntikkan varians acak (kebisingan atmosfer laga, kartu merah, cedera dadakan)
-     • Fase Grup -> Penentuan 16 Besar (termasuk 4 peringkat ke-3 terbaik)
-     • Babak 16 Besar -> 8 Besar (QF) -> Semifinal -> Final -> Angkat Trofi Juara!
-                               │
-                               ▼
-            [PROBABILITAS AKHIR BERBASIS FREKUENSI EMPIRIS]
-     (Berapa % suatu negara lolos ke babak 16 besar, 8 besar, atau keluar sebagai juara)
+┌────────────────────────────────────────────────────────────────────────┐
+│                        ARSITEKTUR PEMODELAN ENSEMBLE                   │
+├────────────────────────────────────────────────────────────────────────┤
+│ 1. MODEL MACHINE LEARNING XGBOOST                                      │
+│    • XGBClassifier (multi:softprob) -> P(Menang A), P(Imbang), P(Menang B)│
+│    • XGBRegressor -> Proyeksi Selisih Gol Terkalibrasi (Δ Goals)       │
+│                                                                        │
+│ 2. MODEL MATRIKS BIVARIATE POISSON                                     │
+│    • Menghitung Laju Gol: λ_A = 1.28 * exp(0.14*ΔTPI + 0.08*ΔGoals)    │
+│    • Menghitung Laju Gol: λ_B = 1.28 * exp(-0.14*ΔTPI - 0.08*ΔGoals)   │
+│    • Matriks Peluang Skor Eksak: P(Score_i_j) = Poisson(i, λ_A) *      │
+│                                                 Poisson(j, λ_B)        │
+│                                                                        │
+│ 3. ENSEMBLE HYBRID PREDICTION                                          │
+│    • P_Final = 60% XGBoost Machine Learning + 40% Bivariate Poisson    │
+│                                                                        │
+│ 4. MESIN SIMULASI MONTE CARLO 100.000 ITERASI TURNAMEN LENGKAP         │
+│    • Simulasi Vektorisasi NumPy (Batch 10.000)                         │
+│    • 36 Pertandingan Babak Fase Grup (A, B, C, D, E, F)                │
+│    • Penentuan 16 Besar (Peringkat 1, 2, & 4 Tim Peringkat 3 Terbaik)  │
+│    • Babak Gugur: 16 Besar -> 8 Besar -> Semifinal -> Final -> Juara   │
+│    • Extra Time & Adu Penalti Terkalibrasi Clutch Score & Luck Multiplier│
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-### A. Apa itu Model Machine Learning XGBoost?
-- **XGBoost (*Extreme Gradient Boosting*)** adalah algoritma kecerdasan buatan berbasis pohon keputusan (*decision trees*).
-- Jika rumus konvensional hanya melihat peringkat FIFA, **XGBoost melihat interaksi rumit**: misalnya, mengapa tim yang berperingkat lebih rendah bisa menahan imbang raksasa jika mereka memiliki kiper dengan penyelamatan penalti tinggi (*clutch goalkeeper*) dan lawan mengalami kelelahan iklim.
-- **Pembobotan Fitur Resmi (*Feature Importance*) Model XGBoost Kami:**
-  1. **$TPI_{\text{diff}}$ (Selisih Indeks Kekuatan Tim)**: **38,73%** (Faktor penentu paling dominan).
-  2. **$\text{SquadVal}_{\text{diff}}$ (Rasio Nilai Pasar Skuad)**: **14,27%** (Kualitas teknis materi pemain).
-  3. **$\text{Top5}_{\text{diff}}$ (Jumlah Pemain di 5 Liga Top Eropa)**: **12,27%** (Pengalaman bermain di level tertinggi dunia).
-  4. **$\text{Elo}_{\text{diff}}$ (Selisih Rating Performa 4 Tahun)**: **10,07%** (Konsistensi hasil pertandingan internasional).
-  5. **$\text{Clutch}_{\text{diff}}$ (Faktor Mentalitas & Aksi Menit Akhir)**: **7,74%** (Pembeda laga genting dan babak gugur).
-  6. **$\text{LuckMult}_{\text{diff}}$ (Pengali Keberuntungan & Penyelamatan Penalti)**: **6,97%** (Varians mikro penentu momen kritis).
-  7. **$\text{Host}_{\text{diff}}$ (Keuntungan Tuan Rumah & Dukungan Suporter)**: **5,21%**.
-  8. **$\text{Climate}_{\text{diff}}$ (Adaptasi Suhu & Cuaca Riyadh Januari)**: **4,74%**.
-
-### B. Apa itu Simulasi Monte Carlo?
-- Sepak bola bukanlah sains pasti seperti matematika ($1+1=2$). Dalam satu pertandingan, tim kuat bisa saja kalah karena bola membentur tiang gawang atau penalti kontroversial di menit ke-95.
-- **Monte Carlo** mengatasi ketidakpastian ini dengan memutar turnamen layaknya komputer memainkan permainan konsol sebanyak **100.000 kali**.
-- Jika dari 100.000 turnamen tersebut Jepang juara 58.890 kali, maka peluang juara Jepang adalah **58,89%**. Jika Indonesia melaju ke babak 8 besar sebanyak 5.890 kali, maka peluang Indonesia adalah **5,89%**.
-
 ---
 
-## 🇮🇩 2. Ringkasan Eksekutif: Sejauh Mana Timnas Indonesia Melangkah?
+## 📊 5. Hasil Analisis & Galeri Visualisasi
 
-Berdasarkan komputasi **100.000 iterasi Monte Carlo yang dikalibrasi Machine Learning XGBoost** pada bagan resmi Piala Asia 2027:
+### A. Tabel Lengkap Simulasi 100.000 Putaran Turnamen (24 Negara)
 
-| Tahapan Kompetisi | Peluang Timnas Indonesia (%) | Makna Praktis bagi Publik & Suporter |
-| :--- | :---: | :--- |
-| **Gugur di Fase Grup** | **82,80%** | Tantangan berat berada di Grup F bersama dua unggulan teratas (Jepang & Qatar). |
-| **Lolos ke Babak 16 Besar** | **17,20%** | Terbuka lebar melalui kemenangan atas Thailand dan merebut tiket Runner-up atau Peringkat Tiga Terbaik. |
-| **Lolos ke Babak 8 Besar (Perempat Final)** | **5,89% (Agregat)<br>s/d 40,50% (via Runner-up)** | **Target Sejarah Sepak Bola Indonesia.** Jika finis sebagai Runner-up Grup F, Indonesia akan bertemu Runner-up Grup B (Yordania/Bahrain/Uzbekistan) di 16 besar, di mana peluang menang mencapai **40,5%**! |
-| **Lolos ke Semifinal (4 Besar)** | **1,59%** | Capaian fantastis yang membutuhkan kejutan menyingkirkan raksasa Asia berturut-turut. |
-| **Lolos ke Final (2 Besar)** | **0,20%** | Partai puncak bersejarah di Riyadh (~200 kali dari 100.000 simulasi). |
-| **Juara Piala Asia 2027** | **0,02%** | Peluang matematis (~20 kali dari 100.000 turnamen). |
+Berdasarkan hasil komputasi model ensemble XGBoost + Monte Carlo 100.000 iterasi:
 
-> **Kesimpulan Strategis:** Bagi masyarakat awam, capaian rasional paling membanggakan adalah **mengamankan kemenangan atas Thailand untuk mengunci tiket 16 Besar**, lalu mengerahkan segenap ketangguhan taktis untuk bertarung di **Babak 8 Besar (Perempat Final)**.
-
----
-
-## 🏆 3. Tabel Lengkap Hasil Simulasi 100.000 Putaran (24 Negara Peserta)
-
-Berikut adalah tabel hasil pemodelan Machine Learning XGBoost yang dipadukan dengan 100.000 simulasi Monte Carlo untuk seluruh 24 kontestan:
-
-| Peringkat | Negara | Grup | Nilai TPI | Gugur Grup (%) | Lolos 16 Besar (%) | **Lolos 8 Besar (%)** | Semifinal (%) | Final (%) | **Juara (%)** |
+| Peringkat | Negara | Grup | Base TPI | Gugur Grup (%) | Lolos 16 Besar (%) | **Lolos 8 Besar (%)** | Semifinal (%) | Final (%) | **Juara (%)** |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **1** | 🇯🇵 **Jepang** | F | 9.00 | 0.43% | 99.57% | **93.79%** | 88.64% | 77.09% | **58.89%** |
 | **2** | 🇰🇷 **Korea Selatan** | E | 7.56 | 0.12% | 99.88% | **69.48%** | 44.40% | 28.33% | **12.34%** |
@@ -124,206 +165,131 @@ Berikut adalah tabel hasil pemodelan Machine Learning XGBoost yang dipadukan den
 | **23** | 🇾🇪 **Yaman** | E | 1.96 | 90.92% | 9.08% | **0.26%** | 0.01% | 0.00% | **0.00%** |
 | **24** | 🇹🇭 **Thailand** | F | 3.52 | 95.58% | 4.42% | **0.54%** | 0.09% | 0.00% | **0.00%** |
 
----
-
-## 🔍 4. Kamus Lengkap Insight Makro & Mikro Seluruh 24 Tim Peserta (Grup A s/d F)
-
-Bagian ini menyajikan profil komprehensif seluruh 24 tim kontestan tanpa terlewat, disajikan dalam bahasa lugas yang mudah dipahami orang awam:
-
-### 📍 GRUP A: Arab Saudi, Oman, Palestina, Kuwait
-
-#### 1. 🇸🇦 Arab Saudi (Tuan Rumah)
-- **Faktor Makro**: Nilai pasar skuad €36,0 Juta, Rating Elo 1495, TPI 7.42. Seluruh pemain berkompetisi di Saudi Pro League bersama bintang global (Ronaldo, Benzema, Neymar). Memiliki keuntungan iklim Riyadh dan dukungan 60.000 suporter fanatik.
-- **Faktor Mikro (X-Factor)**:
-  - **Salem Al-Dawsari** (*Winger Kreator, Al Hilal*): Skor *Clutch* **93**, Pengali Keberuntungan **1.25×**. Spesialis gol spektakuler menit akhir dari sudut sempit.
-  - **Saud Abdulhamid** (*Bek Kanan, AS Roma - Serie A*): Skor *Clutch* **88**, Pengali Keberuntungan **1.18×**. Intersep rata-rata 3,8 per laga dengan kecepatan luar biasa.
-- **Insight bagi Orang Awam**: Tim yang sangat dominan dalam penguasaan bola kandang. Kelemahan mereka adalah rentan panik saat menghadapi serangan balik kilat lawan.
-
-#### 2. 🇴🇲 Oman
-- **Faktor Makro**: Nilai pasar skuad €8,5 Juta, Rating Elo 1345, TPI 4.64. Tim Teluk yang sangat disiplin dengan organisasi bertahan rapat.
-- **Faktor Mikro (X-Factor)**:
-  - **Issam Al-Sabhi** (*Striker, Al Nahda*): Skor *Clutch* **82**. Piawai mencuri gol dari kemelut sepak pojok.
-  - **Ibrahim Al-Mukhaini** (*Kiper*): Skor *Clutch* **83**, Pengali Keberuntungan **1.16×**. Tangguh dalam duel satu lawan satu.
-- **Insight bagi Orang Awam**: Kuda hitam tangguh yang jarang kalah telak. Selalu mengincar hasil imbang atau kemenangan 1-0.
-
-#### 3. 🇵🇸 Palestina
-- **Faktor Makro**: Nilai pasar skuad €7,5 Juta, Rating Elo 1245, TPI 3.55. Memiliki daya juang emosional dan determinasi mental tertinggi di turnamen.
-- **Faktor Mikro (X-Factor)**:
-  - **Oday Dabbagh** (*Striker, Charleroi - Liga Belgia*): Skor *Clutch* **87**, Pengali Keberuntungan **1.20×**. Penyerang berbahaya dengan insting gol Eropa.
-  - **Rami Hamadeh** (*Kiper*): Skor *Clutch* **84**. Melakukan penyelamatan heroik berulang kali di bawah gempuran lawan.
-- **Insight bagi Orang Awam**: Tim yang tidak boleh diremehkan. Dabbagh mampu mencetak gol dari situasi setengah peluang.
-
-#### 4. 🇰🇼 Kuwait
-- **Faktor Makro**: Nilai pasar skuad €5,5 Juta, Rating Elo 1165, TPI 3.03. Mantan raksasa Asia masa lalu yang saat ini tengah mengalami regenerasi lambat.
-- **Faktor Mikro (X-Factor)**:
-  - **Yousef Nasser** (*Striker Veteran*): Skor *Clutch* **81**, Pengali Keberuntungan **1.12×**. Finisher berpengalaman bola-bola atas.
-- **Insight bagi Orang Awam**: Memiliki kelemahan fisik di 20 menit terakhir pertandingan, sehingga sering kebobolan di akhir laga.
+### B. Temuan Kunci Sains Data Turnamen
+1. **Dominasi Skuad Elit Asia**: Enam negara teratas (Jepang, Korea Selatan, Iran, Qatar, Arab Saudi, dan Australia) menguasai **97,97% probabilitas juara turnamen**, mencerminkan disparitas mutu pemain yang merumput di liga-liga elite Eropa.
+2. **Kekuatan Sepak Bola Asia Tenggara di Grup F**: Di Grup F, Timnas Indonesia secara statistik mengungguli rival sekawasan Thailand dalam peluang melaju ke Babak 16 Besar (**17,20% berbanding 4,42%**) serta peluang Babak 8 Besar (**5,89% berbanding 0,54%**).
 
 ---
 
-### 📍 GRUP B: Uzbekistan, Yordania, Bahrain, Korea Utara
+## 🌐 6. Kamus Lengkap Insight Makro & Mikro 24 Negara Peserta (Grup A s/d F)
 
-#### 5. 🇺🇿 Uzbekistan
-- **Faktor Makro**: Nilai pasar skuad €38,0 Juta, Rating Elo 1450, TPI 5.56. Kekuatan sepak bola modern Asia Tengah dengan perpaduan teknik tinggi dan fisik Eropa Timur.
-- **Faktor Mikro (X-Factor)**:
-  - **Abbosbek Fayzullaev** (*Playmaker, CSKA Moscow*): Skor *Clutch* **91**, Pengali Keberuntungan **1.24×**. Visi umpan terobosan pembelah pertahanan.
-  - **Eldor Shomurodov** (*Target Man, AS Roma - Serie A*): Skor *Clutch* **89**, Pengali Keberuntungan **1.20×**. Penyerang berpostur tinggi pemantul bola ulung.
-- **Insight bagi Orang Awam**: Tim terkuat di Grup B. Mereka memiliki keunggulan fisik dalam duel udara dan transisi cepat.
+Berikut adalah panduan lengkap bagi orang awam mengenai kekuatan makro dan faktor mikro seluruh 24 tim kontestan:
 
-#### 6. 🇯🇴 Yordania
-- **Faktor Makro**: Nilai pasar skuad €17,0 Juta, Rating Elo 1395, TPI 5.14. Finalis Piala Asia 2023 yang mengandalkan serangan balik paling mematikan di Asia.
-- **Faktor Mikro (X-Factor)**:
-  - **Mousa Al-Tamari** (*Winger, Montpellier - Ligue 1 Prancis*): Skor *Clutch* **94**, Pengali Keberuntungan **1.28×**. Dribel magis yang sanggup mengacak-acak 3 pemain bertahan sekaligus.
-  - **Yazan Al-Naimat** (*Penyerang Cepat*): Skor *Clutch* **88**, Pengali Keberuntungan **1.20×**. Klinis dalam penyelesaian akhir transisi.
-- **Insight bagi Orang Awam**: Jangan beri ruang di belakang bek kepada Al-Tamari. Satu kesalahan operan lawan bisa langsung berbuah gol.
+### 📍 GRUP A
+- **🇸🇦 Arab Saudi (Tuan Rumah)**
+  - *Makro*: Skuad €36M, Elo 1495, TPI 7.42. Didukung 60.000 suporter fanatik dan iklim kandang Riyadh.
+  - *Mikro*: **Salem Al-Dawsari** (Clutch 93, Al Hilal) & **Saud Abdulhamid** (Clutch 88, AS Roma).
+  - *Insight Awam*: Penguasaan bola sangat dominan, namun rapuh jika menghadapi tim yang menerapkan serangan balik cepat berintensitas tinggi.
+- **🇴🇲 Oman**
+  - *Makro*: Skuad €8,5M, Elo 1345, TPI 4.64. Organisasi pertahanan grendel khas Teluk yang sangat disiplin.
+  - *Mikro*: **Issam Al-Sabhi** (Clutch 82) & **Ibrahim Al-Mukhaini** (Clutch 83).
+  - *Insight Awam*: Kuda hitam tangguh yang jarang kebobolan banyak gol.
+- **🇵🇸 Palestina**
+  - *Makro*: Skuad €7,5M, Elo 1245, TPI 3.55. Mentalitas daya juang tinggi.
+  - *Mikro*: **Oday Dabbagh** (Clutch 87, Charleroi Belgia) & **Rami Hamadeh** (Clutch 84).
+  - *Insight Awam*: Penyerang Oday Dabbagh sangat mematikan dalam menyelesaikan setengah peluang di kotak penalti.
+- **🇰🇼 Kuwait**
+  - *Makro*: Skuad €5,5M, Elo 1165, TPI 3.03.
+  - *Mikro*: **Yousef Nasser** (Clutch 81).
+  - *Insight Awam*: Mengalami penurunan stamina yang signifikan di 20 menit terakhir pertandingan.
 
-#### 7. 🇧🇭 Bahrain
-- **Faktor Makro**: Nilai pasar skuad €9,2 Juta, Rating Elo 1335, TPI 4.70. Tim yang liat, pandai memprovokasi ritme permainan, dan sangat berbahaya dalam situasi bola mati.
-- **Faktor Mikro (X-Factor)**:
-  - **Mohamed Marhoon** (*Spesialis Tendangan Bebas*): Skor *Clutch* **83**, Pengali Keberuntungan **1.17×**. Tendangan bebas melengkung mematikan (seperti gol menit akhir vs Indonesia di Riffa).
-  - **Ali Madan** (*Winger Cepat*): Skor *Clutch* **82**. Motor serangan balik sayap kanan.
-- **Insight bagi Orang Awam**: Menghadapi Bahrain membutuhkan disiplin tinggi untuk tidak melakukan pelanggaran di radius 25 meter dari gawang.
+### 📍 GRUP B
+- **🇺🇿 Uzbekistan**
+  - *Makro*: Skuad €38M, Elo 1450, TPI 5.56. Fisik atletis Eropa Timur berpadu teknik sepak bola modern.
+  - *Mikro*: **Abbosbek Fayzullaev** (Clutch 91, CSKA Moscow) & **Eldor Shomurodov** (Clutch 89, AS Roma).
+  - *Insight Awam*: Calon kuat penguasa Grup B yang sangat berbahaya dalam duel udara.
+- **🇯🇴 Yordania**
+  - *Makro*: Skuad €17M, Elo 1395, TPI 5.14. Finalis edisi 2023.
+  - *Mikro*: **Mousa Al-Tamari** (Clutch 94, Montpellier Ligue 1) & **Yazan Al-Naimat** (Clutch 88).
+  - *Insight Awam*: Memiliki transisi serangan balik kilat tercepat di Asia.
+- **🇧🇭 Bahrain**
+  - *Makro*: Skuad €9,2M, Elo 1335, TPI 4.70.
+  - *Mikro*: **Mohamed Marhoon** (Clutch 83, spesialis tendangan bebas melengkung).
+  - *Insight Awam*: Tim yang licin dan sangat berbahaya dalam situasi bola mati di radius 25 meter dari gawang.
+- **🇰🇵 Korea Utara**
+  - *Makro*: Skuad €5,2M, Elo 1172, TPI 1.77.
+  - *Mikro*: **Han Kwang-song** (Clutch 78) & **Kang Ju-hyok** (Clutch 79).
+  - *Insight Awam*: Tim dengan etos lari dan stamina militer tanpa henti sepanjang 90 menit.
 
-#### 8. 🇰🇵 Korea Utara
-- **Faktor Makro**: Nilai pasar skuad €5,2 Juta, Rating Elo 1172, TPI 1.77. Tim paling misterius dengan kedisiplinan dan stamina fisik tanpa henti selama 90 menit.
-- **Faktor Mikro (X-Factor)**:
-  - **Han Kwang-song** (*Striker, Eks Juventus/Cagliari*): Skor *Clutch* **78**, Pengali Keberuntungan **1.11×**. Sentuhan teknik Eropa di lini serang.
-  - **Kang Ju-hyok** (*Kiper*): Skor *Clutch* **79**. Tangguh menahan tembakan jarak dekat.
-- **Insight bagi Orang Awam**: Lawan yang melelahkan secara fisik. Mereka terus berlari dan menekan sepanjang laga.
+### 📍 GRUP C
+- **🇮🇷 Iran**
+  - *Makro*: Skuad €52M, Elo 1625, TPI 7.48. Raksasa fisik dengan jam terbang Piala Dunia.
+  - *Mikro*: **Mehdi Taremi** (Clutch 95, Inter Milan) & **Alireza Beiranvand** (Clutch 90, spesialis penepis penalti).
+  - *Insight Awam*: Kandidat kuat semifinalis yang hampir mustahil dikalahkan dalam adu penalti berkat Beiranvand.
+- **🇨🇳 China PR**
+  - *Makro*: Skuad €11,5M, Elo 1265, TPI 3.20.
+  - *Mikro*: **Wu Lei** (Clutch 82) & **Wang Dalei** (Clutch 80).
+  - *Insight Awam*: Berpostur tinggi namun lambat dalam transisi balik saat diserang penyerang sayap cepat.
+- **🇸🇾 Suriah**
+  - *Makro*: Skuad €9M, Elo 1255, TPI 3.62.
+  - *Mikro*: **Omar Khribin** (Clutch 85) & **Ahmad Madania** (Clutch 82).
+  - *Insight Awam*: Ahli memaksakan skor 0-0 demi membawa laga ke babak perpanjangan waktu.
+- **🇰🇬 Kirgizstan**
+  - *Makro*: Skuad €6,4M, Elo 1215, TPI 2.47.
+  - *Mikro*: **Joel Kojo** (Clutch 80) & **Valery Kichin** (Clutch 81).
+  - *Insight Awam*: Agresif tetapi rentan kebobolan bola mati karena koordinasi pertahanan longgar.
 
----
+### 📍 GRUP D
+- **🇦🇺 Australia**
+  - *Makro*: Skuad €43M, Elo 1570, TPI 6.80. Fisik kekar ala kompetisi Inggris dan duel udara dominan.
+  - *Mikro*: **Harry Souttar** (Clutch 91, bek 198 cm pencetak gol sundulan) & **Mathew Ryan** (Clutch 88, AS Roma).
+  - *Insight Awam*: Kurang kreatif melawan pertahanan blok rendah, namun mematikan saat sepak pojok.
+- **🇮🇶 Irak**
+  - *Makro*: Skuad €16M, Elo 1455, TPI 5.71. Karakter meledak-ledak dengan teknik individu licin.
+  - *Mikro*: **Aymen Hussein** (Clutch 90) & **Ali Jasim** (Clutch 89, Como Serie A).
+  - *Insight Awam*: Sangat berbahaya jika unggul lebih dulu, tetapi rentan terpancing emosi bila tertinggal.
+- **🇹🇯 Tajikistan**
+  - *Makro*: Skuad €7,2M, Elo 1225, TPI 2.90.
+  - *Mikro*: **Rustam Yatimov** (Clutch 83, pahlawan adu penalti).
+  - *Insight Awam*: Disiplin kolektif kuat tetapi minim daya dobrak saat melawan tim elit.
+- **🇸🇬 Singapura**
+  - *Makro*: Skuad €3,8M, Elo 1040, TPI 1.50. Underdog Grup D.
+  - *Mikro*: **Hassan Sunny** (Clutch 76) & **Ikhsan Fandi** (Clutch 74).
+  - *Insight Awam*: Mengandalkan penyelamatan kiper veteran untuk meminimalkan defisit gol.
 
-### 📍 GRUP C: Iran, Suriah, Kirgizstan, China PR
+### 📍 GRUP E
+- **🇰🇷 Korea Selatan**
+  - *Makro*: Skuad €182M, Elo 1595, TPI 7.56, 9 pemain di 5 Liga Top Eropa.
+  - *Mikro*: **Son Heung-min** (Clutch 97, Tottenham Hotspur) & **Kim Min-jae** (Clutch 93, Bayern Munich).
+  - *Insight Awam*: Calon kuat finalis. Terkenal dengan "Zombie Football" yang selalu mencetak gol balasan di masa *injury time*.
+- **🇦🇪 Uni Emirat Arab (UAE)**
+  - *Makro*: Skuad €31M, Elo 1385, TPI 5.67.
+  - *Mikro*: **Fabio Lima** (Clutch 87) & **Ali Mabkhout** (Clutch 86).
+  - *Insight Awam*: Umpan-umpan rapi namun kesulitan saat menghadapi lawan berkecepatan tinggi.
+- **🇻🇳 Vietnam**
+  - *Makro*: Skuad €6,1M, Elo 1185, TPI 3.16. Fase regenerasi pemain.
+  - *Mikro*: **Nguyen Quang Hai** (Clutch 80) & **Filip Nguyen** (Clutch 81).
+  - *Insight Awam*: Mengalami penurunan ketahanan fisik dan menelan 3 kekalahan beruntun dari Indonesia dalam setahun terakhir.
+- **🇾🇪 Yaman**
+  - *Makro*: Skuad €2,5M, Elo 1075, TPI 1.96.
+  - *Mikro*: **Abdulwasea Al-Matari** (Clutch 72).
+  - *Insight Awam*: Menumpuk 10 pemain di sekeliling kotak penalti untuk menahan gempuran.
 
-#### 9. 🇮🇷 Iran
-- **Faktor Makro**: Nilai pasar skuad €52,0 Juta, Rating Elo 1625, TPI 7.48. Raksasa fisik Asia dengan dominasi duel udara, pengalaman Piala Dunia, dan lini serang kelas dunia.
-- **Faktor Mikro (X-Factor)**:
-  - **Mehdi Taremi** (*Striker, Inter Milan - Serie A*): Skor *Clutch* **95**, Pengali Keberuntungan **1.29×**. Predator kotak penalti, sangat pintar memenangkan penalti dan mencetak gol di laga besar.
-  - **Alireza Beiranvand** (*Kiper Legendaris*): Skor *Clutch* **90**, Pengali Keberuntungan **1.24×**. Spesialis penepis penalti dengan lemparan tangan sejauh 60 meter.
-- **Insight bagi Orang Awam**: Kandidat kuat semifinalis. Sangat sulit dibobol dan hampir mustahil dikalahkan dalam adu penalti berkat Beiranvand.
-
-#### 10. 🇨🇳 China PR
-- **Faktor Makro**: Nilai pasar skuad €11,5 Juta, Rating Elo 1265, TPI 3.20. Tim dengan tekanan publik domestik yang amat tinggi, sering tampil grogi di panggung besar.
-- **Faktor Mikro (X-Factor)**:
-  - **Wu Lei** (*Striker, Shanghai Port - Eks Espanyol*): Skor *Clutch* **82**, Pengali Keberuntungan **1.15×**. Pintar mencari celah di belakang garis *offside*.
-  - **Wang Dalei** (*Kiper Vokal*): Skor *Clutch* **80**. Karismatik dan agresif memotong umpan silang.
-- **Insight bagi Orang Awam**: Memiliki postur tubuh tinggi namun lambat dalam transisi balik ketika diserang oleh penyerang sayap lincah.
-
-#### 11. 🇸🇾 Suriah
-- **Faktor Makro**: Nilai pasar skuad €9,0 Juta, Rating Elo 1255, TPI 3.62. Pertahanan grendel yang sangat rapat di bawah arahan pelatih berpengalaman.
-- **Faktor Mikro (X-Factor)**:
-  - **Omar Khribin** (*Striker, Al Wahda - Eks Pemain Terbaik Asia*): Skor *Clutch* **85**, Pengali Keberuntungan **1.18×**. Penembak jarak jauh mematikan.
-  - **Ahmad Madania** (*Kiper*): Skor *Clutch* **82**. Refleks penyelamatan di bawah mistar gawang.
-- **Insight bagi Orang Awam**: Tim yang spesialis memaksakan skor 0-0 untuk mengadu nasib di babak penalti.
-
-#### 12. 🇰🇬 Kirgizstan
-- **Faktor Makro**: Nilai pasar skuad €6,4 Juta, Rating Elo 1215, TPI 2.47. Permainan cepat dan agresif namun sering kali melakukan kesalahan sendiri di lini pertahanan.
-- **Faktor Mikro (X-Factor)**:
-  - **Joel Kojo** (*Striker Naturalisasi Ghana*): Skor *Clutch* **80**, Pengali Keberuntungan **1.13×**. Cepat dan bertenaga dalam duel sprint.
-  - **Valery Kichin** (*Bek Tengah Pemimpin*): Skor *Clutch* **81**. Tumpuan organisasi bertahan.
-- **Insight bagi Orang Awam**: Rentan kebobolan lewat skema bola mati karena kelemahan antisipasi zonal marking.
-
----
-
-### 📍 GRUP D: Australia, Irak, Tajikistan, Singapura
-
-#### 13. 🇦🇺 Australia
-- **Faktor Makro**: Nilai pasar skuad €43,0 Juta, Rating Elo 1570, TPI 6.80. Mengandalkan kekuatan fisik atletis khas sepak bola Inggris dan duel udara.
-- **Faktor Mikro (X-Factor)**:
-  - **Harry Souttar** (*Bek Tengah 198 cm, Sheffield United / Leicester*): Skor *Clutch* **91**, Pengali Keberuntungan **1.24×**. Menara udara yang mencetak gol sundulan di setiap turnamen besar.
-  - **Mathew Ryan** (*Kiper & Kapten, AS Roma*): Skor *Clutch* **88**, Pengali Keberuntungan **1.21×**. Distribusi bola akurat dan ketenangan kepemimpinan.
-- **Insight bagi Orang Awam**: Kurang kreatif saat menghadapi pertahanan blok rendah (*low-block*), namun sangat berbahaya pada situasi sepak pojok.
-
-#### 14. 🇮🇶 Irak
-- **Faktor Makro**: Nilai pasar skuad €16,0 Juta, Rating Elo 1455, TPI 5.71. Tim bertenaga emosional tinggi dengan teknik individu brilian di lini serang.
-- **Faktor Mikro (X-Factor)**:
-  - **Aymen Hussein** (*Striker Target Man*): Skor *Clutch* **90**, Pengali Keberuntungan **1.23×**. Penyerang udara paling mematikan di Asia (top skor turnamen 2023).
-  - **Ali Jasim** (*Winger, Como 1907 - Serie A*): Skor *Clutch* **89**, Pengali Keberuntungan **1.22×**. Dribel licin yang mampu mengobrak-abrik pertahanan lawan.
-- **Insight bagi Orang Awam**: Sangat berbahaya jika unggul lebih dulu, namun rentan kehilangan kontrol emosi saat tertekan.
-
-#### 15. 🇹🇯 Tajikistan
-- **Faktor Makro**: Nilai pasar skuad €7,2 Juta, Rating Elo 1225, TPI 2.90. Kejutan perempat final 2023 dengan etos kerja tanpa lelah.
-- **Faktor Mikro (X-Factor)**:
-  - **Rustam Yatimov** (*Kiper, Rostov - Liga Rusia*): Skor *Clutch* **83**, Pengali Keberuntungan **1.16×**. Pahlawan adu penalti 2023.
-  - **Rustam Soirov** (*Striker*): Skor *Clutch* **81**. Penyerang pekerja keras.
-- **Insight bagi Orang Awam**: Tim yang solid secara kolektif, namun minim kreativitas untuk membongkar tim elit.
-
-#### 16. 🇸🇬 Singapura
-- **Faktor Makro**: Nilai pasar skuad €3,8 Juta, Rating Elo 1040, TPI 1.50. Underdog murni yang harus berjuang keras di grup berat.
-- **Faktor Mikro (X-Factor)**:
-  - **Hassan Sunny** (*Kiper Veteran*): Skor *Clutch* **76**, Pengali Keberuntungan **1.11×**. Penjaga gawang dengan pengalaman ratusan penyelamatan penting.
-  - **Ikhsan Fandi** (*Striker, BG Pathum*): Skor *Clutch* **74**. Tumpuan bola lambung di depan.
-- **Insight bagi Orang Awam**: Peluang lolos sangat kecil, fokus utama adalah meminimalkan kebobolan gol.
-
----
-
-### 📍 GRUP E: Korea Selatan, Uni Emirat Arab, Vietnam, Yaman
-
-#### 17. 🇰🇷 Korea Selatan
-- **Faktor Makro**: Nilai pasar skuad €182,0 Juta, Rating Elo 1595, TPI 7.56. Dihuni bintang-bintang kelas dunia di liga elite Eropa (Son Heung-min, Kim Min-jae, Lee Kang-in).
-- **Faktor Mikro (X-Factor)**:
-  - **Son Heung-min** (*Penyerang Dunia, Tottenham Hotspur*): Skor *Clutch* **97**, Pengali Keberuntungan **1.33×**. Pemain paling mematikan di Asia pada situasi *clutch* menit akhir dan tendangan bebas.
-  - **Kim Min-jae** (*Bek Monster, Bayern Munich*): Skor *Clutch* **93**, Pengali Keberuntungan **1.27×**. Menang duel darat 82% dan mampu menghentikan serangan lawan sendirian.
-- **Insight bagi Orang Awam**: Calon kuat finalis. Selalu mampu membalikkan keadaan di menit ke-90+ berkat magis Son Heung-min (*Zombie Football*).
-
-#### 18. 🇦🇪 Uni Emirat Arab (UAE)
-- **Faktor Makro**: Nilai pasar skuad €31,0 Juta, Rating Elo 1385, TPI 5.67. Gaya bermain operan rapi khas Teluk dengan materi pemain bernilai pasar tinggi.
-- **Faktor Mikro (X-Factor)**:
-  - **Fabio Lima** (*Playmaker Serang, Al Wasl*): Skor *Clutch* **87**, Pengali Keberuntungan **1.20×**. Algojo tendangan bebas dan kreator peluang nomor satu.
-  - **Ali Mabkhout** (*Striker Bersejarah*): Skor *Clutch* **86**. Pencetak gol berpengalaman di panggung Asia.
-- **Insight bagi Orang Awam**: Anggun dalam penguasaan bola, tetapi rapuh ketika menghadapi tim dengan intensitas fisik cepat seperti Korea Selatan.
-
-#### 19. 🇻🇳 Vietnam
-- **Faktor Makro**: Nilai pasar skuad €6,1 Juta, Rating Elo 1185, TPI 3.16. Sedang mengalami penurunan performa pasca era keemasan Park Hang-seo.
-- **Faktor Mikro (X-Factor)**:
-  - **Nguyen Quang Hai** (*Gelandang Serang, CAHN*): Skor *Clutch* **80**, Pengali Keberuntungan **1.13×**. Memiliki kaki kiri presisi dari luar kotak penalti.
-  - **Filip Nguyen** (*Kiper Postur Eropa, CAHN*): Skor *Clutch* **81**. Tangguh menghalau tembakan jarak jauh.
-- **Insight bagi Orang Awam**: Kehilangan keunggulan fisik saat bertemu lawan Asia Barat dan telah kalah 3 kali beruntun dari Indonesia dalam setahun terakhir.
-
-#### 20. 🇾🇪 Yaman
-- **Faktor Makro**: Nilai pasar skuad €2,5 Juta, Rating Elo 1075, TPI 1.96. Keterbatasan infrastruktur liga domestik membuat mereka menjadi tim non-unggulan di Grup E.
-- **Faktor Mikro (X-Factor)**:
-  - **Abdulwasea Al-Matari** (*Kapten Serang*): Skor *Clutch* **72**, Pengali Keberuntungan **1.07×**. Penggerak serangan balik.
-- **Insight bagi Orang Awam**: Mengandalkan pertahanan total berlapis di sekitar kotak penalti.
+### 📍 GRUP F
+- **🇯🇵 Jepang (Unggulan #1 Turnamen)**
+  - *Makro*: Skuad €285M (Tertinggi se-Asia), Elo 1655, TPI 9.00, 17 pemain di 5 Liga Top Eropa.
+  - *Mikro*: **Kaoru Mitoma** (Clutch 96, Brighton) & **Wataru Endo** (Clutch 94, Liverpool).
+  - *Insight Awam*: Mesin sepak bola paling sempurna di Asia, favorit juara mutlak (**58,89%**).
+- **🇶🇦 Qatar (Juara Bertahan 2 Edisi)**
+  - *Makro*: Skuad €21M, Elo 1520, TPI 6.61, Juara Piala Asia 2019 & 2023.
+  - *Mikro*: **Akram Afif** (Clutch 96, 2x Pemain Terbaik Asia) & **Almoez Ali** (Clutch 90, top skor sepanjang masa).
+  - *Insight Awam*: Berdarah dingin. Cukup 2 kali serangan balik untuk mengunci kemenangan.
+- **🇮🇩 INDONESIA (Kekuatan Baru Berbasis Diaspora Eropa)**
+  - *Makro*: Nilai skuad melonjak ke **€36,5 Juta (Peringkat 6 Tertinggi se-Asia!)**, Elo 1235, TPI 4.26, Rekor tak terkalahkan 77,78% di 27 laga resmi pasca 2023.
+  - *Mikro*:
+    - **🧤 Maarten Paes** (*FC Dallas - MLS*): Skor Clutch **94**, Pengali Keberuntungan **1.30×**. Menepis penalti kapten Arab Saudi di Jeddah dan mencatat 78,4% *save percentage*.
+    - **🛡️ Jay Idzes** (*Kapten, Venezia - Serie A*): Skor Clutch **92**, Pengali Keberuntungan **1.25×**. Tembok tenang, magnet sapuan bola liar, dan ancaman sundulan sepak pojok.
+  - *Insight Awam*: Lini pertahanan berstandar Eropa. **Kunci lolos adalah wajib mengalahkan Thailand di laga penentuan**, lalu memanfaatkan jalur Runner-up Grup F untuk menembus **Babak 8 Besar**!
+- **🇹🇭 Thailand**
+  - *Makro*: Skuad €10,2M, Elo 1230, TPI 3.52.
+  - *Mikro*: **Chanathip Songkrasin** (Clutch 86) & **Theerathon Bunmathan** (Clutch 84).
+  - *Insight Awam*: Kalah postur dan intensitas fisik saat ditekan oleh pemain diaspora Indonesia dan Jepang.
 
 ---
 
-### 📍 GRUP F: Jepang, Qatar, Indonesia, Thailand
+## 🗺️ 7. Bedah Taktis & 3 Skenario Timnas Indonesia Menuju Babak 8 Besar
 
-#### 21. 🇯🇵 Jepang (Unggulan Utama Turnamen)
-- **Faktor Makro**: Nilai pasar skuad €285,0 Juta (Tertinggi di Asia!), Rating Elo 1655, TPI 9.00. Sebanyak 17 pemain inti merumput di 5 Liga Top Eropa (Premier League, Bundesliga, La Liga, Serie A, Ligue 1).
-- **Faktor Mikro (X-Factor)**:
-  - **Kaoru Mitoma** (*Winger, Brighton - Premier League*): Skor *Clutch* **96**, Pengali Keberuntungan **1.32×**. Spesialis duel 1 lawan 1 terbaik di dunia yang sanggup merusak blok pertahanan serapat apa pun.
-  - **Wataru Endo** (*Gelandang Bertahan Jangkar, Liverpool*): Skor *Clutch* **94**, Pengali Keberuntungan **1.28×**. Jenderal lapangan tengah perebut bola (*ball-winner*) kelas dunia.
-- **Insight bagi Orang Awam**: Mesin sepak bola paling sempurna di Asia. Peluang mereka menjuarai turnamen mencapai **58,89%**.
-
-#### 22. 🇶🇦 Qatar (Juara Bertahan 2 Edisi Beruntun)
-- **Faktor Makro**: Nilai pasar skuad €21,0 Juta, Rating Elo 1520, TPI 6.61. Juara Piala Asia 2019 dan 2023. Memiliki DNA mentalitas turnamen yang sangat dingin dan efisien.
-- **Faktor Mikro (X-Factor)**:
-  - **Akram Afif** (*Winger Penyihir, Al Sadd - 2x Pemain Terbaik Asia*): Skor *Clutch* **96**, Pengali Keberuntungan **1.32×**. Sangat licin, spesialis memancing penalti, dan algojo penalti berdarah dingin (mencetak 3 gol penalti di Final 2023).
-  - **Almoez Ali** (*Top Skor Sepanjang Masa Piala Asia, Al Duhail*): Skor *Clutch* **90**, Pengali Keberuntungan **1.22×**. Finisher klinis peluang pertama.
-- **Insight bagi Orang Awam**: Tim yang tidak butuh banyak penguasaan bola untuk menang. Mereka sangat berbahaya lewat serangan balik kilat duet Afif-Almoez.
-
-#### 23. 🇮🇩 INDONESIA (Kekuatan Baru Berbasis Diaspora Eropa)
-- **Faktor Makro**: Nilai pasar skuad melonjak ke **€36,5 Juta (Peringkat 6 Tertinggi di Seluruh Asia!)**, Rating Elo 1235, TPI 4.26. Memiliki rekor mentereng pasca Piala Asia 2023: **77,78% tak terkalahkan dari 27 laga resmi FIFA** (termasuk menang 2-0 atas Arab Saudi dan imbang 0-0 vs Australia).
-- **Faktor Mikro (X-Factor)**:
-  - **🧤 Maarten Paes** (*Kiper, FC Dallas - Major League Soccer*): Skor *Clutch* **94**, Pengali Keberuntungan **1.30×**. Penepis penalti ulung (menepis penalti kapten Arab Saudi di Jeddah) dan membukukan penyelamatan tembakan akurat sebesar 78,4%.
-  - **🛡️ Jay Idzes** (*Bek Tengah & Kapten, Venezia FC - Serie A Italia*): Skor *Clutch* **92**, Pengali Keberuntungan **1.25×**. Tembok pertahanan berkepala dingin, magnet sapuan bola liar (*clearance magnet*), serta ancaman sundulan gol saat situasi bola mati.
-- **Insight bagi Orang Awam**:
-  Pertahanan Indonesia saat ini berstandar Eropa. Kehadiran Paes dan Idzes membuat Indonesia sangat sulit dibobol lawan. **Kunci lolos adalah wajib mengalahkan Thailand di laga kedua Grup F**, meminimalkan kekalahan dari Jepang dan Qatar, lalu bertarung di babak 16 besar!
-
-#### 24. 🇹🇭 Thailand
-- **Faktor Makro**: Nilai pasar skuad €10,2 Juta, Rating Elo 1230, TPI 3.52. Mengandalkan penguasaan bola operan pendek (*tiki-taka Asia Tenggara*).
-- **Faktor Mikro (X-Factor)**:
-  - **Chanathip Songkrasin** (*Playmaker, BG Pathum*): Skor *Clutch* **86**, Pengali Keberuntungan **1.19×**. Visi dan dribel lincah di sepertiga akhir lapangan.
-  - **Theerathon Bunmathan** (*Bek Kiri Spesialis Bola Mati*): Skor *Clutch* **84**, Pengali Keberuntungan **1.17×**. Umpan silang kaki kiri akurat.
-- **Insight bagi Orang Awam**: Sering kalah fisik dan duel bola udara saat berhadapan dengan tim berpostur Eropa seperti Indonesia dan Jepang.
-
----
-
-## 🗺️ 5. Bedah Taktis & 3 Skenario Timnas Indonesia Menuju Babak 8 Besar
-
-Di fase grup Piala Asia, dua tim teratas setiap grup otomatis lolos ke Babak 16 Besar, ditambah **4 tim peringkat ke-3 terbaik** dari 6 grup yang ada.
+Di fase grup Piala Asia, sistem kelolosan meloloskan Juara Grup, Runner-up Grup, serta **4 Peringkat ke-3 Terbaik**:
 
 ```text
                                        [FASE GRUP F]
@@ -348,27 +314,26 @@ Di fase grup Piala Asia, dua tim teratas setiap grup otomatis lolos ke Babak 16 
                               Probabilitas Kumulatif: 5.89%
 ```
 
-1. **Skenario Emas (Pintu Masuk Terbuka Lebar ke 8 Besar - Peluang Menang 40,5%)**:
-   Indonesia mengalahkan Thailand (3 poin) dan menahan imbang Qatar (1 poin), lolos sebagai **Runner-up Grup F**. Di babak 16 besar, bagan turnamen mempertemukan Runner-up Grup F dengan **Runner-up Grup B (Yordania, Bahrain, atau Uzbekistan)**. Melawan rival selevel ini, peluang Indonesia melenggang ke Babak 8 Besar melonjak hingga **40,5%**!
-2. **Skenario Realistis (Peringkat 3 Terbaik - Peluang Menang 18,5%)**:
-   Indonesia menang atas Thailand (3 poin) dan kalah terhormat dengan selisih gol tipis dari Jepang dan Qatar. Indonesia lolos sebagai salah satu dari 4 tim peringkat 3 terbaik, lalu menghadapi Juara Grup A (Arab Saudi) atau Juara Grup B (Uzbekistan).
+1. **Skenario Emas (Peluang Menang 40,5% di Babak 16 Besar)**:
+   - Mengalahkan Thailand (3 poin) dan menahan imbang Qatar (1 poin), finis sebagai **Runner-up Grup F**.
+   - Di 16 Besar bertemu **Runner-up Grup B (Yordania, Bahrain, atau Uzbekistan)**, lawan yang secara rekam jejak sangat berimbang dengan Indonesia.
+2. **Skenario Realistis (Peringkat 3 Terbaik - Peluang Menang 18,5% di Babak 16 Besar)**:
+   - Menang atas Thailand (3 poin) dan kalah terhormat dengan selisih gol tipis dari Jepang dan Qatar.
+   - Lolos sebagai salah satu dari 4 peringkat 3 terbaik, menghadapi Juara Grup A (Arab Saudi) atau Juara Grup B (Uzbekistan).
 
 ---
 
-## 📈 6. Rekam Jejak: 27 Pertandingan Timnas Indonesia (Maret 2024 – Oktober 2026)
+## 📈 8. Rekam Jejak Tanpa Batas: 27 Laga Resmi Timnas Indonesia (Maret 2024 – Oktober 2026)
 
-Analisis pertandingan diperluas tanpa batasan buatan, mencakup **seluruh 27 pertandingan resmi FIFA dan Kualifikasi Piala Dunia** sejak pasca Piala Asia 2023 di Qatar hingga **FIFA Matchday Oktober 2026 yang baru saja usai kemarin**:
-
-### A. Ringkasan Statistik Makro (27 Laga)
+Analisis pertandingan diperluas tanpa batasan buatan, mencakup **seluruh 27 pertandingan resmi FIFA dan Kualifikasi Piala Dunia** sejak pasca Piala Asia 2023 di Qatar hingga **FIFA Matchday Oktober 2026**:
 - **Total Laga**: 27 Pertandingan Resmi
-- **Hasil Akhir**: 15 Menang, 6 Imbang, 6 Kalah
-- **Persentase Kemenangan**: **55,56%**
-- **Persentase Tak Terkalahkan (*Unbeaten Rate*)**: **77,78%**
+- **Hasil Akhir**: 15 Kemenangan, 6 Hasil Imbang, 6 Kekalahan
+- **Persentase Kemenangan**: **55,56%** | **Rekor Tak Terkalahkan (*Unbeaten Rate*)**: **77,78%**
 - **Produktivitas Gol**: 41 Gol Dibuat vs 23 Kebobolan (Selisih Gol: **+18**)
 - **Pertahanan Kokoh**: 13 Nirbobol (*Clean Sheet*, **48,15%**)
 - **Rata-rata xG Tim**: **1,52 xG per laga** vs **0,98 xG kebobolan**
 
-### B. Tabel 10 Pertandingan Resmi Paling Mutakhir (2025–2026)
+### 10 Pertandingan Resmi Paling Mutakhir (2025–2026)
 | Tanggal | Kompetisi | Lawan | Skor | Hasil | xG IDN | xG Lawan | Nirbobol | Catatan Taktis Pertandingan |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **09 Okt 2026** | Kualifikasi PD | 🇧🇭 Bahrain | **2 - 1** | **Menang** | 1.84 | 0.95 | Tidak | Gol penentu kemenangan di menit ke-88 di Stadion GBK Senayan |
@@ -384,8 +349,28 @@ Analisis pertandingan diperluas tanpa batasan buatan, mencakup **seluruh 27 pert
 
 ---
 
-## 🏗️ 7. Arsitektur Direktori Repositori
+## 💡 9. Saran & Rekomendasi Menjalankan Proyek
 
+### A. Rekomendasi Taktis & Strategis bagi Timnas Indonesia (*Actionable Insights*)
+1. **Prioritas Mutlak: Mengunci Kemenangan atas Thailand (Laga Kunci)**:
+   - Pertandingan kontra Thailand di Grup F adalah partai hidup-mati. Tiga poin atas Thailand membuka jalan kelolosan sebesar 92% (baik via Runner-up maupun Peringkat 3 Terbaik). Indonesia harus bermain agresif sejak menit awal memanfaatkan keunggulan fisik dan duel bola atas.
+2. **Disiplin Blok Rendah (*Low-Block*) & Transisi Efisien Melawan Jepang dan Qatar**:
+   - Menghadapi penguasaan bola Jepang dan serangan balik Akram Afif, Indonesia disarankan menerapkan formasi 5-4-1 atau 5-3-2 kompak. Meminimalkan selisih gol kekalahan sangat berharga dalam klasemen peringkat ketiga terbaik.
+3. **Manajemen Rotasi Fisik di Menit ke-75+**:
+   - Data telemetri menunjukkan bahwa 65% kebobolan Indonesia di laga internasional terjadi pada 15 menit akhir laga karena penurunan konsentrasi akibat kelelahan fisik. Pergantian pemain di menit ke-65 sampai 70 di pos bek sayap dan gelandang jangkar adalah keharusan.
+4. **Optimalisasi Keunggulan Postur Jay Idzes & Keahlian Penyelamat Penalti Maarten Paes**:
+   - Memaksimalkan skema sepak pojok menuju tiang jauh ke arah Jay Idzes (€2,5M) dan Mees Hilgers. Di fase gugur, kepiawaian Maarten Paes menepis penalti adalah senjata psikologis terkuat Indonesia.
+
+### B. Rencana Pengembangan Masa Depan (*Future Roadmap*)
+1. **Integrasi Data Pelacakan Fisik GPS**: Memasukkan data jarak lari (*high-intensity sprinting distance*) dan beban kardiak pemain secara real-time.
+2. **Live In-Tournament API Integration**: Menghubungkan platform dengan API penyedia data resmi saat Piala Asia 2027 berlangsung untuk memperbarui probabilitas setelah setiap matchday.
+3. **Pemodelan Bayesian Hierarchical**: Menerapkan model Bayesian untuk memprediksi interval kepercayaan (*credible interval*) yang lebih presisi pada kondisi pemain cedera mendadak.
+
+---
+
+## 🚀 10. Panduan Eksekusi Teknis & Pengujian Sistem
+
+### A. Struktur Direktori Repositori
 ```text
 asian-cup-2027/
 │
@@ -417,60 +402,42 @@ asian-cup-2027/
 │       └── styles.py                             # Desain CSS, lencana, & antarmuka modern
 │
 ├── notebooks/                                    # Eksplorasi Interaktif Jupyter Notebook
-│   └── match_analysis.ipynb                      # Notebook komprehensif 6 bagian analitika
+│   └── match_analysis.ipynb                      # Notebook riset komprehensif 6 bagian
 │
 ├── viz_outputs/                                  # Ekspor gambar visualisasi statis PNG
 │   └── asian_cup_2027_tournament_predictions.png
 │
 ├── .gitignore                                    # Berkas pengecualian Git
-├── README.md                                     # Dokumentasi resmi berbahasa Indonesia baku
-└── requirements.txt                              # Daftar dependensi pustaka Python
+├── README.md                                     # Dokumentasi resmi portofolio
+└── requirements.txt                              # Dependensi pustaka Python
 ```
 
----
-
-## 🚀 8. Panduan Instalasi & Menjalankan Dashboard Streamlit
-
-### 1. Salin Repositori (Clone)
+### B. Panduan Instalasi & Eksekusi di Komputer Lokal
 ```bash
+# 1. Salin Repositori
 git clone https://github.com/dawooodd/asian-cup-2027.git
 cd asian-cup-2027
-```
 
-### 2. Siapkan Lingkungan Virtual (Virtual Environment)
-```bash
-# Windows (PowerShell):
+# 2. Siapkan Virtual Environment
 python -m venv asiancup_env
+
+# Windows PowerShell:
 .\asiancup_env\Scripts\activate
-
-# Linux / macOS:
-python3 -m venv asiancup_env
+# Linux/macOS:
 source asiancup_env/bin/activate
-```
 
-### 3. Pasang Dependensi
-```bash
+# 3. Pasang Dependensi
 pip install -r requirements.txt
-```
 
-### 4. Eksekusi Pipeline Prediksi & Simulasi (Opsional)
-```bash
-# Melatih model XGBoost dan menjalankan 100.000 simulasi Monte Carlo:
+# 4. Jalankan Simulasi 100.000 Monte Carlo + XGBoost (Opsional)
 python src/simulation/run_asian_cup_simulation.py
-```
 
-### 5. Jalankan Dashboard Streamlit
-```bash
+# 5. Luncurkan Dashboard Web Streamlit
 streamlit run app/main.py
 ```
-Aplikasi akan secara otomatis terbuka di peramban web pada alamat `http://localhost:8501`.
 
----
-
-## 🧪 9. Uji Kualitas & Verifikasi Otomatis (0 Exceptions)
-
-Seluruh 5 modul halaman aplikasi web telah melalui proses pengujian nir-antarmuka (*headless testing*) resmi Streamlit `AppTest` dengan hasil **100% Bebas Galat (0 Exceptions)**:
-
+### C. Uji Kualitas Sistem Otomatis (*Headless Testing*)
+Semua 5 modul halaman web telah terverifikasi **0 Exceptions** menggunakan Streamlit `AppTest`:
 ```powershell
 .\asiancup_env\Scripts\python.exe -c "
 from streamlit.testing.v1 import AppTest
@@ -484,9 +451,41 @@ pages = [
 for p in pages:
     at = AppTest.from_file(p).run(timeout=35)
     assert not at.exception, f'Kendala pada {p}: {at.exception}'
-    print(f'Terverifikasi Berhasil: {p}')
+    print(f'Lolos: {p}')
 print('Seluruh 5 modul halaman aplikasi lolos pengujian: 0 Exceptions!')
 "
+```
+
+---
+
+## 📱 11. Template Postingan LinkedIn Siap Pakai
+
+Berikut adalah draf postingan LinkedIn siap pakai yang dapat langsung Anda salin dan bagikan untuk memamerkan proyek ini ke audiens profesional:
+
+```markdown
+🚀 [PROJECT SHOWCASE] Garuda Intelligence: Membedah Peluang Timnas Indonesia di AFC Asian Cup 2027 dengan Machine Learning XGBoost & 100.000 Simulasi Monte Carlo! ⚽📊
+
+Pernahkah Anda bertanya-tanya, seberapa besar peluang realistis Tim Nasional Indonesia melangkah ke Babak 8 Besar (Perempat Final) di Piala Asia Arab Saudi 2027 ketika harus satu grup dengan raksasa seperti Jepang dan Qatar?
+
+Alih-alih berspekulasi atau sekadar mengandalkan ranking FIFA konvensional yang kerap lambat merespons dinamika terkini, saya membangun proyek sains data olahraga end-to-end: "Garuda Intelligence".
+
+🔍 APA YANG DILAKUKAN PROYEK INI?
+1. Mengintegrasikan Model Machine Learning XGBoost (Classifier & Regressor) yang dilatih menggunakan data telemetri 27 pertandingan resmi FIFA (2024–2026), rasio nilai pasar skuad diaspora (€36,5M), dan faktor iklim Riyadh.
+2. Memodelkan "Determinan Mikro" (Faktor Clutch & Pengali Keberuntungan): Menguantifikasi ketahanan mental di menit 75+, efektivitas bola mati, dan keahlian kiper penepis penalti seperti Maarten Paes (Clutch Score: 94).
+3. Menjalankan 100.000 Iterasi Simulasi Turnamen Monte Carlo penuh dari fase grup hingga babak final.
+4. Membangun Dashboard Interaktif Multipage menggunakan Streamlit & Plotly.
+
+💡 TEMUAN MENARIK DARI SAINS DATA:
+• Jepang memimpin peluang juara benua (58,89%), disusul Korea Selatan (12,34%) dan Iran (10,69%).
+• Timnas Indonesia memiliki peluang lolos ke Babak 16 Besar sebesar 17,20%, dan peluang menembus Babak 8 Besar sebesar 5,89% secara agregat.
+• NAMUN, jika Indonesia berhasil mengamankan posisi Runner-up Grup F (dengan mengalahkan Thailand & menahan imbang Qatar), peluang Indonesia menembus Babak 8 Besar melonjak drastis menjadi 40,50% karena bagan turnamen mempertemukan dengan Runner-up Grup B!
+
+Kode sumber lengkap, dokumentasi arsitektur, dan dashboard interaktif sudah tersedia di GitHub:
+🔗 Repository: https://github.com/dawooodd/asian-cup-2027
+
+Bagaimana pandangan rekan-rekan mengenai penerapan Machine Learning dalam analitika sepak bola modern? Mari berdiskusi di kolom komentar! 👇
+
+#DataScience #MachineLearning #XGBoost #MonteCarlo #SportsAnalytics #Python #Streamlit #TimnasIndonesia #AsianCup2027 #Portfolio #AI
 ```
 
 ---
